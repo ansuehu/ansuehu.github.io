@@ -1,0 +1,15 @@
+const user = 'zure-erabiltzailea';
+const repo = 'zure-repositorioa';
+
+fetch(`https://api.github.com/repos/${user}/${repo}/contents/`)
+  .then(response => response.json())
+  .then(data => {
+    const list = document.getElementById('proiektu-zerrenda');
+    data.forEach(item => {
+      if (item.type === 'dir') { // Karpetak soilik badaude
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="${item.name}/">${item.name}</a>`;
+        list.appendChild(li);
+      }
+    });
+  });
