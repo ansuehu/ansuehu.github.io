@@ -1,15 +1,98 @@
-const user = 'ansuehu';
-const repo = 'ansuehu.github.io';
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nire Proiektuen Ataria</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg);
+            color: var(--text);
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        h1 { border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+        .card:hover { transform: translateY(-5px); }
+        a { 
+            text-decoration: none; 
+            color: var(--primary); 
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+        .loading { font-style: italic; color: #64748b; }
+    </style>
+</head>
+<body>
 
-fetch(`https://api.github.com/repos/${user}/${repo}/contents/`)
-  .then(response => response.json())
-  .then(data => {
-    const list = document.getElementById('proiektu-zerrenda');
-    data.forEach(item => {
-      if (item.type === 'dir') { // Karpetak soilik badaude
-        const li = document.createElement('li');
-        li.innerHTML = `<a href="${item.name}/">${item.name}</a>`;
-        list.appendChild(li);
-      }
-    });
-  });
+    <h1>Nire GitHub Proiektuak</h1>
+    <p>Repositorioko karpetak automatikoki sinkronizatuta:</p>
+
+    <div id="proiektu-zerrenda" class="grid">
+        <p class="loading">Kargatzen...</p>
+    </div>
+
+    <script>
+        // ALDATU DATU HAUEK ZUREEKIN
+        const USER = 'ansuehu'; 
+        const REPO = 'ansuehu.github.io';
+
+        async function proiektuakKargatu() {
+            const zerrendaElementua = document.getElementById('proiektu-zerrenda');
+            
+            try {
+                // GitHub APIari deia
+                const response = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/`);
+                const data = await response.json();
+
+                // Garbitu "Kargatzen..." mezua
+                zerrendaElementua.innerHTML = '';
+
+                data.forEach(item => {
+                    // Karpetak soilik erakutsi (eta ezkutatu ezkutukoak edo konfigurazio karpetak)
+                    if (item.type === 'dir' && !item.name.startsWith('.')) {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        
+                        // Orrialde nagusia karpeta-izena/ da (index.html automatikoki kargatzen du)
+                        card.innerHTML = `<a href="${item.name}/">📂 ${item.name.replace(/-/g, ' ')}</a>`;
+                        
+                        zerrendaElementua.appendChild(card);
+                    }
+                });
+
+                if (zerrendaElementua.innerHTML === '') {
+                    zerrendaElementua.innerHTML = '<p>Ez da karpetarik aurkitu.</p>';
+                }
+
+            } catch (error) {
+                console.error("Errorea datuak kargatzean:", error);
+                zerrendaElementua.innerHTML = '<p>Errorea proiektuak kargatzean. Ziurtatu erabiltzaile eta repo izenak ondo daudela.</p>';
+            }
+        }
+
+        proiektuakKargatu();
+    </script>
+</body>
+</html>
