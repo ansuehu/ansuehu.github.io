@@ -1,0 +1,1936 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Basque ASR Examples</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+/* Layout: one column of dataset sections; each example is a card holding the audio,
+   the reference, and one row per model. Slate neutrals, single teal accent, with
+   semantic colour reserved for the word-level diff and the WER bands. */
+:root {
+  --bg: #f6f7f8; --surface: #ffffff; --surface-2: #eef0f2;
+  --fg: #1b2227; --fg-dim: #5c676f; --fg-faint: #8b959c;
+  --line: #dde1e4; --accent: #0f766e; --accent-soft: #d6ebe8;
+  --good: #156e45; --good-bg: #dff0e6;
+  --mid: #8a5a05; --mid-bg: #fbeed3;
+  --bad: #a3302b; --bad-bg: #fadedd;
+  --ins-bg: #fae2e0; --ins-fg: #8f2b26;
+  --del-bg: #e2e8ef; --del-fg: #4a5a6b;
+  --sub-bg: #fbeed3; --sub-fg: #7c5102;
+  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --serif: "IBM Plex Serif", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11171b; --surface: #182026; --surface-2: #1f292f;
+    --fg: #e4e9ec; --fg-dim: #9fabb3; --fg-faint: #6f7d86;
+    --line: #2a353d; --accent: #4fd1c3; --accent-soft: #163a37;
+    --good: #6ed49e; --good-bg: #16352a;
+    --mid: #e8bc63; --mid-bg: #3a2f12;
+    --bad: #f08b84; --bad-bg: #40211f;
+    --ins-bg: #45211f; --ins-fg: #f3a09a;
+    --del-bg: #25313b; --del-fg: #9fb3c4;
+    --sub-bg: #3a2f12; --sub-fg: #e8bc63;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11171b; --surface: #182026; --surface-2: #1f292f;
+  --fg: #e4e9ec; --fg-dim: #9fabb3; --fg-faint: #6f7d86;
+  --line: #2a353d; --accent: #4fd1c3; --accent-soft: #163a37;
+  --good: #6ed49e; --good-bg: #16352a;
+  --mid: #e8bc63; --mid-bg: #3a2f12;
+  --bad: #f08b84; --bad-bg: #40211f;
+  --ins-bg: #45211f; --ins-fg: #f3a09a;
+  --del-bg: #25313b; --del-fg: #9fb3c4;
+  --sub-bg: #3a2f12; --sub-fg: #e8bc63;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: var(--sans); font-size: 15px; line-height: 1.5;
+}
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 72px; }
+h1 { font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.2rem); font-weight: 600; margin: 0 0 .4rem;
+     letter-spacing: -.015em; text-wrap: balance; }
+.lede { color: var(--fg-dim); max-width: 68ch; margin: 0 0 1.4rem; }
+.lede + .lede { margin-top: -.8rem; }
+h2 { font-size: 1.12rem; font-weight: 600; margin: 0 0 .15rem; letter-spacing: -.01em; }
+.note { color: var(--fg-dim); font-size: .86rem; max-width: 72ch; margin: 0 0 1rem; }
+a { color: var(--accent); }
+
+.eyebrow { font-size: .7rem; text-transform: uppercase; letter-spacing: .09em;
+           color: var(--fg-faint); font-weight: 600; }
+
+/* summary strip */
+.summary { overflow-x: auto; margin: 0 0 2.6rem; border: 1px solid var(--line);
+           border-radius: 8px; background: var(--surface); }
+table.sum { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums;
+            font-size: .86rem; min-width: 560px; }
+table.sum th, table.sum td { padding: .5rem .7rem; text-align: right; border-bottom: 1px solid var(--line); }
+table.sum th:first-child, table.sum td:first-child { text-align: left; font-weight: 500; }
+table.sum thead th { color: var(--fg-dim); font-weight: 500; font-size: .76rem;
+                     text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+table.sum tbody tr:last-child td { border-bottom: 0; }
+table.sum td.v { font-family: var(--mono); }
+table.sum td.best { color: var(--accent); font-weight: 500; }
+
+/* jump bar: sticky, spans the wrapper's gutters */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+       margin-inline: -20px; padding: .5rem 20px; margin-bottom: 1.8rem;
+       background: var(--bg); border-bottom: 1px solid var(--line);
+       display: flex; flex-wrap: wrap; gap: .35rem .4rem; align-items: center; }
+.nav a { font-family: var(--mono); font-size: .74rem; text-decoration: none;
+         color: var(--fg-dim); background: var(--surface); border: 1px solid var(--line);
+         border-radius: 999px; padding: .22rem .6rem; white-space: nowrap; }
+.nav a:hover { color: var(--fg); border-color: var(--accent); }
+.nav a:focus-visible, .nav button:focus-visible { outline: 2px solid var(--accent);
+         outline-offset: 2px; }
+.nav button { margin-left: auto; font: inherit; font-size: .74rem; font-family: var(--mono);
+         color: var(--fg-dim); background: var(--surface); border: 1px solid var(--line);
+         border-radius: 999px; padding: .22rem .6rem; cursor: pointer; white-space: nowrap; }
+.nav button:hover { color: var(--fg); border-color: var(--accent); }
+
+details.split { margin-bottom: 1.6rem; scroll-margin-top: 3.6rem; }
+details.split > summary { list-style: none; cursor: pointer; display: flex;
+       flex-wrap: wrap; align-items: baseline; gap: .3rem .7rem;
+       border-top: 2px solid var(--fg); padding: .7rem .1rem .55rem; }
+details.split > summary::-webkit-details-marker { display: none; }
+details.split > summary:hover .sname { color: var(--accent); }
+.chev { width: .62rem; height: .62rem; border-right: 2px solid var(--fg-dim);
+        border-bottom: 2px solid var(--fg-dim); transform: rotate(-45deg);
+        transition: transform .15s ease; flex: none; align-self: center; }
+details[open] > summary .chev { transform: rotate(45deg); }
+.sname { font-size: 1.12rem; font-weight: 600; letter-spacing: -.01em; }
+.smeta { font-family: var(--mono); font-size: .74rem; color: var(--fg-faint);
+         font-variant-numeric: tabular-nums; margin-left: auto; }
+.split-body { padding-top: 1rem; }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+        padding: 1rem 1.1rem 1.1rem; margin-bottom: 1rem; }
+.card-top { display: flex; flex-wrap: wrap; gap: .7rem 1.2rem; align-items: center;
+            justify-content: space-between; margin-bottom: .9rem; }
+.meta { display: flex; flex-wrap: wrap; gap: .25rem .9rem; font-family: var(--mono);
+        font-size: .76rem; color: var(--fg-dim); font-variant-numeric: tabular-nums; }
+.meta b { color: var(--fg); font-weight: 500; }
+audio { height: 34px; max-width: 100%; }
+.flag { display: inline-block; font-size: .7rem; font-weight: 600; letter-spacing: .04em;
+        text-transform: uppercase; padding: .15rem .45rem; border-radius: 4px;
+        background: var(--bad-bg); color: var(--bad); }
+
+.ref { font-family: var(--serif); font-size: 1.02rem; line-height: 1.6;
+       background: var(--surface-2); border-radius: 7px; padding: .7rem .85rem;
+       margin-bottom: .9rem; }
+.ref .eyebrow { display: block; margin-bottom: .3rem; }
+
+.rows { display: grid; gap: .1rem; }
+.row { display: grid; grid-template-columns: 5.6rem 4.2rem 1fr; gap: .8rem;
+       align-items: baseline; padding: .42rem .2rem; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.mname { font-family: var(--mono); font-size: .8rem; color: var(--fg-dim); min-width: 0; }
+.mname b { color: var(--fg); font-weight: 500; }
+.wer { font-family: var(--mono); font-size: .76rem; font-variant-numeric: tabular-nums;
+       text-align: right; padding: .08rem .35rem; border-radius: 4px; justify-self: start;
+       white-space: nowrap; }
+.wer.good { background: var(--good-bg); color: var(--good); }
+.wer.mid  { background: var(--mid-bg);  color: var(--mid); }
+.wer.bad  { background: var(--bad-bg);  color: var(--bad); }
+.wer.na   { background: var(--surface-2); color: var(--fg-faint); }
+.hyp { font-family: var(--serif); line-height: 1.6; min-width: 0; overflow-wrap: anywhere; }
+.w { border-radius: 3px; padding: .02em .18em; }
+.w.ins { background: var(--ins-bg); color: var(--ins-fg); }
+.w.del { background: var(--del-bg); color: var(--del-fg); text-decoration: line-through;
+         text-decoration-thickness: 1px; }
+.w.sub { background: var(--sub-bg); color: var(--sub-fg); }
+.empty { color: var(--fg-faint); font-style: italic; }
+
+.legend { display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: center;
+          font-size: .8rem; color: var(--fg-dim); margin: 0 0 2rem; }
+.legend .w { font-family: var(--serif); }
+
+footer { margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 1.2rem;
+         color: var(--fg-dim); font-size: .82rem; }
+footer code { font-family: var(--mono); font-size: .92em; background: var(--surface-2);
+              padding: .08em .3em; border-radius: 3px; }
+@media (max-width: 620px) {
+  .row { grid-template-columns: 1fr; gap: .15rem; }
+  .wer { justify-self: start; }
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Basque ASR Examples</h1>
+<p class="lede">36 utterances sampled from the six test splits, transcribed by every
+fine-tuned Whisper model that still exists on disk. Beam 5,
+max length 225 &mdash; the same decoding
+<code>evaluate_test.py</code> uses.</p>
+<p class="lede">Two utterances short, two medium and two long per split, drawn at
+random inside each length band. EusPodcast is split by speaking rate instead: three
+ordinary segments and three from the under-0.4-words-per-second group whose references
+account for only part of the speech. Nothing is selected by how well a model did on it.</p>
+<p class="lede">Highlighting compares each hypothesis to the reference after the same
+normalization the WER uses: <span class="w ins">words the model added</span>,
+<span class="w del">words it dropped</span>, <span class="w sub">words it got wrong</span>.
+The percentage on each row is that utterance's own WER, so a single bad word in a short
+reference can read as 50%.</p>
+
+<nav class="nav" aria-label="Jump to a dataset">
+<a href="#composite_eu-test_cv">composite_eu/test_cv</a>
+<a href="#composite_eu-test_parl">composite_eu/test_parl</a>
+<a href="#composite_eu-test_oslr">composite_eu/test_oslr</a>
+<a href="#faktoria-test">faktoria/test</a>
+<a href="#Dialektoak-test">Dialektoak/test</a>
+<a href="#EusPodcast-test">EusPodcast/test</a>
+<button type="button" id="toggle-all" aria-expanded="true">collapse all</button>
+</nav>
+<p class="eyebrow">Corpus WER &mdash; the full test splits</p>
+<div class="summary"><table class="sum"><thead><tr><th>split</th>
+<th>tiny</th>
+<th>small</th>
+<th>medium</th>
+<th>large</th>
+<th>large-v2</th>
+<th>large-v3</th>
+</tr></thead><tbody>
+<tr><td>composite_eu/test_cv</td>
+<td class="v">17.76</td>
+<td class="v">10.40</td>
+<td class="v">5.64</td>
+<td class="v">3.65</td>
+<td class="v best">3.62</td>
+<td class="v">3.91</td>
+</tr>
+<tr><td>composite_eu/test_parl</td>
+<td class="v">17.01</td>
+<td class="v">9.41</td>
+<td class="v">5.57</td>
+<td class="v best">4.24</td>
+<td class="v">5.06</td>
+<td class="v">4.36</td>
+</tr>
+<tr><td>composite_eu/test_oslr</td>
+<td class="v">27.12</td>
+<td class="v">17.69</td>
+<td class="v">12.06</td>
+<td class="v">9.33</td>
+<td class="v">8.46</td>
+<td class="v best">8.38</td>
+</tr>
+<tr><td>faktoria/test</td>
+<td class="v">26.13</td>
+<td class="v">20.19</td>
+<td class="v">11.81</td>
+<td class="v">9.77</td>
+<td class="v best">9.59</td>
+<td class="v">10.42</td>
+</tr>
+<tr><td>Dialektoak/test</td>
+<td class="v">40.72</td>
+<td class="v">47.92</td>
+<td class="v">17.32</td>
+<td class="v best">14.48</td>
+<td class="v">15.70</td>
+<td class="v">16.84</td>
+</tr>
+<tr><td>EusPodcast/test</td>
+<td class="v">79.07</td>
+<td class="v">69.90</td>
+<td class="v">68.16</td>
+<td class="v">64.80</td>
+<td class="v best">57.69</td>
+<td class="v">64.58</td>
+</tr>
+</tbody></table></div>
+<p class="note">From <code>test_results/</code>, over every utterance in each split &mdash; this is the measurement. The examples below are drawn from these same splits to show what the numbers look like utterance by utterance; six of them are far too few to rank anything, so read a row against its own reference rather than against the other rows.</p>
+<details class="split" id="composite_eu-test_cv" open>
+<summary><span class="chev" aria-hidden="true"></span><span class="sname">composite_eu/test_cv</span><span class="smeta">6 examples &middot; corpus WER 17.8 &rarr; 3.6</span></summary>
+<div class="split-body">
+<p class="note">Common Voice. Read sentences, one speaker per clip, clean audio.</p>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_cv_6294.mp3"></audio>
+<div class="meta">
+<span>row <b>6294</b></span>
+<span><b>4.4</b>&thinsp;s</span>
+<span><b>6</b> ref words</span>
+<span><b>1.37</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Horrelako jarrerak mugatzeko neurriak hartu ditugu.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">horrelako jarrerak mugatzeko neurriak hartu ditugu.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Horrelako jarrerak mugatzeko neurriak hartu ditugu.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Horrelako jarrerak mugatzeko neurriak hartu ditugu.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Horrelako jarrerak mugatzeko neurriak hartu ditugu.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Horrelako jarrerak mugatzeko neurriak hartu ditugu.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Horrelako jarrerak mugatzeko neurriak hartu ditugu.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_cv_7253.mp3"></audio>
+<div class="meta">
+<span>row <b>7253</b></span>
+<span><b>6.9</b>&thinsp;s</span>
+<span><b>7</b> ref words</span>
+<span><b>1.02</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Teknika paregabea zuen, eta interpretatzeko gaitasun izugarria.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Teknika paregabea zuen eta interpretatzeko gaitasun izugarria.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Teknika paregabea zuen eta interpretatzeko gaitasun izugarria.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Teknika paregabea zuen, eta interpretatzeko gaitasun izugarria.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Teknika paregabea zuen, eta interpretatzeko gaitasun izugarria.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Teknika paregabea zuen eta interpretatzeko gaitasun izugarria.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Teknika paregabea zuen, eta interpretatzeko gaitasun izugarria.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_cv_7503.mp3"></audio>
+<div class="meta">
+<span>row <b>7503</b></span>
+<span><b>8.8</b>&thinsp;s</span>
+<span><b>11</b> ref words</span>
+<span><b>1.25</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Batetik, aireko baliabideek prebentzio lanetan dihardute balio ekologiko handiena duen gunean.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer mid">36%</div>
+<div class="hyp">Batetik, aireko baliabideek <span class="w sub">prebentziolanetan</span> dihardute balio <span class="w sub">ekologikoan</span> <span class="w sub">diena</span> duen gunean.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Batetik, aireko baliabideek prebentzio lanetan dihardute balio ekologiko handiena duen gunean.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Batetik, aireko baliabideek prebentzio lanetan dihardute balio ekologiko handiena duen gunean.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Batetik, aireko baliabideek prebentzio lanetan dihardute balio ekologiko handiena duen gunean.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Batetik, aireko baliabideek prebentzio lanetan dihardute balio ekologiko handiena duen gunean.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Batetik, aireko baliabideek prebentzio lanetan dihardute balio ekologiko handiena duen gunean.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_cv_8116.mp3"></audio>
+<div class="meta">
+<span>row <b>8116</b></span>
+<span><b>4.0</b>&thinsp;s</span>
+<span><b>4</b> ref words</span>
+<span><b>0.99</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Ondoren, adierazpenak egingo dituzte.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ondoren adierazpenak egingo dituzte.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ondoren, adierazpenak egingo dituzte.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ondoren, adierazpenak egingo dituzte.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ondoren, adierazpenak egingo dituzte.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ondoren, adierazpenak egingo dituzte.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ondoren, adierazpenak egingo dituzte.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_cv_9772.mp3"></audio>
+<div class="meta">
+<span>row <b>9772</b></span>
+<span><b>4.8</b>&thinsp;s</span>
+<span><b>7</b> ref words</span>
+<span><b>1.45</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Bestea turkiar jatorria zuen estatubatuar bat zen.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">57%</div>
+<div class="hyp">Bestea <span class="w sub">Turkiak</span> jatorria zuen <span class="w sub">Estatu</span> <span class="w sub">Batu</span> <span class="w sub">Arbatzen.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">43%</div>
+<div class="hyp">Bestea, Turkiar jatorria zuen <span class="w sub">estatubatu</span> <span class="w sub">harbatzen.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer bad">43%</div>
+<div class="hyp">Bestea <span class="w sub">Turkian</span> jatorria zuen <span class="w sub">Estatu</span> <span class="w sub">Batuar</span> bat zen.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">14%</div>
+<div class="hyp">Bestea, <span class="w sub">Turkian</span> jatorria zuen estatubatuar bat zen.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Bestea, turkiar jatorria zuen estatubatuar bat zen.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">14%</div>
+<div class="hyp">Bestea <span class="w sub">Turkian</span> jatorria zuen estatubatuar bat zen.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_cv_11636.mp3"></audio>
+<div class="meta">
+<span>row <b>11636</b></span>
+<span><b>7.0</b>&thinsp;s</span>
+<span><b>10</b> ref words</span>
+<span><b>1.44</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Aurtengoan, poeta batek eramango zuela esatearekin, bai, asmatu egin nuen.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">10%</div>
+<div class="hyp"><span class="w sub">Gaurtengoan</span> poeta batek eramango zuela esatearekin bai asmatu egin nuen.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">10%</div>
+<div class="hyp">Aurtengoan, poeta batek eramango zuela esatearekin, bai, asmatu egin <span class="w sub">duen.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Aurtengoan, poeta batek eramango zuela esatearekin, bai, asmatu egin nuen.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Aurtengoan, poeta batek eramango zuela esatearekin, bai, asmatu egin nuen.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Aurtengoan, poeta batek eramango zuela esatearekin, bai, asmatu egin nuen.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Aurtengoan, poeta batek eramango zuela esatearekin, bai, asmatu egin nuen.</div>
+</div>
+</div></div>
+</div></details>
+<details class="split" id="composite_eu-test_parl" open>
+<summary><span class="chev" aria-hidden="true"></span><span class="sname">composite_eu/test_parl</span><span class="smeta">6 examples &middot; corpus WER 17.0 &rarr; 4.2</span></summary>
+<div class="split-body">
+<p class="note">Basque Parliament. Prepared speech, formal register.</p>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_parl_79.mp3"></audio>
+<div class="meta">
+<span>row <b>79</b></span>
+<span><b>4.0</b>&thinsp;s</span>
+<span><b>12</b> ref words</span>
+<span><b>3.00</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+ikusteko zer gertatzen ari den eta zer nolako kudeaketa eredua den begira
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">ikusteko zer gertatzen ari den eta zer nolako kudeaketa eredua den begira</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ikusteko zer gertatzen ari den eta zer nolako kudeaketa eredua den begira</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">ikusteko zer gertatzen ari den eta zer nolako kudeaketa eredua den, begira.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">ikusteko zer gertatzen ari den eta zer nolako kudeaketa eredua den begira</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">ikusteko zer gertatzen ari den eta zer nolako kudeaketa eredua den begira</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">ikusteko zer gertatzen ari den eta zer nolako kudeaketa eredua den begira</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_parl_410.mp3"></audio>
+<div class="meta">
+<span>row <b>410</b></span>
+<span><b>6.6</b>&thinsp;s</span>
+<span><b>10</b> ref words</span>
+<span><b>1.51</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+bi baldintza zehatzak jartzen ditu legeak bat motibazio politikoko indarkeria
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">bi baldintza zehatzak jartzen ditu legeak bat motibazio politikoko indarkeria</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">bi baldintza zehatzak jartzen ditu legeak bat motibazio politikoko indarkeria</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">bi baldintza zehatzak jartzen ditu legeak bat motibazio politikoko indarkeria</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">10%</div>
+<div class="hyp">bi baldintza <span class="w sub">zehatza</span> jartzen ditu legeak bat motibazio politikoko indarkeria</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">bi baldintza zehatzak jartzen ditu legeak bat motibazio politikoko indarkeria</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">bi baldintza zehatzak jartzen ditu legeak bat motibazio politikoko indarkeria</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_parl_426.mp3"></audio>
+<div class="meta">
+<span>row <b>426</b></span>
+<span><b>4.7</b>&thinsp;s</span>
+<span><b>5</b> ref words</span>
+<span><b>1.06</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+jasotzeko azterketa eskualdeko egoerara hobeto
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">jasotzeko azterketa eskualdeko egoerara hobeto</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">jasotzeko azterketa eskualdeko egoerara hobeto</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">jasotzeko azterketa eskualdeko egoerara hobeto</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">jasotzeko azterketa eskualdeko egoerara hobeto</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">jasotzeko azterketa eskualdeko egoerara hobeto</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">jasotzeko azterketa eskualdeko egoerara hobeto</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_parl_643.mp3"></audio>
+<div class="meta">
+<span>row <b>643</b></span>
+<span><b>3.9</b>&thinsp;s</span>
+<span><b>6</b> ref words</span>
+<span><b>1.53</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+seriotasunera joko dut eta eutsiko diot
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer mid">17%</div>
+<div class="hyp">Seriotasunera <span class="w ins">eh</span> joko dut eta eutsiko diot.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Seriotasunera joko dut eta eutsiko diot</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">seriotasunera joko dut eta eutsiko diot.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">seriotasunera joko dut eta eutsiko diot</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">seriotasunera joko dut eta eutsiko diot</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">seriotasunera joko dut eta eutsiko diot</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_parl_874.mp3"></audio>
+<div class="meta">
+<span>row <b>874</b></span>
+<span><b>7.6</b>&thinsp;s</span>
+<span><b>18</b> ref words</span>
+<span><b>2.38</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+eskerrik asko azpiazu jauna gai zerrendako hamahirugarren puntua galdera david soto rodriguez elkarrekin podemos ezker anitza taldeko legebiltzarkideak
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">eskerrik asko azpiazu jauna gai zerrendako hamahirugarren puntua galdera, David Soto Rodriguez, elkarrekin podemos ezker anitza taldeko legebiltzarkideak</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer mid">17%</div>
+<div class="hyp">eskerrik asko azpiazu jauna gai zerrendako hamahirugarren puntua galdera david soto <span class="w sub">rodriotz</span> elkarrekin podemos <span class="w sub">ezkerrean</span> <span class="w sub">hitza</span> taldeko legebiltzarkideak</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">eskerrik asko azpiazu jauna gai zerrendako hamahirugarren puntua galdera david Soto rodriguez elkarrekin podemos ezker anitza taldeko legebiltzarkideak</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">eskerrik asko azpiazu jauna gai zerrendako hamahirugarren puntua galdera david soto rodriguez elkarrekin podemos ezker anitza taldeko legebiltzarkideak</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">6%</div>
+<div class="hyp">Eskerrik asko Azpiazu jauna gai zerrendako hamahirugarren puntua galdera David Soto <span class="w sub">Rodríguez</span> elkarrekin Podemos ezker anitza taldeko legebiltzarkideak.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Eskerrik asko azpiazu jauna gai zerrendako hamahirugarren puntua galdera david soto rodriguez elkarrekin podemos ezker anitza taldeko legebiltzarkideak</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_parl_1068.mp3"></audio>
+<div class="meta">
+<span>row <b>1068</b></span>
+<span><b>10.4</b>&thinsp;s</span>
+<span><b>17</b> ref words</span>
+<span><b>1.64</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+osasun sailburuari esaten nion bezala emergentziaken aritzeko kanporatzen den zerbitzuaren kudeaketa nahiko negargarria da negargarria dela ez
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer mid">35%</div>
+<div class="hyp">Osasun sailburuari esaten <span class="w sub">joan</span> <span class="w sub">bezela</span> <span class="w sub">eh</span> <span class="w sub">emergentziak</span> <span class="w sub">eh</span> aritzeko kanporatzen den zerbitzuaren <span class="w sub">kudeaketan</span> nahiko negargarria da, negargarria dela ez.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">12%</div>
+<div class="hyp">Osasun sailburuari esaten nion bezala <span class="w sub">emergentziaren</span> aritzeko kanporatzen den zerbitzuaren <span class="w sub">kudeaketan</span> nahiko negargarria da negargarria dela ez</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">12%</div>
+<div class="hyp">osasun sailburuari esaten nion bezala <span class="w sub">emergentziarekin</span> aritzeko kanporatzen den zerbitzuaren <span class="w sub">kudeaketan</span> nahiko negargarria da negargarria dela ez</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">osasun sailburuari esaten nion bezala emergentziaken aritzeko kanporatzen den zerbitzuaren kudeaketa nahiko negargarria da negargarria dela ez</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">12%</div>
+<div class="hyp">Osasun sailburuari esaten nion bezala <span class="w sub">emergentziak</span> <span class="w sub">egin</span> aritzeko kanporatzen den zerbitzuaren kudeaketa nahiko negargarria da, negargarria dela ez</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">6%</div>
+<div class="hyp">Osasun sailburuari esaten nion bezala <span class="w sub">emergentziak</span> aritzeko kanporatzen den zerbitzuaren kudeaketa nahiko negargarria da negargarria dela ez</div>
+</div>
+</div></div>
+</div></details>
+<details class="split" id="composite_eu-test_oslr" open>
+<summary><span class="chev" aria-hidden="true"></span><span class="sname">composite_eu/test_oslr</span><span class="smeta">6 examples &middot; corpus WER 27.1 &rarr; 8.4</span></summary>
+<div class="split-body">
+<p class="note">OpenSLR. Read speech, the smallest split at 526 utterances.</p>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_oslr_61.mp3"></audio>
+<div class="meta">
+<span>row <b>61</b></span>
+<span><b>7.8</b>&thinsp;s</span>
+<span><b>5</b> ref words</span>
+<span><b>0.64</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Jende askok paradisutzat ditu Maldivak
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">60%</div>
+<div class="hyp">Jende askok <span class="w sub">paradoxutzat</span> ditu <span class="w sub">maldi</span> <span class="w sub">bat.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">40%</div>
+<div class="hyp">Jende askok paradisutzat ditu <span class="w sub">maldibak</span> <span class="w sub">ditu.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer mid">20%</div>
+<div class="hyp">Jende askok paradisutzat ditu <span class="w sub">maldiak</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer mid">20%</div>
+<div class="hyp">Jende askok paradisutzat ditu <span class="w sub">maldibak</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Jende askok paradisutzat ditu Maldivak</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer mid">20%</div>
+<div class="hyp">Jende askok paradisutzat ditu <span class="w sub">Maldibak</span></div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_oslr_118.mp3"></audio>
+<div class="meta">
+<span>row <b>118</b></span>
+<span><b>4.9</b>&thinsp;s</span>
+<span><b>5</b> ref words</span>
+<span><b>1.03</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Basurtoko Ospitalera eraman dute gizona.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer mid">20%</div>
+<div class="hyp"><span class="w sub">Baxurtuko</span> ospitalera eraman dute gizona.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Basurtoko ospitalera eraman dute gizona</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Basurtoko ospitalera eraman dute gizona.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer mid">20%</div>
+<div class="hyp">Basurtoko ospitalera eraman dute <span class="w sub">gizon</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Basurtoko ospitalera eraman dute gizona.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Basurtoko ospitalera eraman dute gizona.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_oslr_126.mp3"></audio>
+<div class="meta">
+<span>row <b>126</b></span>
+<span><b>3.9</b>&thinsp;s</span>
+<span><b>7</b> ref words</span>
+<span><b>1.78</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Richard Burton Elizabeth Taylorren senarra izan zen
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">71%</div>
+<div class="hyp">Richard <span class="w sub">Barton</span> <span class="w sub">eliza</span> <span class="w sub">bete</span> <span class="w sub">lorrez</span> <span class="w sub">narra</span> izan zen.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer mid">29%</div>
+<div class="hyp">Richard <span class="w sub">Barton</span> <span class="w sub">Elizabet</span> Taylorren senarra izan zen</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer mid">29%</div>
+<div class="hyp">Richard <span class="w sub">Barton</span> <span class="w sub">Elisabeth</span> Taylorren senarra izan zen</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">14%</div>
+<div class="hyp">Richard <span class="w sub">Barton</span> Elizabeth Taylorren senarra izan zen</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer bad">43%</div>
+<div class="hyp">Richard <span class="w sub">Barton</span> Elizabeth <span class="w sub">Taylor</span> <span class="w sub">en</span> senarra izan zen</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">14%</div>
+<div class="hyp">Richard <span class="w sub">Barton</span> Elizabeth Taylorren senarra izan zen</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_oslr_138.mp3"></audio>
+<div class="meta">
+<span>row <b>138</b></span>
+<span><b>10.0</b>&thinsp;s</span>
+<span><b>10</b> ref words</span>
+<span><b>1.00</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Wayne Rooney golegile petoa da eta Ingalaterrako ligan jokatzen du
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">40%</div>
+<div class="hyp"><span class="w sub">Guayan,</span> <span class="w sub">Rune,</span> <span class="w sub">Golegi</span> <span class="w sub">Lepetoa</span> da eta Ingalaterrako ligan jokatzen du.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">10%</div>
+<div class="hyp"><span class="w sub">Guaian</span> Rooney golegile petoa da eta Ingalaterrako Ligan jokatzen du</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer mid">30%</div>
+<div class="hyp"><span class="w sub">Goian</span> Rooney <span class="w sub">golegi</span> <span class="w sub">lepetua</span> da eta Ingalaterrako Ligan jokatzen du</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">10%</div>
+<div class="hyp"><span class="w sub">Goyan</span> Rooney golegile petoa da eta Ingalaterrako ligan jokatzen du</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">10%</div>
+<div class="hyp"><span class="w sub">Guayan</span> Rooney golegile petoa da eta Ingalaterrako ligan jokatzen du</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">10%</div>
+<div class="hyp"><span class="w sub">Guajan</span> Rooney golegile petoa da eta Ingalaterrako Ligan jokatzen du</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_oslr_303.mp3"></audio>
+<div class="meta">
+<span>row <b>303</b></span>
+<span><b>7.8</b>&thinsp;s</span>
+<span><b>9</b> ref words</span>
+<span><b>1.16</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Anbotoko Mari hango kobazulo batean bizi dela dio kondairak
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer mid">22%</div>
+<div class="hyp">Anbotoko Mari <span class="w sub">Angoko</span> <span class="w sub">Basulo</span> batean bizi dela dio kondairak.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer mid">22%</div>
+<div class="hyp">Anbotoko Mari <span class="w sub">Angoko</span> <span class="w sub">basulo</span> batean bizi dela dio kondairak</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer mid">22%</div>
+<div class="hyp">Anbotoko Mari <span class="w sub">hangoko</span> <span class="w sub">basulo</span> batean bizi dela dio kondairak</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Anbotoko Mari hango kobazulo batean bizi dela dio kondairak</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer mid">22%</div>
+<div class="hyp">Anbotoko Mari <span class="w sub">hangoko</span> <span class="w sub">basulo</span> batean bizi dela dio kondairak</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">11%</div>
+<div class="hyp">Anbotoko Mari <span class="w sub">hangoko</span> kobazulo batean bizi dela dio kondairak</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/composite_eu_test_oslr_377.mp3"></audio>
+<div class="meta">
+<span>row <b>377</b></span>
+<span><b>7.9</b>&thinsp;s</span>
+<span><b>8</b> ref words</span>
+<span><b>1.01</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Ehun mila biztanletik gorako herri gutxi ditugu erkidegoan
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">12%</div>
+<div class="hyp"><span class="w sub">Egun</span> mila biztanletik gorako herri gutxi ditugu erkidegoan.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ehun mila biztanletik gorako herri gutxi ditugu erkidegoan</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ehun mila biztanletik gorako herri gutxi ditugu Erkidegoan</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ehun mila biztanletik gorako herri gutxi ditugu erkidegoan</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ehun mila biztanletik gorako herri gutxi ditugu erkidegoan</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ehun mila biztanletik gorako herri gutxi ditugu erkidegoan</div>
+</div>
+</div></div>
+</div></details>
+<details class="split" id="faktoria-test" open>
+<summary><span class="chev" aria-hidden="true"></span><span class="sname">faktoria/test</span><span class="smeta">6 examples &middot; corpus WER 26.1 &rarr; 9.6</span></summary>
+<div class="split-body">
+<p class="note">Radio broadcast. The largest test split at 24,005 utterances.</p>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/faktoria_test_4669.mp3"></audio>
+<div class="meta">
+<span>row <b>4669</b></span>
+<span><b>1.0</b>&thinsp;s</span>
+<span><b>3</b> ref words</span>
+<span><b>2.91</b> w/s</span>
+<span>spk <b>BEÑAT NARBAIZA</b></span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Ze ordu da?
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ze ordu da?</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ze ordu da?</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ze ordu da?</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ze ordu da?</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ze ordu da?</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ze ordu da?</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/faktoria_test_6241.mp3"></audio>
+<div class="meta">
+<span>row <b>6241</b></span>
+<span><b>1.5</b>&thinsp;s</span>
+<span><b>3</b> ref words</span>
+<span><b>2.04</b> w/s</span>
+<span>spk <b>JAGOBA</b></span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Baina gero, sorpresa.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">67%</div>
+<div class="hyp"><span class="w sub">Egunero</span> sorpresa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">67%</div>
+<div class="hyp"><span class="w sub">Egingo</span> gero, <span class="w sub">sorpresor.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Baina gero, sorpresa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Baina gero, sorpresa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">baina gero sorpresa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer mid">33%</div>
+<div class="hyp">baina <span class="w sub">orduan,</span> sorpresa.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/faktoria_test_10084.mp3"></audio>
+<div class="meta">
+<span>row <b>10084</b></span>
+<span><b>6.8</b>&thinsp;s</span>
+<span><b>16</b> ref words</span>
+<span><b>2.37</b> w/s</span>
+<span>spk <b>IÑAKI GURIDI</b></span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Eta saskibaloia amaitzeko, Gipuzkoa Basket ek igoerako kanporaketako hirugarren neurketa jokatuko baitu gaur Coruñaren aurka Ilunben.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">50%</div>
+<div class="hyp">Eta <span class="w sub">zazki</span> <span class="w sub">baloia</span> amaitzeko Gipuzkoa <span class="w sub">bazkateek</span> igoerako kanporaketako hirugarren <span class="w sub">aurketa</span> jokatuko baitu gaur, <span class="w sub">korujaren</span> aurka <span class="w sub">ilun</span> <span class="w sub">den.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer mid">25%</div>
+<div class="hyp">eta saskibaloia amaitzeko, Gipuzkoa <span class="w sub">Basketek</span> igoerako kanporaketako hirugarren <span class="w sub">aurketa</span> jokatuko baitu gaur <span class="w sub">koruinaren</span> aurka ilunben.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer mid">38%</div>
+<div class="hyp">Eta saskibaloia amaitzeko, Gipuzkoa <span class="w sub">Basketek</span> igoerako kanporaketako hirugarren <span class="w sub">aurketa</span> jokatuko baitu gaur <span class="w sub">Koruinaren</span> aurka <span class="w sub">ilun</span> <span class="w sub">behin.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer mid">25%</div>
+<div class="hyp">Eta saskibaloia amaitzeko, Gipuzkoa <span class="w sub">Basketek</span> igoerako kanporaketako hirugarren neurketa jokatuko baitu gaur <span class="w sub">koruñaren</span> aurka <span class="w sub">ilunbean.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer mid">19%</div>
+<div class="hyp">eta saskibaloia amaitzeko, Gipuzkoa <span class="w sub">Basketek</span> igoerako kanporaketako hirugarren neurketa jokatuko baitu gaur Coruñaren aurka <span class="w sub">Illunben.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer mid">25%</div>
+<div class="hyp">Eta saskibaloia amaitzeko, Gipuzkoa <span class="w sub">Basketek</span> igoerako kanporaketako hirugarren <span class="w sub">aurketa</span> jokatuko baitu gaur <span class="w sub">Koruinaren</span> aurka Ilunben.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/faktoria_test_11559.mp3"></audio>
+<div class="meta">
+<span>row <b>11559</b></span>
+<span><b>13.4</b>&thinsp;s</span>
+<span><b>26</b> ref words</span>
+<span><b>1.94</b> w/s</span>
+<span>spk <b>EIDER ARANBERRI</b></span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Epaitegiei eta protokoloei loturiko premiazko formakuntza, arreta pertsonalizatua eta baliabideak areagotzea eskatuko dute mozio honen eh bitartez, Jaurlaritzak indarkeria matxistaren egiturazko arazoari erantzun egokia emate aldera.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">8%</div>
+<div class="hyp">Epaitegiei eta <span class="w sub">protokoloi</span> loturiko premiazko formakuntza arreta pertsonalizatua eta baliabideak areagotzea eskatuko dute mozio honen bitartez, jaurlaritzak indarkeria matxistaren egiturazko arazoari erantzun egokia emate aldera.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer mid">15%</div>
+<div class="hyp">Epaitegiei eta <span class="w sub">protokolo</span> <span class="w sub">hori</span> loturiko premiazko formakuntza, arreta pertsonalizatua eta baliabideak areagotzea eskatuko dute mozio honen bitartez, Jaurlaritzak indarkeria matxistaren egiturazko arazoari erantzun egokia <span class="w sub">ematen</span> aldera.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Epaitegiei eta protokoloei loturiko premiazko formakuntza, arreta pertsonalizatua eta baliabideak areagotzea eskatuko dute mozio honen, eh, bitartez Jaurlaritzak indarkeria matxistaren egiturazko arazoari erantzun egokia emate aldera.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Epaitegiei eta protokoloei loturiko premiazko formakuntza, arreta pertsonalizatua eta baliabideak areagotzea eskatuko dute mozio honen, eh, bitartez, Jaurlaritzak indarkeria matxistaren egiturazko arazoari erantzun egokia emate aldera.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">epaitegiei eta protokoloei loturiko premiazko formakuntza, arreta pertsonalizatua eta baliabideak areagotzea eskatuko dute mozio honen, eh, bitartez, Jaurlaritzak indarkeria matxistaren egiturazko arazoari erantzun egokia emate aldera.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">4%</div>
+<div class="hyp">Epaitegiei eta protokoloei loturiko premiazko formakuntza, arreta pertsonalizatua eta baliabideak areagotzea eskatuko dute mozio honen bitartez, Jaurlaritzak indarkeria matxistaren egiturazko arazoari erantzun egokia emate aldera.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/faktoria_test_18396.mp3"></audio>
+<div class="meta">
+<span>row <b>18396</b></span>
+<span><b>4.5</b>&thinsp;s</span>
+<span><b>11</b> ref words</span>
+<span><b>2.47</b> w/s</span>
+<span>spk <b>ARANTXA AGIRRE</b></span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Emakumezkoetan, ETE ligan, Kaiku izan da nagusi Zumaiaren eta Deusturen aurretik.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer mid">18%</div>
+<div class="hyp">Emakumezkoetan <span class="w sub">eta</span> <span class="w sub">eligan</span> Kaiku izan da nagusi, Zumaiaren eta Deusturen aurretik.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">9%</div>
+<div class="hyp">Emakumezkoetan <span class="w sub">eta</span> Ligan Kaiku izan da nagusi Zumaiaren eta Deusturen aurretik.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Emakumezkoetan ETE ligan Kaiku izan da nagusi Zumaiaren eta Deusturen aurretik.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Emakumezkoetan ETE ligan Kaiku izan da nagusi Zumaiaren eta Deusturen aurretik.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Emakumezkoetan ETE ligan Kaiku izan da nagusi Zumaiaren eta Deusturen aurretik.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer mid">27%</div>
+<div class="hyp">Emakumezkoetan <span class="w sub">eta</span> ligan Kaiku izan da nagusi <span class="w sub">Zumaian</span> eta <span class="w sub">Deustoren</span> aurretik.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/faktoria_test_22077.mp3"></audio>
+<div class="meta">
+<span>row <b>22077</b></span>
+<span><b>4.9</b>&thinsp;s</span>
+<span><b>11</b> ref words</span>
+<span><b>2.25</b> w/s</span>
+<span>spk <b>PUBLIZITATEA GIZONA 12</b></span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Eroski, litro bat gazpatxo aparteko produktua euro bat eta berrogeita bederatzian.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">9%</div>
+<div class="hyp">Eroski <span class="w sub">metro</span> bat gazpatxo aparteko produktua, euro bat eta berrogeita bederatzian.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Eroski litro bat gazpatxo aparteko produktua, euro bat eta berrogeita bederatzian.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Eroski litro bat gazpatxo aparteko produktua euro bat eta berrogeita bederatzian.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Eroski litro bat gazpatxo aparteko produktua euro bat eta berrogeita bederatzian.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">9%</div>
+<div class="hyp">Eroski litro bat <span class="w sub">Gaspatxo</span> aparteko produktua euro bat eta berrogeita bederatzian.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Eroski litro bat gazpatxo aparteko produktua euro bat eta berrogeita bederatzian.</div>
+</div>
+</div></div>
+</div></details>
+<details class="split" id="Dialektoak-test" open>
+<summary><span class="chev" aria-hidden="true"></span><span class="sname">Dialektoak/test</span><span class="smeta">6 examples &middot; corpus WER 47.9 &rarr; 14.5</span></summary>
+<div class="split-body">
+<p class="note">Dialect recordings, transcribed in dialect rather than standard Basque.</p>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/Dialektoak_test_228.mp3"></audio>
+<div class="meta">
+<span>row <b>228</b></span>
+<span><b>4.0</b>&thinsp;s</span>
+<span><b>10</b> ref words</span>
+<span><b>2.51</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Eta bapatean, ba askoz gehiago sonatzen dezu edo askoz gutxiago.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">50%</div>
+<div class="hyp">Eta <span class="w sub">batean</span> ba askoz gehiago <span class="w sub">esan</span> <span class="w sub">bat</span> <span class="w sub">ezazu</span> <span class="w sub">eta</span> askoz gutxiago.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">40%</div>
+<div class="hyp">eta <span class="w sub">batean</span> ba askoz gehiago <span class="w sub">esnatzen</span> <span class="w sub">duzu</span> <span class="w sub">eta</span> askoz gutxiago.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer bad">40%</div>
+<div class="hyp">Eta <span class="w sub">bat</span> <span class="w sub">batean,</span> ba askoz gehiago <span class="w sub">esnatzen</span> <span class="w sub">duzue,</span> edo askoz gutxiago?</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">10%</div>
+<div class="hyp">Eta bapatean ba askoz gehiago <span class="w sub">esnatzen</span> dezu edo askoz gutxiago.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">10%</div>
+<div class="hyp">eta bapatean ba askoz gehiago <span class="w sub">esnatzen</span> dezu edo askoz gutxiago.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer bad">50%</div>
+<div class="hyp">Eta <span class="w sub">bat</span> <span class="w sub">batean,</span> ba askoz gehiago <span class="w sub">esnatzen</span> <span class="w sub">duzue,</span> <span class="w sub">eta</span> askoz gutxiago.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/Dialektoak_test_1086.mp3"></audio>
+<div class="meta">
+<span>row <b>1086</b></span>
+<span><b>2.8</b>&thinsp;s</span>
+<span><b>7</b> ref words</span>
+<span><b>2.53</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Ze taldek egin zion kantua Irulegiko eskuari?
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">43%</div>
+<div class="hyp">Ze <span class="w sub">taldeek</span> egin zion kantua, <span class="w sub">hiru</span> <span class="w sub">legegiko</span> eskuari.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer mid">29%</div>
+<div class="hyp">Ze taldek egin zion kantua <span class="w sub">hiru</span> <span class="w sub">legeiko</span> eskuari.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ze taldek egin zion kantua Irulegiko eskuari?</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Ze taldek egin zion kantua Irulegiko eskuari?</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">14%</div>
+<div class="hyp">Ze <span class="w sub">taldeek</span> egin zion kantua Irulegiko eskuari?</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">14%</div>
+<div class="hyp">Ze <span class="w sub">taldeek</span> egin zion kantua Irulegiko eskuari?</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/Dialektoak_test_1088.mp3"></audio>
+<div class="meta">
+<span>row <b>1088</b></span>
+<span><b>0.7</b>&thinsp;s</span>
+<span><b>1</b> ref words</span>
+<span><b>1.35</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Kepa!
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Kepa!</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Kepa!</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Kepa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Kepa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Kepa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Kepa!</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/Dialektoak_test_1173.mp3"></audio>
+<div class="meta">
+<span>row <b>1173</b></span>
+<span><b>4.7</b>&thinsp;s</span>
+<span><b>11</b> ref words</span>
+<span><b>2.35</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Ez da ofizial egin oraindik, baina esan bezala, Maripán Monakora doa.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">45%</div>
+<div class="hyp"><span class="w ins">E</span> ez da <span class="w sub">ofiziarekin</span> oraindik, baina esan bezala <span class="w sub">Maripan</span> <span class="w sub">monakorra</span> doa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer mid">27%</div>
+<div class="hyp">Ez da <span class="w sub">ofizialekin</span> oraindik, baina esan bezala, <span class="w sub">Maripan</span> monakora doa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer mid">27%</div>
+<div class="hyp">Ez da <span class="w sub">ofizialekin</span> oraindik, baina esan bezala, <span class="w sub">Maripan</span> Monakora doa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer mid">36%</div>
+<div class="hyp"><span class="w ins">eh</span> Ez da <span class="w sub">ofizialekin</span> oraindik, baina esan bezala, <span class="w sub">Maripan</span> Monakora doa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer mid">36%</div>
+<div class="hyp"><span class="w ins">eh,</span> ez da <span class="w sub">ofizialekin</span> oraindik, baina esan bezala, Maripán <span class="w sub">Monacora</span> doa.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer mid">27%</div>
+<div class="hyp">ez da <span class="w sub">ofizialekin</span> oraindik, baina esan bezala, <span class="w sub">Maripan</span> Monakora doa.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/Dialektoak_test_1298.mp3"></audio>
+<div class="meta">
+<span>row <b>1298</b></span>
+<span><b>0.7</b>&thinsp;s</span>
+<span><b>1</b> ref words</span>
+<span><b>1.45</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Eskerrik.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">200%</div>
+<div class="hyp"><span class="w sub">Ezkin</span> <span class="w sub">ere.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">100%</div>
+<div class="hyp"><span class="w sub">Ezkerrak...</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Eskerrik...</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Eskerrik...</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Eskerrik...</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Eskerrik!</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/Dialektoak_test_1424.mp3"></audio>
+<div class="meta">
+<span>row <b>1424</b></span>
+<span><b>1.2</b>&thinsp;s</span>
+<span><b>3</b> ref words</span>
+<span><b>2.40</b> w/s</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Oso pozik nator.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">100%</div>
+<div class="hyp"><span class="w sub">O</span> <span class="w sub">ze</span> pozik <span class="w sub">gatoa</span> .</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">67%</div>
+<div class="hyp"><span class="w sub">O</span> <span class="w sub">ze</span> pozik nator.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Oso pozik nator.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Oso pozik nator.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Oso pozik nator.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Oso pozik nator.</div>
+</div>
+</div></div>
+</div></details>
+<details class="split" id="EusPodcast-test" open>
+<summary><span class="chev" aria-hidden="true"></span><span class="sname">EusPodcast/test</span><span class="smeta">6 examples &middot; corpus WER 79.1 &rarr; 57.7</span></summary>
+<div class="split-body">
+<p class="note">Held out of training. Spontaneous conversation with Spanish code-switching, verbatim markup (#eh#, word*, [overlap]), and segments whose reference accounts for only part of the speech.</p>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/EusPodcast_test_3.mp3"></audio>
+<div class="meta">
+<span>row <b>3</b></span>
+<span><b>7.7</b>&thinsp;s</span>
+<span><b>2</b> ref words</span>
+<span><b>0.26</b> w/s</span>
+<span>spk <b>spk8</b></span>
+<span class="flag">under-transcribed</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Ze... Bueno,
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">1050%</div>
+<div class="hyp">Ze, bueno, <span class="w ins">ez</span> <span class="w ins">dakitzen</span> <span class="w ins">genuen</span> <span class="w ins">zen,</span> <span class="w ins">baina</span> <span class="w ins">eh</span> <span class="w ins">bai,</span> <span class="w ins">bai,</span> <span class="w ins">beraz,</span> <span class="w ins">azken</span> <span class="w ins">txapelketarako</span> <span class="w ins">bazen</span> <span class="w ins">den</span> <span class="w ins">eh</span> <span class="w ins">sailkatu</span> <span class="w ins">euskal</span> <span class="w ins">herrikoarako</span> <span class="w ins">eta</span> <span class="w ins">egiten</span> <span class="w ins">genitzen</span> <span class="w ins">genitzen.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">850%</div>
+<div class="hyp">Ze, bueno, <span class="w ins">ez</span> <span class="w ins">dakit</span> <span class="w ins">hor</span> <span class="w ins">egingo</span> <span class="w ins">zen,</span> <span class="w ins">baina,</span> <span class="w ins">azken</span> <span class="w ins">txapelketarako</span> <span class="w ins">bazegoen</span> <span class="w ins">den</span> <span class="w ins">sailkatua</span> <span class="w ins">Euskal</span> <span class="w ins">Herrikorako</span> <span class="w ins">eta</span> <span class="w ins">ehuko</span> <span class="w ins">egin</span> <span class="w ins">zenien.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer bad">850%</div>
+<div class="hyp">Ze, bueno, <span class="w ins">ez</span> <span class="w ins">dakit</span> <span class="w ins">jakingo</span> <span class="w ins">zen,</span> <span class="w ins">baina</span> <span class="w ins">azken</span> <span class="w ins">txapelketarako</span> <span class="w ins">bazeuden</span> <span class="w ins">eh</span> <span class="w ins">sailkatu</span> <span class="w ins">Euskal</span> <span class="w ins">Herriko</span> <span class="w ins">erako</span> <span class="w ins">eta</span> <span class="w ins">ehuko</span> <span class="w ins">egin</span> <span class="w ins">zenian.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer bad">800%</div>
+<div class="hyp">Ze, bueno, <span class="w ins">ez</span> <span class="w ins">dakit</span> <span class="w ins">jakingo</span> <span class="w ins">duzuen,</span> <span class="w ins">baina</span> <span class="w ins">azken</span> <span class="w ins">txapelketarako</span> <span class="w ins">bazauden,</span> <span class="w ins">eh,</span> <span class="w ins">sailkatu</span> <span class="w ins">Euskal</span> <span class="w ins">Herrikorako</span> <span class="w ins">eta</span> <span class="w ins">uko</span> <span class="w ins">egin</span> <span class="w ins">zenean.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer bad">950%</div>
+<div class="hyp">Ze, bueno, <span class="w ins">ez</span> <span class="w ins">daki</span> <span class="w ins">ez</span> <span class="w ins">daki</span> <span class="w ins">egingo</span> <span class="w ins">zen,</span> <span class="w ins">baina</span> <span class="w ins">azken</span> <span class="w ins">txapelketarako</span> <span class="w ins">ba</span> <span class="w ins">zeunden</span> <span class="w ins">eh</span> <span class="w ins">sailkatu</span> <span class="w ins">Euskal</span> <span class="w ins">Herrikorako</span> <span class="w ins">eta</span> <span class="w ins">uko</span> <span class="w ins">egin</span> <span class="w ins">zenean?</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer bad">800%</div>
+<div class="hyp">Ze bueno, <span class="w ins">ez</span> <span class="w ins">dakit</span> <span class="w ins">jakingo</span> <span class="w ins">duzuen,</span> <span class="w ins">baina</span> <span class="w ins">azken</span> <span class="w ins">txapelketarako</span> <span class="w ins">bazeunden,</span> <span class="w ins">eh,</span> <span class="w ins">sailkatua</span> <span class="w ins">Euskal</span> <span class="w ins">Herrikorako</span> <span class="w ins">eta</span> <span class="w ins">uko</span> <span class="w ins">egin</span> <span class="w ins">zenean.</span></div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/EusPodcast_test_26.mp3"></audio>
+<div class="meta">
+<span>row <b>26</b></span>
+<span><b>0.3</b>&thinsp;s</span>
+<span><b>1</b> ref words</span>
+<span><b>2.94</b> w/s</span>
+<span>spk <b>spk3</b></span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Bai.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Bai.</div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Bai.</div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Bai.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Bai.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Bai.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Bai.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/EusPodcast_test_27.mp3"></audio>
+<div class="meta">
+<span>row <b>27</b></span>
+<span><b>1.0</b>&thinsp;s</span>
+<span><b>2</b> ref words</span>
+<span><b>1.92</b> w/s</span>
+<span>spk <b>spk10</b></span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Bai, harria.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">50%</div>
+<div class="hyp">Bai, <span class="w sub">jarria.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">100%</div>
+<div class="hyp"><span class="w sub">Aiarria.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Bai, harria.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Bai, harria.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">bai, harria.</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer good">0%</div>
+<div class="hyp">Bai, harria.</div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/EusPodcast_test_47.mp3"></audio>
+<div class="meta">
+<span>row <b>47</b></span>
+<span><b>53.4</b>&thinsp;s</span>
+<span><b>14</b> ref words</span>
+<span><b>0.26</b> w/s</span>
+<span>spk <b>spk10</b></span>
+<span class="flag">under-transcribed</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Bale, bai. Aber nik uste, Ez jatzue pasetan? #eh# Apur bat memoria ariketa hori.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">450%</div>
+<div class="hyp"><span class="w sub">Bai,</span> bai, aber, nik uste, <span class="w ins">mmm,</span> <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">alau</span> <span class="w ins">oso</span> <span class="w ins">kontzeptu</span> <span class="w ins">zaila</span> <span class="w ins">azaltzeko,</span> <span class="w ins">baina</span> <span class="w ins">nik</span> <span class="w ins">uste</span> <span class="w ins">dut,</span> <span class="w ins">eh,</span> <span class="w ins">beti,</span> <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">ezetetik</span> <span class="w ins">kasu</span> <span class="w ins">honetan</span> <span class="w ins">edo</span> <span class="w ins">edertasun</span> <span class="w ins">hori</span> <span class="w ins">bilatzea</span> <span class="w ins">zineman</span> <span class="w ins">edo,</span> <span class="w ins">bueno,</span> <span class="w ins">nik</span> <span class="w ins">nire</span> <span class="w ins">kasuan</span> <span class="w ins">behintzat,</span> <span class="w ins">dago</span> <span class="w ins">solotuta,</span> <span class="w ins">mmm,</span> <span class="w ins">memoria</span> <span class="w ins">gauz</span> ez <span class="w sub">dakitzen</span> <span class="w sub">du,</span> <span class="w sub">ez</span> <span class="w sub">dakitzen</span> <span class="w sub">du,</span> <span class="w sub">baina</span> <span class="w sub">bai</span> apur bat, <span class="w sub">eh,</span> <span class="w sub">ze</span> <span class="w sub">dago,</span> <span class="w sub">ez</span> <span class="w sub">dakit</span> <span class="w sub">bazekin</span> <span class="w sub">bat</span> <span class="w sub">ez</span> <span class="w sub">duen</span> <span class="w sub">zuri,</span> <span class="w sub">baina</span> <span class="w sub">nire,</span> <span class="w sub">nire</span> <span class="w sub">bazin</span> <span class="w sub">bateazko,</span> <span class="w sub">eh,</span> <span class="w sub">gogoratzen</span> <span class="w sub">dotenean</span> <span class="w sub">nire,</span> <span class="w sub">eh,</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">393%</div>
+<div class="hyp">Bale, bai, aber, nik uste, <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">dela</span> <span class="w ins">oso</span> <span class="w ins">kontzeptu</span> <span class="w ins">zaila</span> <span class="w ins">azaltzeko,</span> <span class="w ins">baina</span> <span class="w ins">nik</span> <span class="w ins">uste</span> <span class="w ins">dut,</span> <span class="w ins">eh,</span> <span class="w ins">beti,</span> <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">estetika</span> <span class="w ins">kasu</span> <span class="w ins">honetan</span> <span class="w ins">edo</span> <span class="w ins">edertasun</span> <span class="w ins">hori</span> <span class="w ins">bilatzea</span> <span class="w ins">zineman</span> <span class="w ins">edo,</span> <span class="w ins">bueno,</span> <span class="w ins">nire</span> <span class="w ins">kasuan</span> <span class="w ins">behintzat</span> <span class="w ins">da</span> <span class="w ins">oso</span> <span class="w ins">lotuta</span> <span class="w ins">memoriagaz,</span> ez <span class="w sub">dakit,</span> <span class="w sub">oso</span> <span class="w sub">ondo,</span> <span class="w sub">baina</span> <span class="w sub">bai,</span> apur bat, <span class="w sub">eh,</span> <span class="w sub">ze</span> <span class="w sub">dago,</span> <span class="w sub">ez</span> <span class="w sub">dakit,</span> <span class="w sub">bazaten</span> <span class="w sub">ez</span> <span class="w sub">zuen</span> <span class="w sub">zuri,</span> <span class="w sub">baina</span> <span class="w sub">nire</span> <span class="w sub">baztena</span> <span class="w sub">arte</span> <span class="w sub">asko</span> <span class="w sub">gogoratzen</span> <span class="w sub">dutenean</span> <span class="w sub">nire,</span> <span class="w sub">eh,</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer bad">407%</div>
+<div class="hyp">Bale, bai, aber, nik uste, <span class="w ins">mmm,</span> <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">dela</span> <span class="w ins">oso</span> <span class="w ins">kontzeptu</span> <span class="w ins">zaila</span> <span class="w ins">azaltzeko,</span> <span class="w ins">baina</span> <span class="w ins">nik</span> <span class="w ins">uste</span> <span class="w ins">dut,</span> <span class="w ins">eh,</span> <span class="w ins">beti,</span> <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">estetika</span> <span class="w ins">kasu</span> <span class="w ins">honetan</span> <span class="w ins">edo</span> <span class="w ins">edertasun</span> <span class="w ins">hori</span> <span class="w ins">bilatzea,</span> <span class="w ins">zineman</span> <span class="w ins">edo,</span> <span class="w ins">bueno,</span> <span class="w ins">ni</span> <span class="w ins">nire</span> <span class="w ins">kasuan</span> <span class="w ins">behintzat</span> <span class="w ins">dagoz</span> <span class="w ins">lotuta</span> <span class="w ins">memoriagaz,</span> ez <span class="w sub">dakit,</span> <span class="w sub">oso</span> <span class="w sub">ondo,</span> <span class="w sub">baina</span> <span class="w sub">bai,</span> apur bat, <span class="w sub">eh,</span> <span class="w sub">ze</span> <span class="w sub">dau,</span> <span class="w sub">ez</span> <span class="w sub">dakit,</span> <span class="w sub">basatzen</span> <span class="w sub">jatzuen</span> <span class="w sub">zuri,</span> <span class="w sub">baina</span> <span class="w sub">nire,</span> <span class="w sub">nire</span> <span class="w sub">basatzen</span> <span class="w sub">jate</span> <span class="w sub">asko,</span> <span class="w sub">eh,</span> <span class="w sub">gogoratzen</span> <span class="w sub">dutenean</span> <span class="w sub">nire,</span> <span class="w sub">mmm...</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer bad">400%</div>
+<div class="hyp">Bale, bai, aber, nik uste, <span class="w ins">eh,</span> <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">dala</span> <span class="w ins">oso</span> <span class="w ins">kontzeptu</span> <span class="w ins">zaila</span> <span class="w ins">azaltzeko,</span> <span class="w ins">baina</span> <span class="w ins">nik</span> <span class="w ins">uste</span> <span class="w ins">dut,</span> <span class="w ins">eh,</span> <span class="w ins">beti,</span> <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">estetika</span> <span class="w ins">kasu</span> <span class="w ins">honetan</span> <span class="w ins">edo</span> <span class="w ins">edertasun</span> <span class="w ins">hori</span> <span class="w ins">bilatzea</span> <span class="w ins">zineman</span> <span class="w ins">edo,</span> <span class="w ins">bueno,</span> <span class="w ins">ni</span> <span class="w ins">nire</span> <span class="w ins">kasuan</span> <span class="w ins">behintzat</span> <span class="w ins">dagoz</span> <span class="w ins">lotuta</span> <span class="w ins">memoriagaz,</span> ez <span class="w sub">dakit</span> <span class="w sub">oso</span> <span class="w sub">ondo,</span> <span class="w sub">baina</span> <span class="w sub">bai</span> apur bat, <span class="w sub">eh,</span> <span class="w sub">ze</span> <span class="w sub">dago,</span> <span class="w sub">ez</span> <span class="w sub">dakit,</span> <span class="w sub">bazenatzuen</span> <span class="w sub">zuri,</span> <span class="w sub">baina</span> <span class="w sub">ni</span> <span class="w sub">ja,</span> <span class="w sub">nire</span> <span class="w sub">bazenate</span> <span class="w sub">asko,</span> <span class="w sub">eh,</span> <span class="w sub">gogoratzen</span> <span class="w sub">dotenean</span> <span class="w sub">nire,</span> <span class="w sub">eh,</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer bad">393%</div>
+<div class="hyp">Bale, bai, aber, nik uste, <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">dala</span> <span class="w ins">oso</span> <span class="w ins">kontzeptu</span> <span class="w ins">zaila</span> <span class="w ins">azaltzeko,</span> <span class="w ins">baina</span> <span class="w ins">nik</span> <span class="w ins">uste</span> <span class="w ins">dut,</span> <span class="w ins">eh,</span> <span class="w ins">beti,</span> <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">estetika</span> <span class="w ins">kasu</span> <span class="w ins">honetan</span> <span class="w ins">edo</span> <span class="w ins">edertasun</span> <span class="w ins">hori</span> <span class="w ins">bilatzea</span> <span class="w ins">zineman</span> <span class="w ins">edo</span> <span class="w ins">bueno,</span> <span class="w ins">nire</span> <span class="w ins">kasuan</span> <span class="w ins">behintzat</span> <span class="w ins">dago</span> <span class="w ins">oso</span> <span class="w ins">lotuta</span> <span class="w ins">memoriagaz,</span> ez <span class="w sub">dakit</span> <span class="w sub">oso</span> <span class="w sub">ondo,</span> <span class="w sub">baina</span> <span class="w sub">bai,</span> apur bat, <span class="w sub">eh,</span> <span class="w sub">ze</span> <span class="w sub">dago,</span> <span class="w sub">ez</span> <span class="w sub">dakit</span> <span class="w sub">bazten</span> <span class="w sub">atzo</span> <span class="w sub">zuri,</span> <span class="w sub">baina</span> <span class="w sub">nire,</span> <span class="w sub">niri</span> <span class="w sub">bazten</span> <span class="w sub">ate</span> <span class="w sub">asko,</span> <span class="w sub">eh,</span> <span class="w sub">gogoratzen</span> <span class="w sub">dotenean</span> <span class="w sub">nire...</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer bad">400%</div>
+<div class="hyp">Bale, bai, aber, nik uste, <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">dela</span> <span class="w ins">oso</span> <span class="w ins">kontzeptu</span> <span class="w ins">zaila</span> <span class="w ins">azaltzeko,</span> <span class="w ins">baina</span> <span class="w ins">nik</span> <span class="w ins">uste</span> <span class="w ins">dut,</span> <span class="w ins">eh,</span> <span class="w ins">beti,</span> <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">estetika</span> <span class="w ins">kasu</span> <span class="w ins">honetan</span> <span class="w ins">edo</span> <span class="w ins">edertasun</span> <span class="w ins">hori</span> <span class="w ins">bilatzea</span> <span class="w ins">zineman</span> <span class="w ins">edo</span> <span class="w ins">bueno,</span> <span class="w ins">ni</span> <span class="w ins">nire</span> <span class="w ins">kasuan</span> <span class="w ins">behintzat</span> <span class="w ins">dago</span> <span class="w ins">oso</span> <span class="w ins">lotuta</span> <span class="w ins">memoriagaz,</span> ez <span class="w sub">dakit</span> <span class="w sub">oso</span> <span class="w sub">ondo,</span> <span class="w sub">baina</span> <span class="w sub">bai,</span> apur bat, <span class="w sub">eh,</span> <span class="w sub">ze</span> <span class="w sub">dago,</span> <span class="w sub">ez</span> <span class="w sub">dakit,</span> <span class="w sub">bazten</span> <span class="w sub">jatzuen</span> <span class="w sub">zuri,</span> <span class="w sub">baina</span> <span class="w sub">nilea,</span> <span class="w sub">niri</span> <span class="w sub">bazten</span> <span class="w sub">jate</span> <span class="w sub">asko,</span> <span class="w sub">eh,</span> <span class="w sub">gogoratzen</span> <span class="w sub">dutenean</span> <span class="w sub">nire...</span></div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/EusPodcast_test_73.mp3"></audio>
+<div class="meta">
+<span>row <b>73</b></span>
+<span><b>14.4</b>&thinsp;s</span>
+<span><b>5</b> ref words</span>
+<span><b>0.35</b> w/s</span>
+<span>spk <b>spk0</b></span>
+<span class="flag">under-transcribed</span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Aber es ke oro har,
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">820%</div>
+<div class="hyp"><span class="w sub">Arrezke</span> oro har, <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">begiratzen</span> <span class="w ins">duzu</span> <span class="w ins">eh</span> <span class="w ins">euskal</span> <span class="w ins">herriko</span> <span class="w ins">festetako</span> <span class="w ins">eta</span> <span class="w ins">lekuetako</span> <span class="w ins">kartela</span> <span class="w ins">begiratzen</span> <span class="w ins">dituzu</span> <span class="w ins">ikus</span> <span class="w ins">nahi</span> <span class="w ins">duzu,</span> <span class="w ins">euskal</span> <span class="w ins">musik</span> <span class="w ins">gertaldeak</span> <span class="w ins">atzuk</span> <span class="w ins">komentatzen</span> <span class="w ins">genuen</span> <span class="w ins">egiten</span> <span class="w ins">duzu</span> <span class="w ins">zuk</span> <span class="w ins">bestela</span> <span class="w ins">entestu</span> <span class="w ins">hori</span> <span class="w ins">pelikuletan</span> <span class="w ins">egiten</span> <span class="w ins">dena,</span> <span class="w ins">euskal</span> <span class="w ins">musika</span> <span class="w ins">taldeetan</span> <span class="w ins">liberrantzia</span> <span class="w ins">izitu</span> <span class="w ins">bi</span> <span class="w ins">eh</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">820%</div>
+<div class="hyp"><span class="w sub">Arrezke</span> oro har, <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">begiratzen</span> <span class="w ins">duzu,</span> <span class="w ins">eh,</span> <span class="w ins">euskal</span> <span class="w ins">herriko</span> <span class="w ins">festetako</span> <span class="w ins">eta</span> <span class="w ins">lekuetako</span> <span class="w ins">kartelak</span> <span class="w ins">begiratzen</span> <span class="w ins">dituzu,</span> <span class="w ins">ikusten</span> <span class="w ins">dituzu,</span> <span class="w ins">euskal</span> <span class="w ins">musika</span> <span class="w ins">taldeak,</span> <span class="w ins">atzuek</span> <span class="w ins">komentatzen</span> <span class="w ins">genuen,</span> <span class="w ins">egiten</span> <span class="w ins">duzu</span> <span class="w ins">zuk</span> <span class="w ins">beste</span> <span class="w ins">lehen</span> <span class="w ins">test</span> <span class="w ins">hori</span> <span class="w ins">pelikuletan</span> <span class="w ins">egiten</span> <span class="w ins">dena,</span> <span class="w ins">euskal</span> <span class="w ins">musika</span> <span class="w ins">taldeetan</span> <span class="w ins">liberrantza</span> <span class="w ins">ez</span> <span class="w ins">ditu,</span> <span class="w ins">bie.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer bad">820%</div>
+<div class="hyp"><span class="w sub">Harrezko</span> oro har, <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">begiratzen</span> <span class="w ins">duzu</span> <span class="w ins">eh</span> <span class="w ins">Euskal</span> <span class="w ins">Herriko</span> <span class="w ins">festetako</span> <span class="w ins">eta</span> <span class="w ins">lekuetako</span> <span class="w ins">kartela</span> <span class="w ins">begiratzen</span> <span class="w ins">dituzu,</span> <span class="w ins">ikusten</span> <span class="w ins">dituzu</span> <span class="w ins">euskal</span> <span class="w ins">musika</span> <span class="w ins">taldeak,</span> <span class="w ins">ahaztu</span> <span class="w ins">komentatzen</span> <span class="w ins">genuen,</span> <span class="w ins">egiten</span> <span class="w ins">duzu</span> <span class="w ins">zuk</span> <span class="w ins">beste</span> <span class="w ins">lehen</span> <span class="w ins">test</span> <span class="w ins">hori,</span> <span class="w ins">pelikuletan</span> <span class="w ins">egiten</span> <span class="w ins">dena,</span> <span class="w ins">euskal</span> <span class="w ins">musika</span> <span class="w ins">taldeetan,</span> <span class="w ins">librantzen</span> <span class="w ins">zaizkitu</span> <span class="w ins">bi</span> <span class="w ins">eh</span> .</div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer bad">740%</div>
+<div class="hyp">Aber, es ke oro har, <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">begiratzen</span> <span class="w ins">duzu</span> <span class="w ins">eh</span> <span class="w ins">Euskal</span> <span class="w ins">Herriko</span> <span class="w ins">festetako</span> <span class="w ins">eta</span> <span class="w ins">lekuetako</span> <span class="w ins">kartela</span> <span class="w ins">begiratzen</span> <span class="w ins">dituzu,</span> <span class="w ins">ikusten</span> <span class="w ins">dituzu</span> <span class="w ins">euskal</span> <span class="w ins">musika</span> <span class="w ins">taldeak,</span> <span class="w ins">ahaztu</span> <span class="w ins">komentatzen</span> <span class="w ins">genuen,</span> <span class="w ins">egiten</span> <span class="w ins">duzu</span> <span class="w ins">zuk</span> <span class="w ins">beste</span> <span class="w ins">lehen</span> <span class="w ins">testu</span> <span class="w ins">hori</span> <span class="w ins">pelikuletan</span> <span class="w ins">egiten</span> <span class="w ins">dena,</span> <span class="w ins">euskal</span> <span class="w ins">musika</span> <span class="w ins">taldetan</span> <span class="w ins">libratzen</span> <span class="w ins">zaizkizu</span> <span class="w ins">bie.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer bad">740%</div>
+<div class="hyp">aber, es ke oro har, <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">begiratzen</span> <span class="w ins">duzu</span> <span class="w ins">eh</span> <span class="w ins">Euskal</span> <span class="w ins">Herriko</span> <span class="w ins">festetako</span> <span class="w ins">eta</span> <span class="w ins">lekuetako</span> <span class="w ins">kartela</span> <span class="w ins">begiratzen</span> <span class="w ins">dituzu,</span> <span class="w ins">ikusten</span> <span class="w ins">dituzu</span> <span class="w ins">Euskal</span> <span class="w ins">musika</span> <span class="w ins">taldeak,</span> <span class="w ins">atzo</span> <span class="w ins">komentatzen</span> <span class="w ins">genuen,</span> <span class="w ins">egiten</span> <span class="w ins">duzu</span> <span class="w ins">zuk</span> <span class="w ins">bestelen</span> <span class="w ins">testo</span> <span class="w ins">hori</span> <span class="w ins">pelikuletan</span> <span class="w ins">egiten</span> <span class="w ins">dena,</span> <span class="w ins">Euskal</span> <span class="w ins">musika</span> <span class="w ins">taldeetan</span> <span class="w ins">librantzen</span> <span class="w ins">zaizkizu</span> <span class="w ins">bi</span> <span class="w ins">eh</span> .</div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer bad">800%</div>
+<div class="hyp"><span class="w sub">Ager,</span> <span class="w sub">eske</span> oro har, <span class="w ins">o</span> <span class="w ins">sea,</span> <span class="w ins">begiratzen</span> <span class="w ins">duzu,</span> <span class="w ins">eh,</span> <span class="w ins">Euskal</span> <span class="w ins">Herriko</span> <span class="w ins">festetako</span> <span class="w ins">eta</span> <span class="w ins">lekuetako</span> <span class="w ins">kartela</span> <span class="w ins">begiratzen</span> <span class="w ins">dituzu,</span> <span class="w ins">ikusten</span> <span class="w ins">dituzu</span> <span class="w ins">Euskal</span> <span class="w ins">musika</span> <span class="w ins">taldeak,</span> <span class="w ins">ahaztu</span> <span class="w ins">komentatzen</span> <span class="w ins">genuen,</span> <span class="w ins">egiten</span> <span class="w ins">duzu</span> <span class="w ins">zuk</span> <span class="w ins">beste</span> <span class="w ins">lehen</span> <span class="w ins">testu</span> <span class="w ins">hori</span> <span class="w ins">pelikuletan</span> <span class="w ins">egiten</span> <span class="w ins">dena,</span> <span class="w ins">Euskal</span> <span class="w ins">musika</span> <span class="w ins">taldeetan</span> <span class="w ins">librean</span> <span class="w ins">zaizkizu</span> <span class="w ins">bie...</span></div>
+</div>
+</div></div>
+<div class="card">
+<div class="card-top">
+<audio controls preload="none" src="audio/EusPodcast_test_110.mp3"></audio>
+<div class="meta">
+<span>row <b>110</b></span>
+<span><b>0.6</b>&thinsp;s</span>
+<span><b>1</b> ref words</span>
+<span><b>1.61</b> w/s</span>
+<span>spk <b>spk11</b></span>
+</div></div>
+<div class="ref"><span class="eyebrow">reference</span>
+Ridikuloa.
+</div>
+<div class="rows">
+<div class="row">
+<div class="mname"><b>tiny</b><br>1e-5</div>
+<div class="wer bad">200%</div>
+<div class="hyp"><span class="w sub">Begirik</span> <span class="w sub">gula.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>small</b><br>1e-5</div>
+<div class="wer bad">100%</div>
+<div class="hyp"><span class="w sub">Perikula.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>medium</b><br>1e-5</div>
+<div class="wer bad">100%</div>
+<div class="hyp"><span class="w sub">Medikula.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large</b><br>2e-5</div>
+<div class="wer bad">100%</div>
+<div class="hyp"><span class="w sub">Medikura.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v2</b><br>2e-5</div>
+<div class="wer bad">100%</div>
+<div class="hyp"><span class="w sub">Pedikura.</span></div>
+</div>
+<div class="row">
+<div class="mname"><b>large-v3</b><br>2e-5</div>
+<div class="wer bad">100%</div>
+<div class="hyp"><span class="w sub">Medikura.</span></div>
+</div>
+</div></div>
+</div></details>
+<footer>
+<p>Whisper fine-tuned for Basque. Models: <code>tiny</code> (lr 1e-5), <code>small</code> (lr 1e-5), <code>medium</code> (lr 1e-5), <code>large</code> (lr 2e-5), <code>large-v2</code> (lr 2e-5), <code>large-v3</code> (lr 2e-5). tiny, small and medium are the
+lr 1e-5 sweep; large, large-v2 and large-v3 are the lr 2e-5 sweep, jobs 54378, 54379 and
+54377. All six were trained on the same mixture of composite_eu, faktoria and Dialektoak;
+EusPodcast was held out, which is why it scores worst.</p>
+<p>Corpora: composite_eu combines Common Voice, Basque Parliament recordings and OpenSLR;
+faktoria is radio broadcast; Dialektoak and EusPodcast come from Aholab (UPV/EHU).
+Decoding is beam 5, max length
+225; WER is computed on text put through Whisper's
+<code>BasicTextNormalizer</code>, which is why casing and punctuation do not count.</p>
+</footer>
+</div>
+<script>
+(function () {
+  var splits = Array.prototype.slice.call(document.querySelectorAll('details.split'));
+  var btn = document.getElementById('toggle-all');
+
+  function syncButton() {
+    var anyOpen = splits.some(function (d) { return d.open; });
+    btn.textContent = anyOpen ? 'collapse all' : 'expand all';
+    btn.setAttribute('aria-expanded', String(anyOpen));
+  }
+
+  btn.addEventListener('click', function () {
+    var open = !splits.some(function (d) { return d.open; });
+    splits.forEach(function (d) { d.open = open; });
+    syncButton();
+  });
+
+  splits.forEach(function (d) { d.addEventListener('toggle', syncButton); });
+
+  // A jump to a collapsed dataset has to open it, or the anchor lands on nothing.
+  function revealHash() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (el && el.tagName === 'DETAILS' && !el.open) {
+      el.open = true;
+      syncButton();
+      el.scrollIntoView();
+    }
+  }
+  window.addEventListener('hashchange', revealHash);
+  revealHash();
+})();
+</script>
+</body>
+</html>
