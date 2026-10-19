@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Basque speech dataset · OmniVoice vs Qwen TTS</title>
+  <style>
+    :root {
+      --ink: #152b38;
+      --muted: #61727b;
+      --line: #dce5e3;
+      --paper: #fffdfa;
+      --teal: #087e78;
+      --teal-soft: #e7f5f1;
+      --orange: #b55e23;
+      --orange-soft: #fff0e5;
+      --shadow: 0 18px 55px rgba(21, 43, 56, .08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 95% 0, #e5f2ec 0, transparent 35%),
+                  radial-gradient(circle at 0 35%, #fff1e5 0, transparent 34%), #f5f7f4;
+    }
+    button, audio { font: inherit; }
+    .shell { max-width: 1160px; margin: auto; padding: 36px 24px 76px; }
+    .topline { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.025em; }
+    .brand-mark { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 10px; background: var(--ink); color: white; font-size: 18px; }
+    .eyebrow { color: var(--teal); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .16em; }
+    .project-tag { color: var(--muted); font-size: 13px; font-weight: 650; }
+    .hero { padding: 68px 0 44px; max-width: 760px; }
+    h1 { margin: 10px 0 18px; font-size: clamp(40px, 6vw, 72px); line-height: 1.05; letter-spacing: -.055em; }
+    .hero p { margin: 0; max-width: 650px; color: var(--muted); font-size: 18px; }
+    .key { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+    .key span { display: inline-flex; align-items: center; gap: 9px; padding: 7px 13px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.76); color: var(--ink); font-size: 13px; font-weight: 650; }
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
+    .dot.omni { background: var(--teal); }
+    .dot.qwen { background: var(--orange); }
+    .overview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 38px; }
+    .overview > div { padding: 19px 22px; background: rgba(255,255,255,.72); border: 1px solid var(--line); border-radius: 17px; }
+    .overview strong { display: block; font-size: 25px; line-height: 1.1; letter-spacing: -.035em; }
+    .overview span { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 15px; margin-bottom: 15px; }
+    h2 { margin: 0; font-size: 24px; letter-spacing: -.035em; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 13px; }
+    .controls { display: flex; align-items: end; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+    .picker { flex: 1 1 400px; min-width: 220px; }
+    .picker label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 12px; font-weight: 750; }
+    .picker select { width: 100%; height: 46px; padding: 0 12px; border: 1px solid var(--line); border-radius: 11px; background: #fff; color: var(--ink); font: inherit; cursor: pointer; }
+    .random-button { height: 46px; padding: 0 18px; border: 1px solid var(--ink); border-radius: 11px; background: var(--ink); color: #fff; cursor: pointer; font-weight: 750; }
+    .random-button:hover { background: #294958; }
+    .random-button:disabled { opacity: .5; cursor: default; }
+    select:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #4bb9ad; outline-offset: 3px; }
+    .example { padding: 28px; border: 1px solid var(--line); border-radius: 22px; background: var(--paper); box-shadow: var(--shadow); }
+    .example-header { display: flex; align-items: start; justify-content: space-between; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+    .example-header h3 { margin: 2px 0 3px; font-size: 29px; letter-spacing: -.04em; }
+    .example-header p { margin: 0; color: var(--muted); }
+    .id { display: inline-block; padding: 7px 10px; border-radius: 8px; background: #f0f3f2; color: #435860; font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: nowrap; }
+    .turn { display: grid; grid-template-columns: minmax(220px, .9fr) minmax(0, 1.8fr); gap: 25px; padding: 23px 0; border-bottom: 1px solid var(--line); }
+    .turn:last-child { border-bottom: 0; padding-bottom: 2px; }
+    .turn-label { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .11em; font-size: 11px; font-weight: 800; color: var(--muted); }
+    .role-dot { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 8px; font-size: 12px; letter-spacing: 0; }
+    .user .role-dot { color: #3753a8; background: #e9efff; }
+    .assistant .role-dot { color: #8350a1; background: #f3eafb; }
+    .transcript { margin: 0; font-size: 17px; line-height: 1.55; font-weight: 560; }
+    .players { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
+    .player { min-width: 0; padding: 14px; border-radius: 14px; border: 1px solid transparent; }
+    .player.omnivoice { background: var(--teal-soft); border-color: #c5e8df; }
+    .player.qwen { background: var(--orange-soft); border-color: #f2d8c5; }
+    .player-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .model-name { font-size: 14px; font-weight: 800; }
+    .omnivoice .model-name { color: var(--teal); }
+    .qwen .model-name { color: var(--orange); }
+    .duration { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .speaker { margin: 2px 0 12px; color: #4e626c; font-size: 12px; }
+    .player audio { display: block; width: 100%; height: 34px; }
+    .note { margin-top: 22px; padding: 17px 20px; border-left: 4px solid var(--teal); border-radius: 0 10px 10px 0; background: rgba(255,255,255,.76); color: var(--muted); font-size: 13px; }
+    .note strong { color: var(--ink); }
+    .study { margin-top: 48px; }
+    .study-intro { max-width: 720px; margin: 9px 0 20px; color: var(--muted); }
+    .study-panel { padding: 28px; border: 1px solid var(--line); border-radius: 22px; background: var(--paper); box-shadow: var(--shadow); }
+    .study-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .study-target { margin: 0 0 20px; padding: 18px 20px; border-radius: 12px; background: #f2f6f4; }
+    .study-target .eyebrow { margin-bottom: 5px; }
+    .study-target p { margin: 0; font-size: 18px; font-weight: 600; }
+    .study-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+    .study-card { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 15px; background: #f8faf9; }
+    .study-card.omnivoice { background: var(--teal-soft); border-color: #c5e8df; }
+    .study-card.qwen { background: var(--orange-soft); border-color: #f2d8c5; }
+    .study-card h3 { margin: 0 0 4px; font-size: 17px; }
+    .study-card p { margin: 0 0 14px; color: #4e626c; font-size: 13px; }
+    .study-card audio { display: block; width: 100%; }
+    .reference-transcript { margin-top: 14px; color: #536570; font-size: 12px; }
+    footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
+    @media (max-width: 800px) {
+      .turn { grid-template-columns: 1fr; gap: 14px; }
+      .hero { padding-top: 48px; }
+      .study-cards { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 530px) {
+      .shell { padding: 23px 15px 48px; }
+      .overview { grid-template-columns: 1fr 1fr; }
+      .overview > div:last-child { grid-column: 1 / -1; }
+      .example { padding: 20px 16px; }
+      .example-header { flex-direction: column; gap: 10px; }
+      .players { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 3px; }
+      .study-panel { padding: 20px 16px; }
+      .study-controls { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topline">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">◖</span> Latxa-Omni <span class="project-tag">/ Dataset listening room</span></div>
+    </div>
+
+    <header class="hero">
+      <div class="eyebrow">Basque speech · model comparison</div>
+      <h1>One dialogue.<br>Two voices.</h1>
+      <p>Hear the same multiturn Basque conversations synthesized by OmniVoice and Qwen TTS. Each turn shows the shared text, followed by audio from both models.</p>
+      <div class="key" aria-label="Audio model legend">
+        <span><i class="dot omni" aria-hidden="true"></i> OmniVoice</span>
+        <span><i class="dot qwen" aria-hidden="true"></i> Qwen TTS</span>
+      </div>
+    </header>
+
+    <div class="overview" aria-label="Collection summary">
+      <div><strong id="conversation-count">0</strong><span>matched conversations</span></div>
+      <div><strong id="turn-count">0</strong><span>spoken turns</span></div>
+      <div><strong id="clip-count">0</strong><span>gallery audio clips</span></div>
+    </div>
+
+    <section aria-labelledby="examples-title">
+      <div class="section-head">
+        <h2 id="examples-title">Explore the conversations</h2>
+        <p>Choose a dialogue or discover one at random.</p>
+      </div>
+      <div class="controls">
+        <div class="picker">
+          <label for="example-select">Conversation</label>
+          <select id="example-select"></select>
+        </div>
+        <button id="random-button" class="random-button" type="button">↻ Random example</button>
+      </div>
+      <div id="example-panel" class="example" role="region" aria-label="Selected conversation" tabindex="0"></div>
+    </section>
+
+    <section class="study" aria-labelledby="study-title">
+      <h2 id="study-title">Hear the reference speaker</h2>
+      <p class="study-intro">Choose a reference voice to hear how OmniVoice changes its delivery of the same Basque line. These three lines were synthesized with 23 different references in a separate OmniVoice test run.</p>
+      <div class="study-panel">
+        <div class="study-controls">
+          <div class="picker">
+            <label for="target-select">Basque line</label>
+            <select id="target-select"></select>
+          </div>
+          <div class="picker">
+            <label for="speaker-select">OmniVoice reference speaker</label>
+            <select id="speaker-select"></select>
+          </div>
+        </div>
+        <div id="reference-panel" role="region" aria-label="Reference speaker comparison"></div>
+      </div>
+    </section>
+
+    <aside class="note">
+      <strong>About this comparison.</strong> These are source synthesis samples, not Latxa-Omni model outputs. The conversation gallery uses filtered OmniVoice data and Qwen TTS with matching text. The reference-speaker study uses a separate OmniVoice test grid with identical text for every selected voice; its Qwen audio stays fixed. Browser copies are encoded as 96 kbps MP3 at their original sample rates.
+    </aside>
+    <footer>InstructS2S-200K Basque translation · selected filtered conversations</footer>
+  </main>
+
+  <script src="examples.js"></script>
+  <script src="reference_demo.js"></script>
+  <script>
+    const examples = window.DATASET_EXAMPLES || [];
+    const referenceDemo = window.REFERENCE_DEMO || { speakers: [], samples: [] };
+    const picker = document.getElementById('example-select');
+    const randomButton = document.getElementById('random-button');
+    const panel = document.getElementById('example-panel');
+    const targetPicker = document.getElementById('target-select');
+    const speakerPicker = document.getElementById('speaker-select');
+    const referencePanel = document.getElementById('reference-panel');
+    let active = 0;
+
+    document.getElementById('conversation-count').textContent = examples.length;
+    const turnCount = examples.reduce((total, item) => total + item.turns.length, 0);
+    document.getElementById('turn-count').textContent = turnCount;
+    document.getElementById('clip-count').textContent = turnCount * 2;
+    examples.forEach((item, index) => {
+      const option = document.createElement('option');
+      option.value = String(index);
+      option.textContent = `${String(index + 1).padStart(2, '0')} · ${item.title} — ${item.subtitle}`;
+      picker.append(option);
+    });
+    randomButton.disabled = examples.length < 2;
+    referenceDemo.samples.forEach((sample, index) => {
+      const option = document.createElement('option');
+      option.value = String(index);
+      option.textContent = `${sample.title} · ${sample.id}`;
+      targetPicker.append(option);
+    });
+    referenceDemo.speakers.forEach(speaker => {
+      const option = document.createElement('option');
+      option.value = speaker.id;
+      option.textContent = `${speaker.id} · ${speaker.language} reference`;
+      speakerPicker.append(option);
+    });
+
+    function element(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    }
+
+    function render() {
+      document.querySelectorAll('audio').forEach(audio => audio.pause());
+      panel.replaceChildren();
+      const example = examples[active];
+      if (!example) {
+        panel.textContent = 'No examples are available.';
+        return;
+      }
+
+      picker.value = String(active);
+
+      const heading = element('div', 'example-header');
+      const headingText = element('div');
+      headingText.append(element('div', 'eyebrow', `${example.turns.length / 2} exchanges · ${example.turns.length} turns`));
+      headingText.append(element('h3', '', example.title));
+      headingText.append(element('p', '', example.subtitle));
+      heading.append(headingText, element('span', 'id', example.id));
+      panel.append(heading);
+
+      example.turns.forEach((turn, index) => {
+        const article = element('article', `turn ${turn.role}`);
+        const left = element('div');
+        const label = element('div', 'turn-label');
+        label.append(element('span', 'role-dot', turn.role === 'user' ? 'U' : 'A'));
+        label.append(document.createTextNode(`${turn.role} · exchange ${Math.floor(index / 2) + 1}`));
+        left.append(label, element('p', 'transcript', turn.text));
+
+        const players = element('div', 'players');
+        for (const [key, name] of [['omnivoice', 'OmniVoice'], ['qwen', 'Qwen TTS']]) {
+          const source = turn[key];
+          const card = element('div', `player ${key}`);
+          const top = element('div', 'player-top');
+          top.append(element('span', 'model-name', name));
+          top.append(element('span', 'duration', `${source.duration.toFixed(1)} s`));
+          const speaker = element('div', 'speaker', `Speaker: ${source.speaker}`);
+          const audio = element('audio');
+          audio.controls = true;
+          audio.preload = 'none';
+          audio.src = source.src;
+          audio.setAttribute('aria-label', `${name}, ${turn.role} turn ${Math.floor(index / 2) + 1}`);
+          card.append(top, speaker, audio);
+          players.append(card);
+        }
+        article.append(left, players);
+        panel.append(article);
+      });
+    }
+
+    function studyCard(className, title, detail, source, label, referenceText) {
+      const card = element('div', `study-card ${className}`);
+      card.append(element('h3', '', title), element('p', '', detail));
+      const audio = element('audio');
+      audio.controls = true;
+      audio.preload = 'none';
+      audio.src = source.src;
+      audio.setAttribute('aria-label', label);
+      card.append(audio);
+      if (referenceText) card.append(element('div', 'reference-transcript', referenceText));
+      return card;
+    }
+
+    function renderReference() {
+      referencePanel.querySelectorAll('audio').forEach(audio => audio.pause());
+      referencePanel.replaceChildren();
+      const sample = referenceDemo.samples[Number(targetPicker.value)];
+      const speaker = referenceDemo.speakers.find(item => item.id === speakerPicker.value);
+      if (!sample || !speaker) {
+        referencePanel.textContent = 'Reference examples are unavailable.';
+        return;
+      }
+      const target = element('div', 'study-target');
+      target.append(element('div', 'eyebrow', `${sample.title} · ${sample.id}`));
+      target.append(element('p', '', sample.text));
+      referencePanel.append(target);
+      const cards = element('div', 'study-cards');
+      cards.append(studyCard('', 'Reference recording', `${speaker.id} · ${speaker.language}`, speaker.audio,
+        `${speaker.id} reference recording`, `Reference transcript: ${speaker.text}`));
+      cards.append(studyCard('omnivoice', 'OmniVoice output', `Cloned from ${speaker.id} · same Basque text`,
+        sample.voices[speaker.id], `OmniVoice output using ${speaker.id} reference`));
+      cards.append(studyCard('qwen', 'Qwen TTS comparison', `Fixed ${sample.qwen.speaker} voice · same Basque text`,
+        sample.qwen, 'Qwen TTS comparison'));
+      referencePanel.append(cards);
+    }
+
+    picker.addEventListener('change', () => {
+      active = Number(picker.value);
+      render();
+    });
+    randomButton.addEventListener('click', () => {
+      const offset = 1 + Math.floor(Math.random() * (examples.length - 1));
+      active = (active + offset) % examples.length;
+      render();
+    });
+    targetPicker.addEventListener('change', renderReference);
+    speakerPicker.addEventListener('change', renderReference);
+    document.addEventListener('play', event => {
+      if (event.target.tagName === 'AUDIO') {
+        document.querySelectorAll('audio').forEach(audio => {
+          if (audio !== event.target) audio.pause();
+        });
+      }
+    }, true);
+    render();
+    renderReference();
+  </script>
+</body>
+</html>
