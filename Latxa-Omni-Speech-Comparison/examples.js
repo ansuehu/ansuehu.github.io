@@ -7,17 +7,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "user",
         "text": "Kaixo, kalkulatu ahal duzu bost zentimetro luze eta zortzi zentimetro zabal den laukizuzen baten azalera?",
-        "omnivoice": {
-          "src": "audio/instruct_en_1700-1-omnivoice.mp3",
-          "duration": 7.7,
-          "sampleRate": 16000,
-          "speaker": "es_bp_353"
-        },
         "qwen": {
           "src": "audio/instruct_en_1700-1-qwen.mp3",
           "duration": 7.3,
           "sampleRate": 24000,
           "speaker": "kepa"
+        },
+        "omnivoice": {
+          "src": "audio/instruct_en_1700-1-omnivoice.mp3",
+          "duration": 7.3,
+          "sampleRate": 16000,
+          "speaker": "cv_0357"
         }
       },
       {
@@ -41,9 +41,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kalkulatu zazpi zentimetro luze eta lau zentimetro zabal den laukizuzen baten perimetroa.",
         "omnivoice": {
           "src": "audio/instruct_en_1700-3-omnivoice.mp3",
-          "duration": 6.6,
+          "duration": 6.1,
           "sampleRate": 16000,
-          "speaker": "es_bp_353"
+          "speaker": "cv_0357"
         },
         "qwen": {
           "src": "audio/instruct_en_1700-3-qwen.mp3",
@@ -80,9 +80,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, margolan honentzat izenburu bat iradoki dezakezu, badakizu, hiriko skylinea gauez agertzen den hori, argiz betea eta abar, olioan egina?",
         "omnivoice": {
           "src": "audio/instruct_en_5213-1-omnivoice.mp3",
-          "duration": 8.4,
+          "duration": 10.4,
           "sampleRate": 16000,
-          "speaker": "maider"
+          "speaker": "cv_0918"
         },
         "qwen": {
           "src": "audio/instruct_en_5213-1-qwen.mp3",
@@ -112,9 +112,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein beste izenburu aukera dituzu margolan honentzat?",
         "omnivoice": {
           "src": "audio/instruct_en_5213-3-omnivoice.mp3",
-          "duration": 3.3,
+          "duration": 3.6,
           "sampleRate": 16000,
-          "speaker": "maider"
+          "speaker": "cv_0918"
         },
         "qwen": {
           "src": "audio/instruct_en_5213-3-qwen.mp3",
@@ -389,9 +389,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, jar ditzakezu trantsizio-hitz egokiak esaldi hau leunagoa izan dadin, adibidez, 'Parkean egon ginen, baina jendez gainezka zegoen'?",
         "omnivoice": {
           "src": "audio/instruct_en_49403-1-omnivoice.mp3",
-          "duration": 7.9,
+          "duration": 9.5,
           "sampleRate": 16000,
-          "speaker": "en_4222"
+          "speaker": "cv_0624"
         },
         "qwen": {
           "src": "audio/instruct_en_49403-1-qwen.mp3",
@@ -403,17 +403,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Trantsizio-hitzak erabil ditzakezu, hala nola, aldiz, beraz edo bitartean, zure esaldia leunagoa izan dadin. Adibidez, 'Parkean egon ginen; aldiz, jendez gainezka zegoen'.",
-        "qwen": {
-          "src": "audio/instruct_en_49403-2-qwen.mp3",
-          "duration": 12.5,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_49403-2-omnivoice.mp3",
           "duration": 9.8,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_49403-2-qwen.mp3",
+          "duration": 12.5,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -421,9 +421,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emango al didazu bitartean hitza erabiltzen duen esaldi baten adibidea?",
         "omnivoice": {
           "src": "audio/instruct_en_49403-3-omnivoice.mp3",
-          "duration": 4.2,
+          "duration": 4.7,
           "sampleRate": 16000,
-          "speaker": "en_4222"
+          "speaker": "cv_0624"
         },
         "qwen": {
           "src": "audio/instruct_en_49403-3-qwen.mp3",
@@ -451,8 +451,79 @@ window.DATASET_EXAMPLES = [
     ]
   },
   {
-    "id": "instruct_en_8720",
+    "id": "instruct_en_2244",
     "title": "Dialogue 06",
+    "subtitle": "Kaixo, ebaluatu al dezakezu, ba, Evernote-ren erabilgarritasuna?",
+    "turns": [
+      {
+        "role": "user",
+        "text": "Kaixo, ebaluatu al dezakezu, ba, Evernote-ren erabilgarritasuna?",
+        "omnivoice": {
+          "src": "audio/instruct_en_2244-1-omnivoice.mp3",
+          "duration": 4.3,
+          "sampleRate": 16000,
+          "speaker": "cv_1129"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_2244-1-qwen.mp3",
+          "duration": 4.4,
+          "sampleRate": 24000,
+          "speaker": "antton"
+        }
+      },
+      {
+        "role": "assistant",
+        "text": "Evernote-ren erabilgarritasuna orokorrean ona da, interfaze intuitiboarekin eta etiketatzea eta bilatzea bezalako ezaugarriekin, oharrak antolatu eta aurkitzea errazten dutenak. Hala ere, ikasketa-kurba maldatsua eta aginte-panel nahasia itogarriak izan daitezke erabiltzaile berrientzat.",
+        "omnivoice": {
+          "src": "audio/instruct_en_2244-2-omnivoice.mp3",
+          "duration": 17.0,
+          "sampleRate": 16000,
+          "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_2244-2-qwen.mp3",
+          "duration": 11.9,
+          "sampleRate": 24000,
+          "speaker": "maider"
+        }
+      },
+      {
+        "role": "user",
+        "text": "Zein dira Evernote-ren ezaugarri nagusiak?",
+        "omnivoice": {
+          "src": "audio/instruct_en_2244-3-omnivoice.mp3",
+          "duration": 3.0,
+          "sampleRate": 16000,
+          "speaker": "cv_1129"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_2244-3-qwen.mp3",
+          "duration": 2.7,
+          "sampleRate": 24000,
+          "speaker": "antton"
+        }
+      },
+      {
+        "role": "assistant",
+        "text": "Evernote-k oharren etiketatzea, bilaketa eta antolaketa bezalako ezaugarriak ditu, zure oharrak aurkitu eta kudeatzea errazten dutenak.",
+        "omnivoice": {
+          "src": "audio/instruct_en_2244-4-omnivoice.mp3",
+          "duration": 8.0,
+          "sampleRate": 16000,
+          "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_2244-4-qwen.mp3",
+          "duration": 9.2,
+          "sampleRate": 24000,
+          "speaker": "maider"
+        }
+      }
+    ]
+  },
+  {
+    "id": "instruct_en_8720",
+    "title": "Dialogue 07",
     "subtitle": "Kaixo, aztertu dezakezu testu hau niretzat? Muinoan piztutako suak azkar zabaldu ziren eta…",
     "turns": [
       {
@@ -460,9 +531,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, aztertu dezakezu testu hau niretzat? Muinoan piztutako suak azkar zabaldu ziren eta herriaren zati handi bat suntsitu zuten. Zein motatako testua da?",
         "omnivoice": {
           "src": "audio/instruct_en_8720-1-omnivoice.mp3",
-          "duration": 9.2,
+          "duration": 10.2,
           "sampleRate": 16000,
-          "speaker": "es_bp_509"
+          "speaker": "cv_0984"
         },
         "qwen": {
           "src": "audio/instruct_en_8720-1-qwen.mp3",
@@ -474,17 +545,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Testu narratibo bat da, seguruenik istorio edo albiste baten zati bat, gertaera edo gorabehera zehatz bat deskribatzen duena.",
-        "qwen": {
-          "src": "audio/instruct_en_8720-2-qwen.mp3",
-          "duration": 8.0,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_8720-2-omnivoice.mp3",
           "duration": 7.3,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_8720-2-qwen.mp3",
+          "duration": 8.0,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -492,9 +563,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kontatu ahal didazu zer gertatu zitzaion herriari?",
         "omnivoice": {
           "src": "audio/instruct_en_8720-3-omnivoice.mp3",
-          "duration": 3.1,
+          "duration": 2.8,
           "sampleRate": 16000,
-          "speaker": "es_bp_509"
+          "speaker": "cv_0984"
         },
         "qwen": {
           "src": "audio/instruct_en_8720-3-qwen.mp3",
@@ -523,23 +594,23 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_44637",
-    "title": "Dialogue 07",
+    "title": "Dialogue 08",
     "subtitle": "Kaixo, poemaren egitura kritikatu dezakezu? Ba, dio, Basoak goizean hitz egiten du, Txorien…",
     "turns": [
       {
         "role": "user",
         "text": "Kaixo, poemaren egitura kritikatu dezakezu? Ba, dio, Basoak goizean hitz egiten du, Txorien kantua eta azkenean argia zabaltzen ditu, Ahaztuta zegoenaren oroigarri leuna, Bizitza gauaren interpretazio bat besterik ez da.",
-        "qwen": {
-          "src": "audio/instruct_en_44637-1-qwen.mp3",
-          "duration": 12.5,
-          "sampleRate": 24000,
-          "speaker": "jon"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_44637-1-omnivoice.mp3",
           "duration": 13.4,
           "sampleRate": 16000,
           "speaker": "kepa"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_44637-1-qwen.mp3",
+          "duration": 12.5,
+          "sampleRate": 24000,
+          "speaker": "jon"
         }
       },
       {
@@ -594,7 +665,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_2700",
-    "title": "Dialogue 08",
+    "title": "Dialogue 09",
     "subtitle": "Kaixo, izendatu ahal dizkidazu hiru Europako monumentu ospetsu?",
     "turns": [
       {
@@ -602,9 +673,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, izendatu ahal dizkidazu hiru Europako monumentu ospetsu?",
         "omnivoice": {
           "src": "audio/instruct_en_2700-1-omnivoice.mp3",
-          "duration": 3.8,
+          "duration": 4.6,
           "sampleRate": 16000,
-          "speaker": "en_2086"
+          "speaker": "cv_0245"
         },
         "qwen": {
           "src": "audio/instruct_en_2700-1-qwen.mp3",
@@ -616,17 +687,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Hona hemen hiru Europako monumentu ospetsu: Eiffel Dorrea, Koliseoa eta Guggenheim Museoa.",
-        "qwen": {
-          "src": "audio/instruct_en_2700-2-qwen.mp3",
-          "duration": 6.1,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_2700-2-omnivoice.mp3",
           "duration": 5.3,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_2700-2-qwen.mp3",
+          "duration": 6.1,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -634,9 +705,9 @@ window.DATASET_EXAMPLES = [
         "text": "Esan ahal dizkidazu bi Europako ibai ospetsu?",
         "omnivoice": {
           "src": "audio/instruct_en_2700-3-omnivoice.mp3",
-          "duration": 2.7,
+          "duration": 3.1,
           "sampleRate": 16000,
-          "speaker": "en_2086"
+          "speaker": "cv_0245"
         },
         "qwen": {
           "src": "audio/instruct_en_2700-3-qwen.mp3",
@@ -666,9 +737,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira bi Europako hiri ospetsu",
         "omnivoice": {
           "src": "audio/instruct_en_2700-5-omnivoice.mp3",
-          "duration": 2.2,
+          "duration": 2.4,
           "sampleRate": 16000,
-          "speaker": "en_2086"
+          "speaker": "cv_0245"
         },
         "qwen": {
           "src": "audio/instruct_en_2700-5-qwen.mp3",
@@ -680,17 +751,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Bi Europako hiri ospetsu dira Paris eta Erroma",
-        "qwen": {
-          "src": "audio/instruct_en_2700-6-qwen.mp3",
-          "duration": 3.5,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_2700-6-omnivoice.mp3",
           "duration": 2.8,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_2700-6-qwen.mp3",
+          "duration": 3.5,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -698,9 +769,9 @@ window.DATASET_EXAMPLES = [
         "text": "Izendatu ahal didazu Europako uharte ospetsu bat",
         "omnivoice": {
           "src": "audio/instruct_en_2700-7-omnivoice.mp3",
-          "duration": 2.9,
+          "duration": 3.4,
           "sampleRate": 16000,
-          "speaker": "en_2086"
+          "speaker": "cv_0245"
         },
         "qwen": {
           "src": "audio/instruct_en_2700-7-qwen.mp3",
@@ -729,7 +800,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_69535",
-    "title": "Dialogue 09",
+    "title": "Dialogue 10",
     "subtitle": "Kaixo, ba, identifikatu al dezakezu joerarik talde politikoek, badakizu, indarkeria erabiltzeko…",
     "turns": [
       {
@@ -767,17 +838,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "user",
         "text": "Zein da faktore ekonomikoen papera indarkeria justifikatzeko orduan?",
-        "qwen": {
-          "src": "audio/instruct_en_69535-3-qwen.mp3",
-          "duration": 4.8,
-          "sampleRate": 24000,
-          "speaker": "jon"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_69535-3-omnivoice.mp3",
           "duration": 4.3,
           "sampleRate": 16000,
           "speaker": "antton"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_69535-3-qwen.mp3",
+          "duration": 4.8,
+          "sampleRate": 24000,
+          "speaker": "jon"
         }
       },
       {
@@ -815,24 +886,24 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Faktore sozialek, hala nola diskriminazioak eta ordezkaritza faltak, indarkeria justifikatzeko erabiltzen dira, askotan, kexak agerian jartzeko edo aldaketa sozialaren alde borrokatzeko bitarteko gisa.",
-        "qwen": {
-          "src": "audio/instruct_en_69535-6-qwen.mp3",
-          "duration": 12.5,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_69535-6-omnivoice.mp3",
           "duration": 11.9,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_69535-6-qwen.mp3",
+          "duration": 12.5,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       }
     ]
   },
   {
     "id": "instruct_en_23168",
-    "title": "Dialogue 10",
+    "title": "Dialogue 11",
     "subtitle": "Kaixo, lagundu ahal didazu esapide egokiena aukeratzen aukera hauen artean? A daukat, Bigarren…",
     "turns": [
       {
@@ -840,9 +911,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, lagundu ahal didazu esapide egokiena aukeratzen aukera hauen artean? A daukat, Bigarren mailan geratu, B, Eseri, edo C, Bizkarraldea hartu. Zein aukeratu beharko nuke?",
         "omnivoice": {
           "src": "audio/instruct_en_23168-1-omnivoice.mp3",
-          "duration": 14.0,
+          "duration": 17.2,
           "sampleRate": 16000,
-          "speaker": "en_4381"
+          "speaker": "cv_0650"
         },
         "qwen": {
           "src": "audio/instruct_en_23168-1-qwen.mp3",
@@ -872,9 +943,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zer esan nahi du Bigarren mailan geratu esapideak bilera-testuinguru batean?",
         "omnivoice": {
           "src": "audio/instruct_en_23168-3-omnivoice.mp3",
-          "duration": 6.2,
+          "duration": 7.6,
           "sampleRate": 16000,
-          "speaker": "en_4381"
+          "speaker": "cv_0650"
         },
         "qwen": {
           "src": "audio/instruct_en_23168-3-qwen.mp3",
@@ -904,9 +975,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emango al didazu Bigarren mailan geratu esapidea esaldi batean erabiltzeko adibide bat?",
         "omnivoice": {
           "src": "audio/instruct_en_23168-5-omnivoice.mp3",
-          "duration": 6.9,
+          "duration": 8.7,
           "sampleRate": 16000,
-          "speaker": "en_4381"
+          "speaker": "cv_0650"
         },
         "qwen": {
           "src": "audio/instruct_en_23168-5-qwen.mp3",
@@ -935,7 +1006,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_45399",
-    "title": "Dialogue 11",
+    "title": "Dialogue 12",
     "subtitle": "Kaixo, egin dezakezu, ba, saiakera hau sinesgarriagoa, badakizu? Hemen dio freskagarriak edatea…",
     "turns": [
       {
@@ -943,9 +1014,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, egin dezakezu, ba, saiakera hau sinesgarriagoa, badakizu? Hemen dio freskagarriak edatea txarra dela osasunerako, kaloria, azukre eta kafeina asko izaten ditu maiz, eta eragin negatiboa izan dezake zure osasunean denborarekin.",
         "omnivoice": {
           "src": "audio/instruct_en_45399-1-omnivoice.mp3",
-          "duration": 15.2,
+          "duration": 14.4,
           "sampleRate": 16000,
-          "speaker": "miren"
+          "speaker": "cv_1006"
         },
         "qwen": {
           "src": "audio/instruct_en_45399-1-qwen.mp3",
@@ -975,9 +1046,9 @@ window.DATASET_EXAMPLES = [
         "text": "Egin dezakezu hizkuntza formala izatea?",
         "omnivoice": {
           "src": "audio/instruct_en_45399-3-omnivoice.mp3",
-          "duration": 2.7,
+          "duration": 2.3,
           "sampleRate": 16000,
-          "speaker": "miren"
+          "speaker": "cv_1006"
         },
         "qwen": {
           "src": "audio/instruct_en_45399-3-qwen.mp3",
@@ -1006,7 +1077,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_24013",
-    "title": "Dialogue 12",
+    "title": "Dialogue 13",
     "subtitle": "Kaixo, web hosting zerbitzu bat gomendatu ahal didazu?",
     "turns": [
       {
@@ -1014,9 +1085,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, web hosting zerbitzu bat gomendatu ahal didazu?",
         "omnivoice": {
           "src": "audio/instruct_en_24013-1-omnivoice.mp3",
-          "duration": 3.0,
+          "duration": 3.2,
           "sampleRate": 16000,
-          "speaker": "en_3835"
+          "speaker": "cv_0553"
         },
         "qwen": {
           "src": "audio/instruct_en_24013-1-qwen.mp3",
@@ -1028,17 +1099,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Bluehost edo SiteGround gomendatzen dizkizut web hosting zerbitzu fidagarriak lortzeko, biek bezeroarentzako arreta ona eta prezio lehiakorrak eskaintzen baitituzte.",
-        "qwen": {
-          "src": "audio/instruct_en_24013-2-qwen.mp3",
-          "duration": 11.3,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_24013-2-omnivoice.mp3",
           "duration": 9.6,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_24013-2-qwen.mp3",
+          "duration": 11.3,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -1046,9 +1117,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zeintzuk dira Bluehosten ezaugarri nagusiak?",
         "omnivoice": {
           "src": "audio/instruct_en_24013-3-omnivoice.mp3",
-          "duration": 2.6,
+          "duration": 3.2,
           "sampleRate": 16000,
-          "speaker": "en_3835"
+          "speaker": "cv_0553"
         },
         "qwen": {
           "src": "audio/instruct_en_24013-3-qwen.mp3",
@@ -1077,7 +1148,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_45758",
-    "title": "Dialogue 13",
+    "title": "Dialogue 14",
     "subtitle": "Kaixo, zeintzuk dira ordenagailu baten abantailak kalkulagailu baten aldean, badakizu?",
     "turns": [
       {
@@ -1085,9 +1156,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, zeintzuk dira ordenagailu baten abantailak kalkulagailu baten aldean, badakizu?",
         "omnivoice": {
           "src": "audio/instruct_en_45758-1-omnivoice.mp3",
-          "duration": 4.4,
+          "duration": 6.3,
           "sampleRate": 16000,
-          "speaker": "es_bp_545"
+          "speaker": "cv_1241"
         },
         "qwen": {
           "src": "audio/instruct_en_45758-1-qwen.mp3",
@@ -1117,9 +1188,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zeintzuk dira ordenagailu eramangarri baten eta mahaigaineko ordenagailu baten arteko desberdintasun nagusiak?",
         "omnivoice": {
           "src": "audio/instruct_en_45758-3-omnivoice.mp3",
-          "duration": 5.7,
+          "duration": 10.2,
           "sampleRate": 16000,
-          "speaker": "es_bp_545"
+          "speaker": "cv_1241"
         },
         "qwen": {
           "src": "audio/instruct_en_45758-3-qwen.mp3",
@@ -1148,7 +1219,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_24405",
-    "title": "Dialogue 14",
+    "title": "Dialogue 15",
     "subtitle": "Kaixo, esango al didazu zein den Dominikar Errepublikako hiriburua?",
     "turns": [
       {
@@ -1156,9 +1227,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, esango al didazu zein den Dominikar Errepublikako hiriburua?",
         "omnivoice": {
           "src": "audio/instruct_en_24405-1-omnivoice.mp3",
-          "duration": 3.7,
+          "duration": 3.6,
           "sampleRate": 16000,
-          "speaker": "es_bp_554"
+          "speaker": "cv_1298"
         },
         "qwen": {
           "src": "audio/instruct_en_24405-1-qwen.mp3",
@@ -1186,17 +1257,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "user",
         "text": "Zein da Dominikar Errepublikako hiririk handiena?",
+        "omnivoice": {
+          "src": "audio/instruct_en_24405-3-omnivoice.mp3",
+          "duration": 2.8,
+          "sampleRate": 16000,
+          "speaker": "cv_1298"
+        },
         "qwen": {
           "src": "audio/instruct_en_24405-3-qwen.mp3",
           "duration": 2.7,
           "sampleRate": 24000,
           "speaker": "kepa"
-        },
-        "omnivoice": {
-          "src": "audio/instruct_en_24405-3-omnivoice.mp3",
-          "duration": 3.1,
-          "sampleRate": 16000,
-          "speaker": "es_bp_554"
         }
       },
       {
@@ -1222,7 +1293,7 @@ window.DATASET_EXAMPLES = [
           "src": "audio/instruct_en_24405-5-omnivoice.mp3",
           "duration": 2.3,
           "sampleRate": 16000,
-          "speaker": "es_bp_554"
+          "speaker": "cv_1298"
         },
         "qwen": {
           "src": "audio/instruct_en_24405-5-qwen.mp3",
@@ -1234,24 +1305,24 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Santo Domingoko biztanleria milioi bat pertsona ingurukoa da.",
-        "qwen": {
-          "src": "audio/instruct_en_24405-6-qwen.mp3",
-          "duration": 3.8,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_24405-6-omnivoice.mp3",
           "duration": 3.7,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_24405-6-qwen.mp3",
+          "duration": 3.8,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       }
     ]
   },
   {
     "id": "instruct_en_7096",
-    "title": "Dialogue 15",
+    "title": "Dialogue 16",
     "subtitle": "Kaixo, gai al zara urtebetetze festa baterako gonbidatu zerrenda bat iradokitzeko, hamar…",
     "turns": [
       {
@@ -1259,9 +1330,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, gai al zara urtebetetze festa baterako gonbidatu zerrenda bat iradokitzeko, hamar pertsona inguru gonbidatzen baditut, lau bikote eta haien lagunak barne?",
         "omnivoice": {
           "src": "audio/instruct_en_7096-1-omnivoice.mp3",
-          "duration": 9.3,
+          "duration": 10.0,
           "sampleRate": 16000,
-          "speaker": "es_bp_189"
+          "speaker": "cv_0138"
         },
         "qwen": {
           "src": "audio/instruct_en_7096-1-qwen.mp3",
@@ -1293,7 +1364,7 @@ window.DATASET_EXAMPLES = [
           "src": "audio/instruct_en_7096-3-omnivoice.mp3",
           "duration": 3.2,
           "sampleRate": 16000,
-          "speaker": "es_bp_189"
+          "speaker": "cv_0138"
         },
         "qwen": {
           "src": "audio/instruct_en_7096-3-qwen.mp3",
@@ -1323,9 +1394,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein da gomendatuko zenukeen gonbidatu kopuru maximoa urtebetetze festa intimo baterako?",
         "omnivoice": {
           "src": "audio/instruct_en_7096-5-omnivoice.mp3",
-          "duration": 5.3,
+          "duration": 5.7,
           "sampleRate": 16000,
-          "speaker": "es_bp_189"
+          "speaker": "cv_0138"
         },
         "qwen": {
           "src": "audio/instruct_en_7096-5-qwen.mp3",
@@ -1355,9 +1426,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein da gutxieneko gonbidatu kopurua urtebetetze festa txiki baterako?",
         "omnivoice": {
           "src": "audio/instruct_en_7096-7-omnivoice.mp3",
-          "duration": 4.2,
+          "duration": 4.4,
           "sampleRate": 16000,
-          "speaker": "es_bp_189"
+          "speaker": "cv_0138"
         },
         "qwen": {
           "src": "audio/instruct_en_7096-7-qwen.mp3",
@@ -1386,7 +1457,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_69892",
-    "title": "Dialogue 16",
+    "title": "Dialogue 17",
     "subtitle": "Kaixo, esango didazu, zeintzuk dira, ba, bihotzekoak emateko lehen seinaleak emakumeengan,…",
     "turns": [
       {
@@ -1457,39 +1528,39 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_33457",
-    "title": "Dialogue 17",
+    "title": "Dialogue 18",
     "subtitle": "Kaixo, bururatzen al zaizu modu dibertigarri bat haurrei animaliei buruz irakasteko?",
     "turns": [
       {
         "role": "user",
         "text": "Kaixo, bururatzen al zaizu modu dibertigarri bat haurrei animaliei buruz irakasteko?",
+        "omnivoice": {
+          "src": "audio/instruct_en_33457-1-omnivoice.mp3",
+          "duration": 5.1,
+          "sampleRate": 16000,
+          "speaker": "cv_1017"
+        },
         "qwen": {
           "src": "audio/instruct_en_33457-1-qwen.mp3",
           "duration": 6.2,
           "sampleRate": 24000,
           "speaker": "xabier"
-        },
-        "omnivoice": {
-          "src": "audio/instruct_en_33457-1-omnivoice.mp3",
-          "duration": 5.6,
-          "sampleRate": 16000,
-          "speaker": "miren"
         }
       },
       {
         "role": "assistant",
         "text": "Sortu altxorraren bilaketa bat argazki edo jostailu ezberdinekin, eta utzi haurrei aurkitzen eta identifikatzen. Gainera, animalien maskarak egin ditzakezu eta beren izaki gogokoenak antzezten utzi!",
-        "qwen": {
-          "src": "audio/instruct_en_33457-2-qwen.mp3",
-          "duration": 12.5,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_33457-2-omnivoice.mp3",
           "duration": 11.5,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_33457-2-qwen.mp3",
+          "duration": 12.5,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -1499,7 +1570,7 @@ window.DATASET_EXAMPLES = [
           "src": "audio/instruct_en_33457-3-omnivoice.mp3",
           "duration": 4.9,
           "sampleRate": 16000,
-          "speaker": "miren"
+          "speaker": "cv_1017"
         },
         "qwen": {
           "src": "audio/instruct_en_33457-3-qwen.mp3",
@@ -1511,17 +1582,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Egin buztin edo paperarekin akuario baten maketa, eta utzi haurrei beren ozeano-izakiak sortzen eta gehitzen.",
-        "qwen": {
-          "src": "audio/instruct_en_33457-4-qwen.mp3",
-          "duration": 8.5,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_33457-4-omnivoice.mp3",
           "duration": 6.4,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_33457-4-qwen.mp3",
+          "duration": 8.5,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -1529,9 +1600,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira baserriko animaliei buruz haurrei irakasteko modu dibertigarri batzuk?",
         "omnivoice": {
           "src": "audio/instruct_en_33457-5-omnivoice.mp3",
-          "duration": 5.1,
+          "duration": 5.2,
           "sampleRate": 16000,
-          "speaker": "miren"
+          "speaker": "cv_1017"
         },
         "qwen": {
           "src": "audio/instruct_en_33457-5-qwen.mp3",
@@ -1560,7 +1631,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_15984",
-    "title": "Dialogue 18",
+    "title": "Dialogue 19",
     "subtitle": "Kaixo, aurkitu al dezakezu material ekologikoren bat saskibaloi kantxa bat egiteko, badakizu,…",
     "turns": [
       {
@@ -1568,9 +1639,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, aurkitu al dezakezu material ekologikoren bat saskibaloi kantxa bat egiteko, badakizu, naturatik eratorria?",
         "omnivoice": {
           "src": "audio/instruct_en_15984-1-omnivoice.mp3",
-          "duration": 6.8,
+          "duration": 8.3,
           "sampleRate": 16000,
-          "speaker": "en_208"
+          "speaker": "cv_0244"
         },
         "qwen": {
           "src": "audio/instruct_en_15984-1-qwen.mp3",
@@ -1600,9 +1671,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zeintzuk dira banbua saskibaloi kantxa baterako erabiltzearen abantailak?",
         "omnivoice": {
           "src": "audio/instruct_en_15984-3-omnivoice.mp3",
-          "duration": 5.0,
+          "duration": 5.3,
           "sampleRate": 16000,
-          "speaker": "en_208"
+          "speaker": "cv_0244"
         },
         "qwen": {
           "src": "audio/instruct_en_15984-3-qwen.mp3",
@@ -1631,7 +1702,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_13285",
-    "title": "Dialogue 19",
+    "title": "Dialogue 20",
     "subtitle": "Kaixo, eman ahal didazu iragarki webgune baterako esaldi adibide bat?",
     "turns": [
       {
@@ -1639,9 +1710,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, eman ahal didazu iragarki webgune baterako esaldi adibide bat?",
         "omnivoice": {
           "src": "audio/instruct_en_13285-1-omnivoice.mp3",
-          "duration": 5.0,
+          "duration": 4.5,
           "sampleRate": 16000,
-          "speaker": "es_bp_47"
+          "speaker": "cv_0648"
         },
         "qwen": {
           "src": "audio/instruct_en_13285-1-qwen.mp3",
@@ -1671,9 +1742,9 @@ window.DATASET_EXAMPLES = [
         "text": "Eman iezadazu beste adibide bat ordenagailu eramangarri baterako iragarki batentzat.",
         "omnivoice": {
           "src": "audio/instruct_en_13285-3-omnivoice.mp3",
-          "duration": 7.1,
+          "duration": 5.5,
           "sampleRate": 16000,
-          "speaker": "es_bp_47"
+          "speaker": "cv_0648"
         },
         "qwen": {
           "src": "audio/instruct_en_13285-3-qwen.mp3",
@@ -1685,17 +1756,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Salgai, ordenagailu eramangarri erabilia, egoera onean, berrogeita hamar dolar, erdigunean kokatua, jarri harremanetan Janerekin bost zero zero bederatzi zortzi zazpi zenbakian.",
-        "qwen": {
-          "src": "audio/instruct_en_13285-4-qwen.mp3",
-          "duration": 12.5,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_13285-4-omnivoice.mp3",
           "duration": 10.2,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_13285-4-qwen.mp3",
+          "duration": 12.5,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -1703,9 +1774,9 @@ window.DATASET_EXAMPLES = [
         "text": "Eman iezadazu beste adibide bat tablet baterako iragarki batentzat.",
         "omnivoice": {
           "src": "audio/instruct_en_13285-5-omnivoice.mp3",
-          "duration": 5.6,
+          "duration": 4.7,
           "sampleRate": 16000,
-          "speaker": "es_bp_47"
+          "speaker": "cv_0648"
         },
         "qwen": {
           "src": "audio/instruct_en_13285-5-qwen.mp3",
@@ -1735,9 +1806,9 @@ window.DATASET_EXAMPLES = [
         "text": "Eman iezadazu beste adibide bat smartphone baterako iragarki batentzat.",
         "omnivoice": {
           "src": "audio/instruct_en_13285-7-omnivoice.mp3",
-          "duration": 6.0,
+          "duration": 4.3,
           "sampleRate": 16000,
-          "speaker": "es_bp_47"
+          "speaker": "cv_0648"
         },
         "qwen": {
           "src": "audio/instruct_en_13285-7-qwen.mp3",
@@ -1766,7 +1837,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_103005",
-    "title": "Dialogue 20",
+    "title": "Dialogue 21",
     "subtitle": "Emango al dizkidazu Ilustrazioko idealen adibide zehatzak, badakizu, gaur egungo giza eskubideen…",
     "turns": [
       {
@@ -1774,9 +1845,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emango al dizkidazu Ilustrazioko idealen adibide zehatzak, badakizu, gaur egungo giza eskubideen legeetan txertatu direnak, gaur egun bezala?",
         "omnivoice": {
           "src": "audio/instruct_en_103005-1-omnivoice.mp3",
-          "duration": 13.1,
+          "duration": 8.8,
           "sampleRate": 16000,
-          "speaker": "en_3118"
+          "speaker": "cv_0438"
         },
         "qwen": {
           "src": "audio/instruct_en_103005-1-qwen.mp3",
@@ -1806,9 +1877,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emango al didazu informazio gehiago Immanuel Kantek pertsonak beren baitan helburu gisa tratatzeko ideiari buruz?",
         "omnivoice": {
           "src": "audio/instruct_en_103005-3-omnivoice.mp3",
-          "duration": 10.6,
+          "duration": 7.0,
           "sampleRate": 16000,
-          "speaker": "en_3118"
+          "speaker": "cv_0438"
         },
         "qwen": {
           "src": "audio/instruct_en_103005-3-qwen.mp3",
@@ -1837,7 +1908,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_70592",
-    "title": "Dialogue 21",
+    "title": "Dialogue 22",
     "subtitle": "Kaixo, beno, nola erabili dezakezue, badakizu, adimen artifiziala bezeroen esperientzia benetan…",
     "turns": [
       {
@@ -1845,9 +1916,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, beno, nola erabili dezakezue, badakizu, adimen artifiziala bezeroen esperientzia benetan hobetzeko ostalaritza-industrian, hoteletan eta horrelakoetan?",
         "omnivoice": {
           "src": "audio/instruct_en_70592-1-omnivoice.mp3",
-          "duration": 11.2,
+          "duration": 13.7,
           "sampleRate": 16000,
-          "speaker": "jon"
+          "speaker": "cv_0452"
         },
         "qwen": {
           "src": "audio/instruct_en_70592-1-qwen.mp3",
@@ -1877,9 +1948,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emadazu hotel baten adibidea, adimen artifiziala erabiltzen duena.",
         "omnivoice": {
           "src": "audio/instruct_en_70592-3-omnivoice.mp3",
-          "duration": 4.8,
+          "duration": 6.1,
           "sampleRate": 16000,
-          "speaker": "jon"
+          "speaker": "cv_0452"
         },
         "qwen": {
           "src": "audio/instruct_en_70592-3-qwen.mp3",
@@ -1908,7 +1979,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_7204",
-    "title": "Dialogue 22",
+    "title": "Dialogue 23",
     "subtitle": "Kaixo, zein da Estatu Batuetako kirolik ezagunena?",
     "turns": [
       {
@@ -1918,7 +1989,7 @@ window.DATASET_EXAMPLES = [
           "src": "audio/instruct_en_7204-1-omnivoice.mp3",
           "duration": 3.3,
           "sampleRate": 16000,
-          "speaker": "kiko"
+          "speaker": "cv_0736"
         },
         "qwen": {
           "src": "audio/instruct_en_7204-1-qwen.mp3",
@@ -1948,9 +2019,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira ikusle kopuruari dagokionez lehen hiru kirolak?",
         "omnivoice": {
           "src": "audio/instruct_en_7204-3-omnivoice.mp3",
-          "duration": 3.4,
+          "duration": 3.8,
           "sampleRate": 16000,
-          "speaker": "kiko"
+          "speaker": "cv_0736"
         },
         "qwen": {
           "src": "audio/instruct_en_7204-3-qwen.mp3",
@@ -1979,7 +2050,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_41719",
-    "title": "Dialogue 23",
+    "title": "Dialogue 24",
     "subtitle": "Zein dira, badakizu, eguneroko ariketa fisikoaren onura batzuk osasunerako?",
     "turns": [
       {
@@ -1987,9 +2058,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira, badakizu, eguneroko ariketa fisikoaren onura batzuk osasunerako?",
         "omnivoice": {
           "src": "audio/instruct_en_41719-1-omnivoice.mp3",
-          "duration": 5.0,
+          "duration": 5.8,
           "sampleRate": 16000,
-          "speaker": "en_1054"
+          "speaker": "cv_0016"
         },
         "qwen": {
           "src": "audio/instruct_en_41719-1-qwen.mp3",
@@ -2019,9 +2090,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira jarduera fisiko erregularraren onurak osasun mentalerako?",
         "omnivoice": {
           "src": "audio/instruct_en_41719-3-omnivoice.mp3",
-          "duration": 4.5,
+          "duration": 4.9,
           "sampleRate": 16000,
-          "speaker": "en_1054"
+          "speaker": "cv_0016"
         },
         "qwen": {
           "src": "audio/instruct_en_41719-3-qwen.mp3",
@@ -2050,7 +2121,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_98170",
-    "title": "Dialogue 24",
+    "title": "Dialogue 25",
     "subtitle": "Kaixo, gomendatu al dizkidazu etxerako garbiketa-produktu ekologiko batzuk, funtzionatzen…",
     "turns": [
       {
@@ -2058,9 +2129,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, gomendatu al dizkidazu etxerako garbiketa-produktu ekologiko batzuk, funtzionatzen dutenak eta diru asko gastaraziko ez didatenak? Eta zerrendatu al ditzakezu osagaiak eta non aurki ditzakedan?",
         "omnivoice": {
           "src": "audio/instruct_en_98170-1-omnivoice.mp3",
-          "duration": 12.9,
+          "duration": 14.3,
           "sampleRate": 16000,
-          "speaker": "nerea"
+          "speaker": "cv_1203"
         },
         "qwen": {
           "src": "audio/instruct_en_98170-1-qwen.mp3",
@@ -2090,9 +2161,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira Dr. Bronner's xaboi castilea garbitzaile multiproduktu gisa erabiltzeko aholku batzuk?",
         "omnivoice": {
           "src": "audio/instruct_en_98170-3-omnivoice.mp3",
-          "duration": 5.6,
+          "duration": 6.6,
           "sampleRate": 16000,
-          "speaker": "nerea"
+          "speaker": "cv_1203"
         },
         "qwen": {
           "src": "audio/instruct_en_98170-3-qwen.mp3",
@@ -2104,24 +2175,24 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Dr. Bronner's xaboi castilea erabiltzeko, diluitu koilarakada bat xaboi ur edalontzi batekin garbiketa orokorrerako, edo erabili indar osoa nahaste zailak garbitzeko. Eskuak eta gorputza garbitzeko ere bikaina da.",
-        "qwen": {
-          "src": "audio/instruct_en_98170-4-qwen.mp3",
-          "duration": 11.1,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_98170-4-omnivoice.mp3",
           "duration": 12.4,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_98170-4-qwen.mp3",
+          "duration": 11.1,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       }
     ]
   },
   {
     "id": "instruct_en_31634",
-    "title": "Dialogue 25",
+    "title": "Dialogue 26",
     "subtitle": "Kaixo, biharko zortzietarako abisua jar dezakezu?",
     "turns": [
       {
@@ -2129,9 +2200,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, biharko zortzietarako abisua jar dezakezu?",
         "omnivoice": {
           "src": "audio/instruct_en_31634-1-omnivoice.mp3",
-          "duration": 3.5,
+          "duration": 4.5,
           "sampleRate": 16000,
-          "speaker": "es_bp_389"
+          "speaker": "cv_0418"
         },
         "qwen": {
           "src": "audio/instruct_en_31634-1-qwen.mp3",
@@ -2161,9 +2232,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zertarako da abisua?",
         "omnivoice": {
           "src": "audio/instruct_en_31634-3-omnivoice.mp3",
-          "duration": 1.9,
+          "duration": 1.7,
           "sampleRate": 16000,
-          "speaker": "es_bp_389"
+          "speaker": "cv_0418"
         },
         "qwen": {
           "src": "audio/instruct_en_31634-3-qwen.mp3",
@@ -2192,7 +2263,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_47385",
-    "title": "Dialogue 26",
+    "title": "Dialogue 27",
     "subtitle": "Kaixo, eman ahal dizkidazu pauso batzuk, badakizu, estresa murrizten laguntzeko?",
     "turns": [
       {
@@ -2200,9 +2271,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, eman ahal dizkidazu pauso batzuk, badakizu, estresa murrizten laguntzeko?",
         "omnivoice": {
           "src": "audio/instruct_en_47385-1-omnivoice.mp3",
-          "duration": 5.6,
+          "duration": 5.1,
           "sampleRate": 16000,
-          "speaker": "en_1724"
+          "speaker": "cv_0156"
         },
         "qwen": {
           "src": "audio/instruct_en_47385-1-qwen.mp3",
@@ -2232,9 +2303,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira erlaxatzeko teknika batzuk oheratzeko?",
         "omnivoice": {
           "src": "audio/instruct_en_47385-3-omnivoice.mp3",
-          "duration": 3.5,
+          "duration": 3.1,
           "sampleRate": 16000,
-          "speaker": "en_1724"
+          "speaker": "cv_0156"
         },
         "qwen": {
           "src": "audio/instruct_en_47385-3-qwen.mp3",
@@ -2263,23 +2334,23 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_153431",
-    "title": "Dialogue 27",
+    "title": "Dialogue 28",
     "subtitle": "Emango al dizkidazu adibide batzuk enpresa handietako mentoretza programa arrakastatsuenak, eta…",
     "turns": [
       {
         "role": "user",
         "text": "Emango al dizkidazu adibide batzuk enpresa handietako mentoretza programa arrakastatsuenak, eta zer egin zuten hain ondo funtzionatzeko?",
+        "omnivoice": {
+          "src": "audio/instruct_en_153431-1-omnivoice.mp3",
+          "duration": 10.7,
+          "sampleRate": 16000,
+          "speaker": "cv_0694"
+        },
         "qwen": {
           "src": "audio/instruct_en_153431-1-qwen.mp3",
           "duration": 9.3,
           "sampleRate": 24000,
           "speaker": "maider"
-        },
-        "omnivoice": {
-          "src": "audio/instruct_en_153431-1-omnivoice.mp3",
-          "duration": 9.8,
-          "sampleRate": 16000,
-          "speaker": "es_bp_476"
         }
       },
       {
@@ -2303,9 +2374,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zeintzuk dira lantokian mentore bat izatearen onurak?",
         "omnivoice": {
           "src": "audio/instruct_en_153431-3-omnivoice.mp3",
-          "duration": 3.9,
+          "duration": 4.0,
           "sampleRate": 16000,
-          "speaker": "es_bp_476"
+          "speaker": "cv_0694"
         },
         "qwen": {
           "src": "audio/instruct_en_153431-3-qwen.mp3",
@@ -2334,7 +2405,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_31165",
-    "title": "Dialogue 28",
+    "title": "Dialogue 29",
     "subtitle": "Aizu, asma dezakezu txiste barregarri bat, badakizu, zerbait argia, ez oso melenga, tako hitzan…",
     "turns": [
       {
@@ -2342,9 +2413,9 @@ window.DATASET_EXAMPLES = [
         "text": "Aizu, asma dezakezu txiste barregarri bat, badakizu, zerbait argia, ez oso melenga, tako hitzan oinarrituta?",
         "omnivoice": {
           "src": "audio/instruct_en_31165-1-omnivoice.mp3",
-          "duration": 6.1,
+          "duration": 7.8,
           "sampleRate": 16000,
-          "speaker": "en_8776"
+          "speaker": "cv_1373"
         },
         "qwen": {
           "src": "audio/instruct_en_31165-1-qwen.mp3",
@@ -2374,9 +2445,9 @@ window.DATASET_EXAMPLES = [
         "text": "Asma ezazu beste txiste barregarri bat pizzari buruz.",
         "omnivoice": {
           "src": "audio/instruct_en_31165-3-omnivoice.mp3",
-          "duration": 3.2,
+          "duration": 3.7,
           "sampleRate": 16000,
-          "speaker": "en_8776"
+          "speaker": "cv_1373"
         },
         "qwen": {
           "src": "audio/instruct_en_31165-3-qwen.mp3",
@@ -2405,7 +2476,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_32293",
-    "title": "Dialogue 29",
+    "title": "Dialogue 30",
     "subtitle": "Kaixo, txio bat sortu dezakezu edertasunari buruz?",
     "turns": [
       {
@@ -2413,9 +2484,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, txio bat sortu dezakezu edertasunari buruz?",
         "omnivoice": {
           "src": "audio/instruct_en_32293-1-omnivoice.mp3",
-          "duration": 3.0,
+          "duration": 3.9,
           "sampleRate": 16000,
-          "speaker": "kepa"
+          "speaker": "cv_0580"
         },
         "qwen": {
           "src": "audio/instruct_en_32293-1-qwen.mp3",
@@ -2445,9 +2516,9 @@ window.DATASET_EXAMPLES = [
         "text": "Sortu txio bat modari buruz",
         "omnivoice": {
           "src": "audio/instruct_en_32293-3-omnivoice.mp3",
-          "duration": 2.0,
+          "duration": 2.2,
           "sampleRate": 16000,
-          "speaker": "kepa"
+          "speaker": "cv_0580"
         },
         "qwen": {
           "src": "audio/instruct_en_32293-3-qwen.mp3",
@@ -2477,9 +2548,9 @@ window.DATASET_EXAMPLES = [
         "text": "Sortu txio bat bidaiatzeari buruz",
         "omnivoice": {
           "src": "audio/instruct_en_32293-5-omnivoice.mp3",
-          "duration": 2.2,
+          "duration": 2.6,
           "sampleRate": 16000,
-          "speaker": "kepa"
+          "speaker": "cv_0580"
         },
         "qwen": {
           "src": "audio/instruct_en_32293-5-qwen.mp3",
@@ -2491,24 +2562,24 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Hona hemen txio bat bidaiatzeari buruz: Leku berriak ezagutzea da bizitzako abenturarik handienetako bat.",
-        "qwen": {
-          "src": "audio/instruct_en_32293-6-qwen.mp3",
-          "duration": 7.2,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_32293-6-omnivoice.mp3",
           "duration": 6.2,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_32293-6-qwen.mp3",
+          "duration": 7.2,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       }
     ]
   },
   {
     "id": "instruct_en_106785",
-    "title": "Dialogue 30",
+    "title": "Dialogue 31",
     "subtitle": "Emango al dizkidazu Eskubide Zibilen Mugimenduan antolatutako indarkeriarik gabeko protesta eta…",
     "turns": [
       {
@@ -2516,9 +2587,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emango al dizkidazu Eskubide Zibilen Mugimenduan antolatutako indarkeriarik gabeko protesta eta boikot batzuen adibide zehatzak, ba, desegregazioan eragin nabarmena izan zutenak, badakizu, AEBetako estatu desberdinetan?",
         "omnivoice": {
           "src": "audio/instruct_en_106785-1-omnivoice.mp3",
-          "duration": 17.8,
+          "duration": 20.1,
           "sampleRate": 16000,
-          "speaker": "es_bp_47"
+          "speaker": "cv_0646"
         },
         "qwen": {
           "src": "audio/instruct_en_106785-1-qwen.mp3",
@@ -2548,9 +2619,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein izan ziren Montgomeryko Autobusen Boikotaren emaitza nagusiak?",
         "omnivoice": {
           "src": "audio/instruct_en_106785-3-omnivoice.mp3",
-          "duration": 5.0,
+          "duration": 5.8,
           "sampleRate": 16000,
-          "speaker": "es_bp_47"
+          "speaker": "cv_0646"
         },
         "qwen": {
           "src": "audio/instruct_en_106785-3-qwen.mp3",
@@ -2580,9 +2651,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein izan ziren Birminghamgo Kanpainaren emaitza nagusiak?",
         "omnivoice": {
           "src": "audio/instruct_en_106785-5-omnivoice.mp3",
-          "duration": 5.0,
+          "duration": 5.1,
           "sampleRate": 16000,
-          "speaker": "es_bp_47"
+          "speaker": "cv_0646"
         },
         "qwen": {
           "src": "audio/instruct_en_106785-5-qwen.mp3",
@@ -2612,9 +2683,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein izan ziren Selmatik Montgomeryrako Martxen emaitza nagusiak?",
         "omnivoice": {
           "src": "audio/instruct_en_106785-7-omnivoice.mp3",
-          "duration": 5.5,
+          "duration": 5.3,
           "sampleRate": 16000,
-          "speaker": "es_bp_47"
+          "speaker": "cv_0646"
         },
         "qwen": {
           "src": "audio/instruct_en_106785-7-qwen.mp3",
@@ -2643,7 +2714,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_48605",
-    "title": "Dialogue 31",
+    "title": "Dialogue 32",
     "subtitle": "Kaixo, ordenatu al ditzakezu planeta hauek eguzkitik hurbilenetik urrunenera? Merkuriorekin,…",
     "turns": [
       {
@@ -2651,9 +2722,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, ordenatu al ditzakezu planeta hauek eguzkitik hurbilenetik urrunenera? Merkuriorekin, Artizarrekin, Lurrarekin, Martekin, Jupiterrekin, Saturnorekin, Uranorekin eta Neptunorekin nabil.",
         "omnivoice": {
           "src": "audio/instruct_en_48605-1-omnivoice.mp3",
-          "duration": 11.2,
+          "duration": 14.2,
           "sampleRate": 16000,
-          "speaker": "en_7264"
+          "speaker": "cv_1106"
         },
         "qwen": {
           "src": "audio/instruct_en_48605-1-qwen.mp3",
@@ -2683,9 +2754,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein da gure eguzki-sistemako planetarik handiena?",
         "omnivoice": {
           "src": "audio/instruct_en_48605-3-omnivoice.mp3",
-          "duration": 3.1,
+          "duration": 3.7,
           "sampleRate": 16000,
-          "speaker": "en_7264"
+          "speaker": "cv_1106"
         },
         "qwen": {
           "src": "audio/instruct_en_48605-3-qwen.mp3",
@@ -2714,7 +2785,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_19188",
-    "title": "Dialogue 32",
+    "title": "Dialogue 33",
     "subtitle": "Kaixo, artikulu hau politika arlokoa da, albiste bat edo iritzi artikulu bat den esan dezakezu?",
     "turns": [
       {
@@ -2785,7 +2856,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_1968",
-    "title": "Dialogue 33",
+    "title": "Dialogue 34",
     "subtitle": "Kaixo, gai interesgarri bat bururatzen ahal didazu konbentzitzeko saiakera bat idazteko?",
     "turns": [
       {
@@ -2856,7 +2927,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_45402",
-    "title": "Dialogue 34",
+    "title": "Dialogue 35",
     "subtitle": "Kaixo, etxeko zuzenbideko webgune baten hasierako orria berriz diseinatu dezakezu?",
     "turns": [
       {
@@ -2959,7 +3030,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_24356",
-    "title": "Dialogue 35",
+    "title": "Dialogue 36",
     "subtitle": "Kaixo, esan diezadakezu Reddit-eko hari hau, r barrabasa askreddit-etik datorrena, ba, oso…",
     "turns": [
       {
@@ -2967,9 +3038,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, esan diezadakezu Reddit-eko hari hau, r barrabasa askreddit-etik datorrena, ba, oso iritzi-iritzitakoa den edo zer? Iruzkin pila bat ditu arazoak konpontzeari buruz, norbaitek esaten duela ukabilkada bat eman eta onena espero, edo arazoan zentratu eta zerbait argia egitea, horrelako gauzak.",
         "omnivoice": {
           "src": "audio/instruct_en_24356-1-omnivoice.mp3",
-          "duration": 18.3,
+          "duration": 23.0,
           "sampleRate": 16000,
-          "speaker": "es_bp_526"
+          "speaker": "cv_1094"
         },
         "qwen": {
           "src": "audio/instruct_en_24356-1-qwen.mp3",
@@ -2999,9 +3070,9 @@ window.DATASET_EXAMPLES = [
         "text": "Laburbildu al dezakezu Reddit-eko hariaren puntu nagusia?",
         "omnivoice": {
           "src": "audio/instruct_en_24356-3-omnivoice.mp3",
-          "duration": 3.8,
+          "duration": 3.9,
           "sampleRate": 16000,
-          "speaker": "es_bp_526"
+          "speaker": "cv_1094"
         },
         "qwen": {
           "src": "audio/instruct_en_24356-3-qwen.mp3",
@@ -3030,7 +3101,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_16794",
-    "title": "Dialogue 36",
+    "title": "Dialogue 37",
     "subtitle": "Kaixo, hiru arrazoi posible bururatzen al zaizkizu nire programan errore arraro hau zergatik ari…",
     "turns": [
       {
@@ -3038,9 +3109,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, hiru arrazoi posible bururatzen al zaizkizu nire programan errore arraro hau zergatik ari naizen jasotzen?",
         "omnivoice": {
           "src": "audio/instruct_en_16794-1-omnivoice.mp3",
-          "duration": 6.6,
+          "duration": 7.3,
           "sampleRate": 16000,
-          "speaker": "aintzane"
+          "speaker": "cv_0091"
         },
         "qwen": {
           "src": "audio/instruct_en_16794-1-qwen.mp3",
@@ -3070,9 +3141,9 @@ window.DATASET_EXAMPLES = [
         "text": "Azaldu al dezakezu lehen arrazoia zehatzago?",
         "omnivoice": {
           "src": "audio/instruct_en_16794-3-omnivoice.mp3",
-          "duration": 2.7,
+          "duration": 2.9,
           "sampleRate": 16000,
-          "speaker": "aintzane"
+          "speaker": "cv_0091"
         },
         "qwen": {
           "src": "audio/instruct_en_16794-3-qwen.mp3",
@@ -3102,9 +3173,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emango al zenidake sintaxi-errore baten adibide bat?",
         "omnivoice": {
           "src": "audio/instruct_en_16794-5-omnivoice.mp3",
-          "duration": 3.2,
+          "duration": 3.6,
           "sampleRate": 16000,
-          "speaker": "aintzane"
+          "speaker": "cv_0091"
         },
         "qwen": {
           "src": "audio/instruct_en_16794-5-qwen.mp3",
@@ -3133,7 +3204,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_130110",
-    "title": "Dialogue 37",
+    "title": "Dialogue 38",
     "subtitle": "Kaixo, hobe al da meditatzea leku lasai batean edo zarata kentzeko entzungailuak erabil ditzaket…",
     "turns": [
       {
@@ -3141,9 +3212,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, hobe al da meditatzea leku lasai batean edo zarata kentzeko entzungailuak erabil ditzaket inguruan zarata badago?",
         "omnivoice": {
           "src": "audio/instruct_en_130110-1-omnivoice.mp3",
-          "duration": 6.1,
+          "duration": 6.5,
           "sampleRate": 16000,
-          "speaker": "es_bp_432"
+          "speaker": "cv_0513"
         },
         "qwen": {
           "src": "audio/instruct_en_130110-1-qwen.mp3",
@@ -3173,9 +3244,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zeintzuk dira zarata kentzeko entzungailuak meditatzeko erabiltzearen onurak?",
         "omnivoice": {
           "src": "audio/instruct_en_130110-3-omnivoice.mp3",
-          "duration": 4.1,
+          "duration": 3.9,
           "sampleRate": 16000,
-          "speaker": "es_bp_432"
+          "speaker": "cv_0513"
         },
         "qwen": {
           "src": "audio/instruct_en_130110-3-qwen.mp3",
@@ -3205,9 +3276,9 @@ window.DATASET_EXAMPLES = [
         "text": "Erabil al ditzaket zarata kentzeko entzungailuak gidatutako meditazio batean?",
         "omnivoice": {
           "src": "audio/instruct_en_130110-5-omnivoice.mp3",
-          "duration": 4.1,
+          "duration": 4.7,
           "sampleRate": 16000,
-          "speaker": "es_bp_432"
+          "speaker": "cv_0513"
         },
         "qwen": {
           "src": "audio/instruct_en_130110-5-qwen.mp3",
@@ -3236,7 +3307,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_2039",
-    "title": "Dialogue 38",
+    "title": "Dialogue 39",
     "subtitle": "Kaixo, esaldi hau sailkatu dezakezu? 'Bizitza errusiar mendi bat da' metafora ala konparazioa da?",
     "turns": [
       {
@@ -3244,9 +3315,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, esaldi hau sailkatu dezakezu? 'Bizitza errusiar mendi bat da' metafora ala konparazioa da?",
         "omnivoice": {
           "src": "audio/instruct_en_2039-1-omnivoice.mp3",
-          "duration": 6.1,
+          "duration": 7.5,
           "sampleRate": 16000,
-          "speaker": "kiko"
+          "speaker": "cv_0727"
         },
         "qwen": {
           "src": "audio/instruct_en_2039-1-qwen.mp3",
@@ -3276,9 +3347,9 @@ window.DATASET_EXAMPLES = [
         "text": "Sailkatu esaldi hau simile edo metafora gisa: 'gehiago korrika egin zuen gepardo bat bezala'",
         "omnivoice": {
           "src": "audio/instruct_en_2039-3-omnivoice.mp3",
-          "duration": 5.8,
+          "duration": 6.9,
           "sampleRate": 16000,
-          "speaker": "kiko"
+          "speaker": "cv_0727"
         },
         "qwen": {
           "src": "audio/instruct_en_2039-3-qwen.mp3",
@@ -3307,7 +3378,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_170485",
-    "title": "Dialogue 39",
+    "title": "Dialogue 40",
     "subtitle": "Emango al didazu itsas ekosistemetan plastikoaren kutsadurak duen eraginaren inguruko azalpen…",
     "turns": [
       {
@@ -3315,9 +3386,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emango al didazu itsas ekosistemetan plastikoaren kutsadurak duen eraginaren inguruko azalpen zehatza?",
         "omnivoice": {
           "src": "audio/instruct_en_170485-1-omnivoice.mp3",
-          "duration": 7.0,
+          "duration": 6.2,
           "sampleRate": 16000,
-          "speaker": "es_bp_479"
+          "speaker": "cv_0724"
         },
         "qwen": {
           "src": "audio/instruct_en_170485-1-qwen.mp3",
@@ -3347,9 +3418,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zer egin dezakete norbanakoek ozeanoetako plastikoaren kutsadura murrizteko?",
         "omnivoice": {
           "src": "audio/instruct_en_170485-3-omnivoice.mp3",
-          "duration": 5.0,
+          "duration": 4.4,
           "sampleRate": 16000,
-          "speaker": "es_bp_479"
+          "speaker": "cv_0724"
         },
         "qwen": {
           "src": "audio/instruct_en_170485-3-qwen.mp3",
@@ -3361,24 +3432,24 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Norbanakoek plastikoaren kutsadura murriztu dezakete berrerabil daitezkeen poltsak eta ur-botilak erabiliz, plastikozko hondakinak birziklatuz eta mikroesferak dituzten produktuak saihestuz. Gainera, hondartza-garbiketetan parte har dezakete eta itsas ekosistemak babesteko lan egiten duten erakundeei laguntza eman diezaiekete.",
-        "qwen": {
-          "src": "audio/instruct_en_170485-4-qwen.mp3",
-          "duration": 10.3,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_170485-4-omnivoice.mp3",
           "duration": 19.0,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_170485-4-qwen.mp3",
+          "duration": 10.3,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       }
     ]
   },
   {
     "id": "instruct_en_175845",
-    "title": "Dialogue 40",
+    "title": "Dialogue 41",
     "subtitle": "Kontatu ahal didazu zerbait, badakizu, Koreako janari tradizionalaren historiari eta garrantzi…",
     "turns": [
       {
@@ -3386,9 +3457,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kontatu ahal didazu zerbait, badakizu, Koreako janari tradizionalaren historiari eta garrantzi kulturalari buruz?",
         "omnivoice": {
           "src": "audio/instruct_en_175845-1-omnivoice.mp3",
-          "duration": 5.5,
+          "duration": 8.1,
           "sampleRate": 16000,
-          "speaker": "es_bp_541"
+          "speaker": "cv_1205"
         },
         "qwen": {
           "src": "audio/instruct_en_175845-1-qwen.mp3",
@@ -3418,9 +3489,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira Koreako plater tradizional ezagunenak?",
         "omnivoice": {
           "src": "audio/instruct_en_175845-3-omnivoice.mp3",
-          "duration": 2.4,
+          "duration": 3.2,
           "sampleRate": 16000,
-          "speaker": "es_bp_541"
+          "speaker": "cv_1205"
         },
         "qwen": {
           "src": "audio/instruct_en_175845-3-qwen.mp3",
@@ -3449,7 +3520,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_194531",
-    "title": "Dialogue 41",
+    "title": "Dialogue 42",
     "subtitle": "Kaixo, ba al dakizu arrantza egiteko leku on bat inguru honetan?",
     "turns": [
       {
@@ -3457,9 +3528,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, ba al dakizu arrantza egiteko leku on bat inguru honetan?",
         "omnivoice": {
           "src": "audio/instruct_en_194531-1-omnivoice.mp3",
-          "duration": 3.3,
+          "duration": 4.4,
           "sampleRate": 16000,
-          "speaker": "es_bp_380"
+          "speaker": "cv_0408"
         },
         "qwen": {
           "src": "audio/instruct_en_194531-1-qwen.mp3",
@@ -3489,9 +3560,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein arrain mota harrapa dezaket han?",
         "omnivoice": {
           "src": "audio/instruct_en_194531-3-omnivoice.mp3",
-          "duration": 2.1,
+          "duration": 2.4,
           "sampleRate": 16000,
-          "speaker": "es_bp_380"
+          "speaker": "cv_0408"
         },
         "qwen": {
           "src": "audio/instruct_en_194531-3-qwen.mp3",
@@ -3521,9 +3592,9 @@ window.DATASET_EXAMPLES = [
         "text": "Erraza al da arrainak harrapatzea hasiberrientzat?",
         "omnivoice": {
           "src": "audio/instruct_en_194531-5-omnivoice.mp3",
-          "duration": 2.8,
+          "duration": 3.6,
           "sampleRate": 16000,
-          "speaker": "es_bp_380"
+          "speaker": "cv_0408"
         },
         "qwen": {
           "src": "audio/instruct_en_194531-5-qwen.mp3",
@@ -3552,7 +3623,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_147403",
-    "title": "Dialogue 42",
+    "title": "Dialogue 43",
     "subtitle": "Aupa, baso debekatura joan nahi duzu eta, badakizu, izaki arriskutsu batzuekin topo egin, edo…",
     "turns": [
       {
@@ -3560,9 +3631,9 @@ window.DATASET_EXAMPLES = [
         "text": "Aupa, baso debekatura joan nahi duzu eta, badakizu, izaki arriskutsu batzuekin topo egin, edo nahiago duzu Aintzira Beltza ikustera joan eta, agian, itsas laminen bat ikusi?",
         "omnivoice": {
           "src": "audio/instruct_en_147403-1-omnivoice.mp3",
-          "duration": 10.2,
+          "duration": 11.7,
           "sampleRate": 16000,
-          "speaker": "es_bp_313"
+          "speaker": "cv_0311"
         },
         "qwen": {
           "src": "audio/instruct_en_147403-1-qwen.mp3",
@@ -3592,9 +3663,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein eguneko ordutan uste duzu dela onena itsas laminak Aintzira Beltzean ikusteko?",
         "omnivoice": {
           "src": "audio/instruct_en_147403-3-omnivoice.mp3",
-          "duration": 5.1,
+          "duration": 5.5,
           "sampleRate": 16000,
-          "speaker": "es_bp_313"
+          "speaker": "cv_0311"
         },
         "qwen": {
           "src": "audio/instruct_en_147403-3-qwen.mp3",
@@ -3623,7 +3694,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_113259",
-    "title": "Dialogue 43",
+    "title": "Dialogue 44",
     "subtitle": "Kaixo, lanarekin eta gauzekin oso lanpetuta nago, beraz, aurrekontua hautsiko ez didaten otordu…",
     "turns": [
       {
@@ -3631,9 +3702,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, lanarekin eta gauzekin oso lanpetuta nago, beraz, aurrekontua hautsiko ez didaten otordu osasungarriak prestatzeko ideiak behar ditut, badakizu, beti korrika dabiltzan nire moduko profesionalentzat.",
         "omnivoice": {
           "src": "audio/instruct_en_113259-1-omnivoice.mp3",
-          "duration": 11.3,
+          "duration": 14.9,
           "sampleRate": 16000,
-          "speaker": "es_bp_305"
+          "speaker": "cv_0288"
         },
         "qwen": {
           "src": "audio/instruct_en_113259-1-qwen.mp3",
@@ -3663,9 +3734,9 @@ window.DATASET_EXAMPLES = [
         "text": "Eta zer afari-ideia erraz berotzeko?",
         "omnivoice": {
           "src": "audio/instruct_en_113259-3-omnivoice.mp3",
-          "duration": 2.2,
+          "duration": 2.8,
           "sampleRate": 16000,
-          "speaker": "es_bp_305"
+          "speaker": "cv_0288"
         },
         "qwen": {
           "src": "audio/instruct_en_113259-3-qwen.mp3",
@@ -3677,17 +3748,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Afaltzeko, saiatu dilista-zopa edo quinoa eta barazki lurrunetan erretako oilaskoa prestatzen. Aukera hauek ondo berotzen dira eta denbora eta dirua aurrezteko sorta handietan egin daitezke.",
-        "qwen": {
-          "src": "audio/instruct_en_113259-4-qwen.mp3",
-          "duration": 12.5,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_113259-4-omnivoice.mp3",
           "duration": 11.1,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_113259-4-qwen.mp3",
+          "duration": 12.5,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -3695,9 +3766,9 @@ window.DATASET_EXAMPLES = [
         "text": "Iradoki al dezakezu hartzeko eta joateko errazak diren mokadu osasungarri batzuk?",
         "omnivoice": {
           "src": "audio/instruct_en_113259-5-omnivoice.mp3",
-          "duration": 4.7,
+          "duration": 5.3,
           "sampleRate": 16000,
-          "speaker": "es_bp_305"
+          "speaker": "cv_0288"
         },
         "qwen": {
           "src": "audio/instruct_en_113259-5-qwen.mp3",
@@ -3726,7 +3797,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_43275",
-    "title": "Dialogue 44",
+    "title": "Dialogue 45",
     "subtitle": "Kaixo, erakutsi ahal didazu nola kalkulatu probabilitateak Excel erabiliz?",
     "turns": [
       {
@@ -3734,9 +3805,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, erakutsi ahal didazu nola kalkulatu probabilitateak Excel erabiliz?",
         "omnivoice": {
           "src": "audio/instruct_en_43275-1-omnivoice.mp3",
-          "duration": 4.6,
+          "duration": 5.1,
           "sampleRate": 16000,
-          "speaker": "es_bp_527"
+          "speaker": "cv_1103"
         },
         "qwen": {
           "src": "audio/instruct_en_43275-1-qwen.mp3",
@@ -3766,9 +3837,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein da formulak probabilitatea probabilitatetik kalkulatzeko Excelen?",
         "omnivoice": {
           "src": "audio/instruct_en_43275-3-omnivoice.mp3",
-          "duration": 4.4,
+          "duration": 5.0,
           "sampleRate": 16000,
-          "speaker": "es_bp_527"
+          "speaker": "cv_1103"
         },
         "qwen": {
           "src": "audio/instruct_en_43275-3-qwen.mp3",
@@ -3798,9 +3869,9 @@ window.DATASET_EXAMPLES = [
         "text": "Nola kalkulatu daitezke bi hiruren probabilitateak Excelen?",
         "omnivoice": {
           "src": "audio/instruct_en_43275-5-omnivoice.mp3",
-          "duration": 3.7,
+          "duration": 3.8,
           "sampleRate": 16000,
-          "speaker": "es_bp_527"
+          "speaker": "cv_1103"
         },
         "qwen": {
           "src": "audio/instruct_en_43275-5-qwen.mp3",
@@ -3829,7 +3900,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_20968",
-    "title": "Dialogue 45",
+    "title": "Dialogue 46",
     "subtitle": "Kaixo, uste al duzu mundua benetan hobea dela orain, badakizu, duela hamar urte baino?",
     "turns": [
       {
@@ -3837,9 +3908,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, uste al duzu mundua benetan hobea dela orain, badakizu, duela hamar urte baino?",
         "omnivoice": {
           "src": "audio/instruct_en_20968-1-omnivoice.mp3",
-          "duration": 4.8,
+          "duration": 6.2,
           "sampleRate": 16000,
-          "speaker": "es_bp_14"
+          "speaker": "cv_0092"
         },
         "qwen": {
           "src": "audio/instruct_en_20968-1-qwen.mp3",
@@ -3871,7 +3942,7 @@ window.DATASET_EXAMPLES = [
           "src": "audio/instruct_en_20968-3-omnivoice.mp3",
           "duration": 3.6,
           "sampleRate": 16000,
-          "speaker": "es_bp_14"
+          "speaker": "cv_0092"
         },
         "qwen": {
           "src": "audio/instruct_en_20968-3-qwen.mp3",
@@ -3901,9 +3972,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein aurrerapen egin da erronka horietan?",
         "omnivoice": {
           "src": "audio/instruct_en_20968-5-omnivoice.mp3",
-          "duration": 2.5,
+          "duration": 2.8,
           "sampleRate": 16000,
-          "speaker": "es_bp_14"
+          "speaker": "cv_0092"
         },
         "qwen": {
           "src": "audio/instruct_en_20968-5-qwen.mp3",
@@ -3932,7 +4003,7 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_14525",
-    "title": "Dialogue 46",
+    "title": "Dialogue 47",
     "subtitle": "Kaixo, begiratu al dezakezu The Verge eta laburpen azkar bat eman?",
     "turns": [
       {
@@ -4067,23 +4138,23 @@ window.DATASET_EXAMPLES = [
   },
   {
     "id": "instruct_en_197003",
-    "title": "Dialogue 47",
+    "title": "Dialogue 48",
     "subtitle": "Kaixo, gomendatu al dizkidazu aurrekontu txikiko moduak Taganrogeko janari errusiarra…",
     "turns": [
       {
         "role": "user",
         "text": "Kaixo, gomendatu al dizkidazu aurrekontu txikiko moduak Taganrogeko janari errusiarra probatzeko? Aukera merkeen bila nabil.",
+        "omnivoice": {
+          "src": "audio/instruct_en_197003-1-omnivoice.mp3",
+          "duration": 7.7,
+          "sampleRate": 16000,
+          "speaker": "cv_0798"
+        },
         "qwen": {
           "src": "audio/instruct_en_197003-1-qwen.mp3",
           "duration": 6.8,
           "sampleRate": 24000,
           "speaker": "maider"
-        },
-        "omnivoice": {
-          "src": "audio/instruct_en_197003-1-omnivoice.mp3",
-          "duration": 7.5,
-          "sampleRate": 16000,
-          "speaker": "es_bp_487"
         }
       },
       {
@@ -4107,9 +4178,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira merkatuetan probatu beharko nituzkeen errusiar plater ezagunak?",
         "omnivoice": {
           "src": "audio/instruct_en_197003-3-omnivoice.mp3",
-          "duration": 4.6,
+          "duration": 4.8,
           "sampleRate": 16000,
-          "speaker": "es_bp_487"
+          "speaker": "cv_0798"
         },
         "qwen": {
           "src": "audio/instruct_en_197003-3-qwen.mp3",
@@ -4139,9 +4210,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein da janaria tokiko merkatu batean eskatzeko modurik onena Taganrogeko?",
         "omnivoice": {
           "src": "audio/instruct_en_197003-5-omnivoice.mp3",
-          "duration": 4.6,
+          "duration": 4.8,
           "sampleRate": 16000,
-          "speaker": "es_bp_487"
+          "speaker": "cv_0798"
         },
         "qwen": {
           "src": "audio/instruct_en_197003-5-qwen.mp3",
@@ -4169,141 +4240,6 @@ window.DATASET_EXAMPLES = [
     ]
   },
   {
-    "id": "instruct_en_5832",
-    "title": "Dialogue 48",
-    "subtitle": "Kaixo, kontatu ahal didazu Mike izeneko pertsonaia bati buruz?",
-    "turns": [
-      {
-        "role": "user",
-        "text": "Kaixo, kontatu ahal didazu Mike izeneko pertsonaia bati buruz?",
-        "omnivoice": {
-          "src": "audio/instruct_en_5832-1-omnivoice.mp3",
-          "duration": 3.7,
-          "sampleRate": 16000,
-          "speaker": "nerea"
-        },
-        "qwen": {
-          "src": "audio/instruct_en_5832-1-qwen.mp3",
-          "duration": 4.6,
-          "sampleRate": 24000,
-          "speaker": "klara"
-        }
-      },
-      {
-        "role": "assistant",
-        "text": "Mike izeneko pertsonaia asko daude. Mesedez, eman al dezakezu testuinguru edo informazio gehiago zein Mikez ari zaren?",
-        "omnivoice": {
-          "src": "audio/instruct_en_5832-2-omnivoice.mp3",
-          "duration": 6.9,
-          "sampleRate": 16000,
-          "speaker": "aintzane"
-        },
-        "qwen": {
-          "src": "audio/instruct_en_5832-2-qwen.mp3",
-          "duration": 8.5,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        }
-      },
-      {
-        "role": "user",
-        "text": "Kontatu iezadazu Sing filmeko Mikeri buruz",
-        "omnivoice": {
-          "src": "audio/instruct_en_5832-3-omnivoice.mp3",
-          "duration": 3.0,
-          "sampleRate": 16000,
-          "speaker": "nerea"
-        },
-        "qwen": {
-          "src": "audio/instruct_en_5832-3-qwen.mp3",
-          "duration": 3.4,
-          "sampleRate": 24000,
-          "speaker": "klara"
-        }
-      },
-      {
-        "role": "assistant",
-        "text": "Mike sagu bat da eta Sing filmeko pertsonaia nagusietako bat, bere nortasun handiagatik eta kantatzeko talentuagatik ezaguna.",
-        "omnivoice": {
-          "src": "audio/instruct_en_5832-4-omnivoice.mp3",
-          "duration": 7.4,
-          "sampleRate": 16000,
-          "speaker": "aintzane"
-        },
-        "qwen": {
-          "src": "audio/instruct_en_5832-4-qwen.mp3",
-          "duration": 9.5,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        }
-      },
-      {
-        "role": "user",
-        "text": "Nolakoa da Mikeren nortasuna Sing filmean?",
-        "omnivoice": {
-          "src": "audio/instruct_en_5832-5-omnivoice.mp3",
-          "duration": 2.6,
-          "sampleRate": 16000,
-          "speaker": "nerea"
-        },
-        "qwen": {
-          "src": "audio/instruct_en_5832-5-qwen.mp3",
-          "duration": 3.2,
-          "sampleRate": 24000,
-          "speaker": "klara"
-        }
-      },
-      {
-        "role": "assistant",
-        "text": "Mikek nortasun handia du Sing filmean",
-        "omnivoice": {
-          "src": "audio/instruct_en_5832-6-omnivoice.mp3",
-          "duration": 2.3,
-          "sampleRate": 16000,
-          "speaker": "aintzane"
-        },
-        "qwen": {
-          "src": "audio/instruct_en_5832-6-qwen.mp3",
-          "duration": 3.0,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        }
-      },
-      {
-        "role": "user",
-        "text": "Deskribatu Mikeren kantatzeko talentua Sing filmean",
-        "omnivoice": {
-          "src": "audio/instruct_en_5832-7-omnivoice.mp3",
-          "duration": 3.4,
-          "sampleRate": 16000,
-          "speaker": "nerea"
-        },
-        "qwen": {
-          "src": "audio/instruct_en_5832-7-qwen.mp3",
-          "duration": 4.4,
-          "sampleRate": 24000,
-          "speaker": "klara"
-        }
-      },
-      {
-        "role": "assistant",
-        "text": "Mikek kantatzeko talentu handia du Sing filmean",
-        "qwen": {
-          "src": "audio/instruct_en_5832-8-qwen.mp3",
-          "duration": 3.4,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
-        "omnivoice": {
-          "src": "audio/instruct_en_5832-8-omnivoice.mp3",
-          "duration": 2.9,
-          "sampleRate": 16000,
-          "speaker": "aintzane"
-        }
-      }
-    ]
-  },
-  {
     "id": "instruct_en_18244",
     "title": "Dialogue 49",
     "subtitle": "Kaixo, sor dezakezu ingelesezko hitz berri bat niretzat?",
@@ -4313,9 +4249,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, sor dezakezu ingelesezko hitz berri bat niretzat?",
         "omnivoice": {
           "src": "audio/instruct_en_18244-1-omnivoice.mp3",
-          "duration": 3.3,
+          "duration": 4.3,
           "sampleRate": 16000,
-          "speaker": "es_bp_489"
+          "speaker": "cv_0816"
         },
         "qwen": {
           "src": "audio/instruct_en_18244-1-qwen.mp3",
@@ -4345,9 +4281,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emadazu beste hitz berri bat",
         "omnivoice": {
           "src": "audio/instruct_en_18244-3-omnivoice.mp3",
-          "duration": 2.0,
+          "duration": 2.1,
           "sampleRate": 16000,
-          "speaker": "es_bp_489"
+          "speaker": "cv_0816"
         },
         "qwen": {
           "src": "audio/instruct_en_18244-3-qwen.mp3",
@@ -4384,9 +4320,9 @@ window.DATASET_EXAMPLES = [
         "text": "Laburbildu al dezakezu hau niretzat? Badago gai bat substantzia toxikoei, gizakiei, arrainei, urari, ingurumenari, animaliei, kutsadurari, osasunari eta mehatxuei buruz, eta esaldi bakar batean behar dut.",
         "omnivoice": {
           "src": "audio/instruct_en_48873-1-omnivoice.mp3",
-          "duration": 11.3,
+          "duration": 15.7,
           "sampleRate": 16000,
-          "speaker": "inaki"
+          "speaker": "cv_0264"
         },
         "qwen": {
           "src": "audio/instruct_en_48873-1-qwen.mp3",
@@ -4416,9 +4352,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zer egin daiteke kutsadura murrizteko?",
         "omnivoice": {
           "src": "audio/instruct_en_48873-3-omnivoice.mp3",
-          "duration": 2.1,
+          "duration": 3.2,
           "sampleRate": 16000,
-          "speaker": "inaki"
+          "speaker": "cv_0264"
         },
         "qwen": {
           "src": "audio/instruct_en_48873-3-qwen.mp3",
@@ -4448,9 +4384,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira produktu ekologikoen adibide batzuk?",
         "omnivoice": {
           "src": "audio/instruct_en_48873-5-omnivoice.mp3",
-          "duration": 2.8,
+          "duration": 3.8,
           "sampleRate": 16000,
-          "speaker": "inaki"
+          "speaker": "cv_0264"
         },
         "qwen": {
           "src": "audio/instruct_en_48873-5-qwen.mp3",
@@ -4462,17 +4398,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Produktu ekologikoen adibideak dira poltsa berrerabilgarriak, ur-botila berrerabilgarriak eta garbiketa-produktu biodegradagarriak.",
-        "qwen": {
-          "src": "audio/instruct_en_48873-6-qwen.mp3",
-          "duration": 8.9,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_48873-6-omnivoice.mp3",
           "duration": 8.0,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_48873-6-qwen.mp3",
+          "duration": 8.9,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -4480,9 +4416,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zeintzuk dira poltsa berrerabilgarriak erabiltzearen onurak?",
         "omnivoice": {
           "src": "audio/instruct_en_48873-7-omnivoice.mp3",
-          "duration": 3.2,
+          "duration": 4.8,
           "sampleRate": 16000,
-          "speaker": "inaki"
+          "speaker": "cv_0264"
         },
         "qwen": {
           "src": "audio/instruct_en_48873-7-qwen.mp3",
@@ -4590,9 +4526,9 @@ window.DATASET_EXAMPLES = [
         "text": "Berridatzi dezakezu esaldia, Grand Tower ingurua udan ederra dela esanez?",
         "omnivoice": {
           "src": "audio/instruct_en_39795-1-omnivoice.mp3",
-          "duration": 4.3,
+          "duration": 5.2,
           "sampleRate": 16000,
-          "speaker": "es_bp_189"
+          "speaker": "cv_0137"
         },
         "qwen": {
           "src": "audio/instruct_en_39795-1-qwen.mp3",
@@ -4622,9 +4558,9 @@ window.DATASET_EXAMPLES = [
         "text": "Berridatzi esaldia Grand Tower inguruko eguraldia udan deskribatzeko.",
         "omnivoice": {
           "src": "audio/instruct_en_39795-3-omnivoice.mp3",
-          "duration": 4.2,
+          "duration": 4.9,
           "sampleRate": 16000,
-          "speaker": "es_bp_189"
+          "speaker": "cv_0137"
         },
         "qwen": {
           "src": "audio/instruct_en_39795-3-qwen.mp3",
@@ -4654,9 +4590,9 @@ window.DATASET_EXAMPLES = [
         "text": "Deskribatu Grand Tower inguruan udan egin ditzakezun jarduerak.",
         "omnivoice": {
           "src": "audio/instruct_en_39795-5-omnivoice.mp3",
-          "duration": 3.8,
+          "duration": 4.6,
           "sampleRate": 16000,
-          "speaker": "es_bp_189"
+          "speaker": "cv_0137"
         },
         "qwen": {
           "src": "audio/instruct_en_39795-5-qwen.mp3",
@@ -4693,9 +4629,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, ba al dago arroz-plater berezirik jendeak oporretarako edo, badakizu, ospakizun handietarako bakarrik prestatzen duenik?",
         "omnivoice": {
           "src": "audio/instruct_en_187685-1-omnivoice.mp3",
-          "duration": 7.0,
+          "duration": 14.9,
           "sampleRate": 16000,
-          "speaker": "es_bp_538"
+          "speaker": "cv_1184"
         },
         "qwen": {
           "src": "audio/instruct_en_187685-1-qwen.mp3",
@@ -4725,9 +4661,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zer da Biryani?",
         "omnivoice": {
           "src": "audio/instruct_en_187685-3-omnivoice.mp3",
-          "duration": 1.2,
+          "duration": 2.4,
           "sampleRate": 16000,
-          "speaker": "es_bp_538"
+          "speaker": "cv_1184"
         },
         "qwen": {
           "src": "audio/instruct_en_187685-3-qwen.mp3",
@@ -4757,9 +4693,9 @@ window.DATASET_EXAMPLES = [
         "text": "Nola prestatzen da Biryani?",
         "omnivoice": {
           "src": "audio/instruct_en_187685-5-omnivoice.mp3",
-          "duration": 1.5,
+          "duration": 4.5,
           "sampleRate": 16000,
-          "speaker": "es_bp_538"
+          "speaker": "cv_1184"
         },
         "qwen": {
           "src": "audio/instruct_en_187685-5-qwen.mp3",
@@ -4796,9 +4732,9 @@ window.DATASET_EXAMPLES = [
         "text": "Eta, zer paper jokatu du St Andrews Unibertsitateak hiriko monumentuak eta eraikin nabarmenak moldatzen, bada?",
         "omnivoice": {
           "src": "audio/instruct_en_198720-1-omnivoice.mp3",
-          "duration": 8.7,
+          "duration": 7.6,
           "sampleRate": 16000,
-          "speaker": "es_bp_485"
+          "speaker": "cv_0779"
         },
         "qwen": {
           "src": "audio/instruct_en_198720-1-qwen.mp3",
@@ -4826,17 +4762,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "user",
         "text": "Zein gertakari nabarmen izan dira San Salbatore kaperan urteetan zehar?",
+        "omnivoice": {
+          "src": "audio/instruct_en_198720-3-omnivoice.mp3",
+          "duration": 4.8,
+          "sampleRate": 16000,
+          "speaker": "cv_0779"
+        },
         "qwen": {
           "src": "audio/instruct_en_198720-3-qwen.mp3",
           "duration": 4.6,
           "sampleRate": 24000,
           "speaker": "antton"
-        },
-        "omnivoice": {
-          "src": "audio/instruct_en_198720-3-omnivoice.mp3",
-          "duration": 5.7,
-          "sampleRate": 16000,
-          "speaker": "es_bp_485"
         }
       },
       {
@@ -4860,9 +4796,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein beste eraikin historiko dira St Andrews Unibertsitatearen parte?",
         "omnivoice": {
           "src": "audio/instruct_en_198720-5-omnivoice.mp3",
-          "duration": 6.0,
+          "duration": 4.7,
           "sampleRate": 16000,
-          "speaker": "es_bp_485"
+          "speaker": "cv_0779"
         },
         "qwen": {
           "src": "audio/instruct_en_198720-5-qwen.mp3",
@@ -4970,9 +4906,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, sor al dezakezu titular bat aurkikuntza berri hau deskribatzen duena, ba, non ikertzaileek estralurtar bizitzaren ebidentzia aurkitu duten?",
         "omnivoice": {
           "src": "audio/instruct_en_44712-1-omnivoice.mp3",
-          "duration": 9.8,
+          "duration": 12.0,
           "sampleRate": 16000,
-          "speaker": "es_bp_521"
+          "speaker": "cv_1054"
         },
         "qwen": {
           "src": "audio/instruct_en_44712-1-qwen.mp3",
@@ -5002,9 +4938,9 @@ window.DATASET_EXAMPLES = [
         "text": "Sortu albiste laburpen bat aurkikuntzari buruz",
         "omnivoice": {
           "src": "audio/instruct_en_44712-3-omnivoice.mp3",
-          "duration": 3.3,
+          "duration": 4.0,
           "sampleRate": 16000,
-          "speaker": "es_bp_521"
+          "speaker": "cv_1054"
         },
         "qwen": {
           "src": "audio/instruct_en_44712-3-qwen.mp3",
@@ -5041,9 +4977,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, laburbildu al dezakezu Debekatutako Hiriko arkitektura estiloa?",
         "omnivoice": {
           "src": "audio/instruct_en_30513-1-omnivoice.mp3",
-          "duration": 4.4,
+          "duration": 4.5,
           "sampleRate": 16000,
-          "speaker": "kepa"
+          "speaker": "cv_0585"
         },
         "qwen": {
           "src": "audio/instruct_en_30513-1-qwen.mp3",
@@ -5071,17 +5007,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "user",
         "text": "Zein material erabili ziren Debekatutako Hiria eraikitzeko?",
+        "omnivoice": {
+          "src": "audio/instruct_en_30513-3-omnivoice.mp3",
+          "duration": 3.7,
+          "sampleRate": 16000,
+          "speaker": "cv_0585"
+        },
         "qwen": {
           "src": "audio/instruct_en_30513-3-qwen.mp3",
           "duration": 4.1,
           "sampleRate": 24000,
           "speaker": "klara"
-        },
-        "omnivoice": {
-          "src": "audio/instruct_en_30513-3-omnivoice.mp3",
-          "duration": 3.6,
-          "sampleRate": 16000,
-          "speaker": "kepa"
         }
       },
       {
@@ -5105,9 +5041,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein da Debekatutako Hiriko diseinuaren garrantzia?",
         "omnivoice": {
           "src": "audio/instruct_en_30513-5-omnivoice.mp3",
-          "duration": 3.1,
+          "duration": 3.3,
           "sampleRate": 16000,
-          "speaker": "kepa"
+          "speaker": "cv_0585"
         },
         "qwen": {
           "src": "audio/instruct_en_30513-5-qwen.mp3",
@@ -5137,9 +5073,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein da Debekatutako Hiriko helburu nagusia?",
         "omnivoice": {
           "src": "audio/instruct_en_30513-7-omnivoice.mp3",
-          "duration": 2.7,
+          "duration": 2.6,
           "sampleRate": 16000,
-          "speaker": "kepa"
+          "speaker": "cv_0585"
         },
         "qwen": {
           "src": "audio/instruct_en_30513-7-qwen.mp3",
@@ -5176,9 +5112,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, kontatu ahal didazu Britainia Handiko historiako gertaera garrantzitsu bati buruz eta zergatik den hain esanguratsua?",
         "omnivoice": {
           "src": "audio/instruct_en_6172-1-omnivoice.mp3",
-          "duration": 9.5,
+          "duration": 12.4,
           "sampleRate": 16000,
-          "speaker": "es_bp_47"
+          "speaker": "cv_0650"
         },
         "qwen": {
           "src": "audio/instruct_en_6172-1-qwen.mp3",
@@ -5208,9 +5144,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein izan ziren Ingalaterraren konkista normandiarraren ondorio nagusiak?",
         "omnivoice": {
           "src": "audio/instruct_en_6172-3-omnivoice.mp3",
-          "duration": 5.4,
+          "duration": 6.9,
           "sampleRate": 16000,
-          "speaker": "es_bp_47"
+          "speaker": "cv_0650"
         },
         "qwen": {
           "src": "audio/instruct_en_6172-3-qwen.mp3",
@@ -5247,9 +5183,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, idatzi al dezakezu paragrafo labur bat bezeroarentzako arreta-zerbitzuarekin izan dudan azken aldiaz?",
         "omnivoice": {
           "src": "audio/instruct_en_16683-1-omnivoice.mp3",
-          "duration": 6.2,
+          "duration": 8.1,
           "sampleRate": 16000,
-          "speaker": "inaki"
+          "speaker": "cv_0297"
         },
         "qwen": {
           "src": "audio/instruct_en_16683-1-qwen.mp3",
@@ -5279,9 +5215,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emadazu bezeroarentzako arreta-ordezkariekin eraginkortasunez komunikatzeko aholku orokorrak.",
         "omnivoice": {
           "src": "audio/instruct_en_16683-3-omnivoice.mp3",
-          "duration": 5.6,
+          "duration": 6.9,
           "sampleRate": 16000,
-          "speaker": "inaki"
+          "speaker": "cv_0297"
         },
         "qwen": {
           "src": "audio/instruct_en_16683-3-qwen.mp3",
@@ -5311,9 +5247,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emadazu adibide bat, non errespetuz jokatzeak bezeroarentzako arreta-arazo bat konpontzen lagundu zuen.",
         "omnivoice": {
           "src": "audio/instruct_en_16683-5-omnivoice.mp3",
-          "duration": 6.0,
+          "duration": 7.8,
           "sampleRate": 16000,
-          "speaker": "inaki"
+          "speaker": "cv_0297"
         },
         "qwen": {
           "src": "audio/instruct_en_16683-5-qwen.mp3",
@@ -5350,9 +5286,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, webgune berri baterako, TravelDex, erabiltzaile-interfaze bat diseinatu dezakezu?",
         "omnivoice": {
           "src": "audio/instruct_en_14657-1-omnivoice.mp3",
-          "duration": 6.7,
+          "duration": 4.4,
           "sampleRate": 16000,
-          "speaker": "es_bp_480"
+          "speaker": "cv_0739"
         },
         "qwen": {
           "src": "audio/instruct_en_14657-1-qwen.mp3",
@@ -5382,9 +5318,9 @@ window.DATASET_EXAMPLES = [
         "text": "Deskribatu TravelDex-en ezaugarri nagusiak.",
         "omnivoice": {
           "src": "audio/instruct_en_14657-3-omnivoice.mp3",
-          "duration": 3.1,
+          "duration": 2.4,
           "sampleRate": 16000,
-          "speaker": "es_bp_480"
+          "speaker": "cv_0739"
         },
         "qwen": {
           "src": "audio/instruct_en_14657-3-qwen.mp3",
@@ -5412,17 +5348,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "user",
         "text": "Zein dira TravelDex-eko bilaketa-barraren osagai nagusiak?",
+        "omnivoice": {
+          "src": "audio/instruct_en_14657-5-omnivoice.mp3",
+          "duration": 2.9,
+          "sampleRate": 16000,
+          "speaker": "cv_0739"
+        },
         "qwen": {
           "src": "audio/instruct_en_14657-5-qwen.mp3",
           "duration": 4.2,
           "sampleRate": 24000,
           "speaker": "xabier"
-        },
-        "omnivoice": {
-          "src": "audio/instruct_en_14657-5-omnivoice.mp3",
-          "duration": 4.9,
-          "sampleRate": 16000,
-          "speaker": "es_bp_480"
         }
       },
       {
@@ -5453,9 +5389,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, emango al dizkidazu lau aholku erabilgarri jendaurrean hitz egiteko?",
         "omnivoice": {
           "src": "audio/instruct_en_46350-1-omnivoice.mp3",
-          "duration": 5.7,
+          "duration": 5.1,
           "sampleRate": 16000,
-          "speaker": "klara"
+          "speaker": "cv_0825"
         },
         "qwen": {
           "src": "audio/instruct_en_46350-1-qwen.mp3",
@@ -5485,9 +5421,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira saihestu beharreko akats ohikoenak jendaurrean hitz egitean?",
         "omnivoice": {
           "src": "audio/instruct_en_46350-3-omnivoice.mp3",
-          "duration": 5.4,
+          "duration": 4.1,
           "sampleRate": 16000,
-          "speaker": "klara"
+          "speaker": "cv_0825"
         },
         "qwen": {
           "src": "audio/instruct_en_46350-3-qwen.mp3",
@@ -5499,17 +5435,17 @@ window.DATASET_EXAMPLES = [
       {
         "role": "assistant",
         "text": "Akats ohikoak dira urduri egotea, gidoi bat irakurtzea eta azkarregi hitz egitea. Saihestu horiek konfiantza eta erakargarritasun handiagoa izateko.",
-        "qwen": {
-          "src": "audio/instruct_en_46350-4-qwen.mp3",
-          "duration": 5.5,
-          "sampleRate": 24000,
-          "speaker": "maider"
-        },
         "omnivoice": {
           "src": "audio/instruct_en_46350-4-omnivoice.mp3",
           "duration": 8.6,
           "sampleRate": 16000,
           "speaker": "aintzane"
+        },
+        "qwen": {
+          "src": "audio/instruct_en_46350-4-qwen.mp3",
+          "duration": 5.5,
+          "sampleRate": 24000,
+          "speaker": "maider"
         }
       },
       {
@@ -5517,9 +5453,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emango al didazu aholkuren bat urduritasuna nola kudeatu jendaurrean hitz egitean?",
         "omnivoice": {
           "src": "audio/instruct_en_46350-5-omnivoice.mp3",
-          "duration": 6.9,
+          "duration": 5.2,
           "sampleRate": 16000,
-          "speaker": "klara"
+          "speaker": "cv_0825"
         },
         "qwen": {
           "src": "audio/instruct_en_46350-5-qwen.mp3",
@@ -5549,9 +5485,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein dira jendaurreko hitzaldi bat prestatzeko moduak?",
         "omnivoice": {
           "src": "audio/instruct_en_46350-7-omnivoice.mp3",
-          "duration": 4.3,
+          "duration": 3.2,
           "sampleRate": 16000,
-          "speaker": "klara"
+          "speaker": "cv_0825"
         },
         "qwen": {
           "src": "audio/instruct_en_46350-7-qwen.mp3",
@@ -5588,9 +5524,9 @@ window.DATASET_EXAMPLES = [
         "text": "Laburrago eta inpaktanteago egin dezakezu? Aplikazio hau, ba, super garrantzitsua da janaria beti puntu-puntuan egosi nahi duen edonorentzat.",
         "omnivoice": {
           "src": "audio/instruct_en_31077-1-omnivoice.mp3",
-          "duration": 9.5,
+          "duration": 10.9,
           "sampleRate": 16000,
-          "speaker": "es_bp_470"
+          "speaker": "cv_0659"
         },
         "qwen": {
           "src": "audio/instruct_en_31077-1-qwen.mp3",
@@ -5620,9 +5556,9 @@ window.DATASET_EXAMPLES = [
         "text": "Egin esaldia laburrago",
         "omnivoice": {
           "src": "audio/instruct_en_31077-3-omnivoice.mp3",
-          "duration": 2.0,
+          "duration": 1.8,
           "sampleRate": 16000,
-          "speaker": "es_bp_470"
+          "speaker": "cv_0659"
         },
         "qwen": {
           "src": "audio/instruct_en_31077-3-qwen.mp3",
@@ -5652,9 +5588,9 @@ window.DATASET_EXAMPLES = [
         "text": "Egin are laburrago",
         "omnivoice": {
           "src": "audio/instruct_en_31077-5-omnivoice.mp3",
-          "duration": 1.9,
+          "duration": 1.6,
           "sampleRate": 16000,
-          "speaker": "es_bp_470"
+          "speaker": "cv_0659"
         },
         "qwen": {
           "src": "audio/instruct_en_31077-5-qwen.mp3",
@@ -5691,9 +5627,9 @@ window.DATASET_EXAMPLES = [
         "text": "Emango al dizkidazu adibide batzuk herrialde edo eskualde zehatzei buruz, badakizu, non LGBT plus aktibistek erronka oso, oso gogorrak edo larriak dituzten?",
         "omnivoice": {
           "src": "audio/instruct_en_143472-1-omnivoice.mp3",
-          "duration": 8.4,
+          "duration": 15.2,
           "sampleRate": 16000,
-          "speaker": "en_8506"
+          "speaker": "cv_1333"
         },
         "qwen": {
           "src": "audio/instruct_en_143472-1-qwen.mp3",
@@ -5723,9 +5659,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein laguntza mota behar dute LGBT plus aktibistek erronka horiek gainditzeko?",
         "omnivoice": {
           "src": "audio/instruct_en_143472-3-omnivoice.mp3",
-          "duration": 4.4,
+          "duration": 7.8,
           "sampleRate": 16000,
-          "speaker": "en_8506"
+          "speaker": "cv_1333"
         },
         "qwen": {
           "src": "audio/instruct_en_143472-3-qwen.mp3",
@@ -5755,9 +5691,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zer egin dezakete norbanakoek mundu osoko LGBT plus aktibistei laguntzeko?",
         "omnivoice": {
           "src": "audio/instruct_en_143472-5-omnivoice.mp3",
-          "duration": 4.2,
+          "duration": 6.6,
           "sampleRate": 16000,
-          "speaker": "en_8506"
+          "speaker": "cv_1333"
         },
         "qwen": {
           "src": "audio/instruct_en_143472-5-qwen.mp3",
@@ -5794,9 +5730,9 @@ window.DATASET_EXAMPLES = [
         "text": "Kaixo, erregresio linealaren eredu bat sor dezakezu puntu hauen bidez: bat-bat, bi-bi eta hiru-lau?",
         "omnivoice": {
           "src": "audio/instruct_en_17591-1-omnivoice.mp3",
-          "duration": 6.4,
+          "duration": 7.4,
           "sampleRate": 16000,
-          "speaker": "en_6000"
+          "speaker": "cv_0890"
         },
         "qwen": {
           "src": "audio/instruct_en_17591-1-qwen.mp3",
@@ -5826,9 +5762,9 @@ window.DATASET_EXAMPLES = [
         "text": "Zein da y-ren balio iragarria x lau denean?",
         "omnivoice": {
           "src": "audio/instruct_en_17591-3-omnivoice.mp3",
-          "duration": 2.9,
+          "duration": 2.7,
           "sampleRate": 16000,
-          "speaker": "en_6000"
+          "speaker": "cv_0890"
         },
         "qwen": {
           "src": "audio/instruct_en_17591-3-qwen.mp3",

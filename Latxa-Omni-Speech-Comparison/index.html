@@ -155,7 +155,7 @@
 
     <section class="study" aria-labelledby="study-title">
       <h2 id="study-title">Hear the reference speaker</h2>
-      <p class="study-intro">Choose a reference voice to hear how OmniVoice changes its delivery of the same Basque line. These three lines were synthesized with 23 different references in a separate OmniVoice test run.</p>
+      <p class="study-intro">Choose a reference voice to hear how OmniVoice changes its delivery of the same Basque line. These three lines were synthesized with <span id="reference-count">0</span> different references in a separate OmniVoice test run: the studio Basque voices used in the dataset and a sample of the Basque Common Voice speakers used for user turns.</p>
       <div class="study-panel">
         <div class="study-controls">
           <div class="picker">
@@ -172,7 +172,7 @@
     </section>
 
     <aside class="note">
-      <strong>About this comparison.</strong> These are source synthesis samples, not Latxa-Omni model outputs. The conversation gallery uses filtered OmniVoice data and Qwen TTS with matching text. The reference-speaker study uses a separate OmniVoice test grid with identical text for every selected voice; its Qwen audio stays fixed. Browser copies are encoded as 96 kbps MP3 at their original sample rates.
+      <strong>About this comparison.</strong> These are source synthesis samples, not Latxa-Omni model outputs. The conversation gallery uses filtered OmniVoice data and Qwen TTS with matching text. OmniVoice user turns are cloned from Basque voices only (studio recordings and 1,422 Common Voice speakers); assistant turns always use aintzane. The reference-speaker study uses a separate OmniVoice test grid with identical text for every selected voice; its Qwen audio stays fixed. Browser copies are encoded as 96 kbps MP3 at their original sample rates.
     </aside>
     <footer>InstructS2S-200K Basque translation · selected filtered conversations</footer>
   </main>
@@ -194,6 +194,7 @@
     const turnCount = examples.reduce((total, item) => total + item.turns.length, 0);
     document.getElementById('turn-count').textContent = turnCount;
     document.getElementById('clip-count').textContent = turnCount * 2;
+    document.getElementById('reference-count').textContent = referenceDemo.speakers.length;
     examples.forEach((item, index) => {
       const option = document.createElement('option');
       option.value = String(index);

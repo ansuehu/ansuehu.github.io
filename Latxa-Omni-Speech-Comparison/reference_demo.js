@@ -2,7 +2,7 @@ window.REFERENCE_DEMO = {
   "speakers": [
     {
       "id": "aintzane",
-      "language": "Basque",
+      "language": "studio",
       "text": "Onartzen al da zerbitzatze hobe bat, edo maitasun oparoago bat egon daitekeela?",
       "audio": {
         "src": "audio/refdemo-reference-aintzane.mp3",
@@ -11,8 +11,18 @@ window.REFERENCE_DEMO = {
       }
     },
     {
+      "id": "antton",
+      "language": "studio",
+      "text": "Tori janari hauek, eta premia garaian, eman karitatez itsasontzian ezkutatuta dauden fraide pobretxoei.",
+      "audio": {
+        "src": "audio/refdemo-reference-antton.mp3",
+        "duration": 6.7,
+        "sampleRate": 48000
+      }
+    },
+    {
       "id": "inaki",
-      "language": "Basque",
+      "language": "studio",
       "text": "Informazio hutsa eman beharrean, erabiltzailea web gunearen partaide bihurtu behar genuen.",
       "audio": {
         "src": "audio/refdemo-reference-inaki.mp3",
@@ -22,7 +32,7 @@ window.REFERENCE_DEMO = {
     },
     {
       "id": "jaione",
-      "language": "Basque",
+      "language": "studio",
       "text": "Aske utzi dute Afganistanen duela hiru hilabete bahitutako ingeniaria.",
       "audio": {
         "src": "audio/refdemo-reference-jaione.mp3",
@@ -32,7 +42,7 @@ window.REFERENCE_DEMO = {
     },
     {
       "id": "jon",
-      "language": "Basque",
+      "language": "studio",
       "text": "Izan ere, zuek zilegitasun demokratiko guztia zenuten desberdinen arteko akordioak egitean.",
       "audio": {
         "src": "audio/refdemo-reference-jon.mp3",
@@ -42,7 +52,7 @@ window.REFERENCE_DEMO = {
     },
     {
       "id": "kepa",
-      "language": "Basque",
+      "language": "studio",
       "text": "Goiherrikoek ere atzo ez zuten tiratu seiehun eta berrogei kiloetan.",
       "audio": {
         "src": "audio/refdemo-reference-kepa.mp3",
@@ -52,7 +62,7 @@ window.REFERENCE_DEMO = {
     },
     {
       "id": "kiko",
-      "language": "Basque",
+      "language": "studio",
       "text": "Han jo eta hemen jo, bihotza lehertuko zitzaidala uste nuen, hain fite ari baitzitzaidan taupaka.",
       "audio": {
         "src": "audio/refdemo-reference-kiko.mp3",
@@ -62,7 +72,7 @@ window.REFERENCE_DEMO = {
     },
     {
       "id": "klara",
-      "language": "Basque",
+      "language": "studio",
       "text": "Esne hartzitu hauek berariazko araua izatea litzateke egokiena.",
       "audio": {
         "src": "audio/refdemo-reference-klara.mp3",
@@ -71,8 +81,18 @@ window.REFERENCE_DEMO = {
       }
     },
     {
+      "id": "maider",
+      "language": "studio",
+      "text": "Zeintzuk dira arreta zerbitzurik okerrena eskaintzen dituzten telefono konpainiak?",
+      "audio": {
+        "src": "audio/refdemo-reference-maider.mp3",
+        "duration": 4.9,
+        "sampleRate": 48000
+      }
+    },
+    {
       "id": "miren",
-      "language": "Basque",
+      "language": "studio",
       "text": "Beraien bizitza ere arriskuan jartzen dela, eta legea betez aske utzi beharko lituzketen arren espetxean jarraitzen dutela azpimarratu dute.",
       "audio": {
         "src": "audio/refdemo-reference-miren.mp3",
@@ -82,7 +102,7 @@ window.REFERENCE_DEMO = {
     },
     {
       "id": "nerea",
-      "language": "Basque",
+      "language": "studio",
       "text": "Eta mekanismoek egiten badute huts, administrazioei dagokie tresna horiek hobetzea edo indartzea.",
       "audio": {
         "src": "audio/refdemo-reference-nerea.mp3",
@@ -92,7 +112,7 @@ window.REFERENCE_DEMO = {
     },
     {
       "id": "pello",
-      "language": "Basque",
+      "language": "studio",
       "text": "Erosi baino lehenago, proba ezazu aulkia zure ibilgailuko eserlekuan.",
       "audio": {
         "src": "audio/refdemo-reference-pello.mp3",
@@ -102,7 +122,7 @@ window.REFERENCE_DEMO = {
     },
     {
       "id": "xabier",
-      "language": "Basque",
+      "language": "studio",
       "text": "Idazleak ipuinen batean liburu honen egilea mamua bihurtua agertzen zaigula gaztigatu digu.",
       "audio": {
         "src": "audio/refdemo-reference-xabier.mp3",
@@ -111,122 +131,122 @@ window.REFERENCE_DEMO = {
       }
     },
     {
-      "id": "es_bp_0",
-      "language": "Spanish",
-      "text": "No vamos a renunciar a defender utilizando todas las herramientas legales a nuestro alcance la autonomía de los agentes sociales en euskadi.",
+      "id": "cv_0000",
+      "language": "Common Voice",
+      "text": "Maite Idirinek ezagutzen ninduen, bazekien ni eskolan nengoela.",
       "audio": {
-        "src": "audio/refdemo-reference-es_bp_0.mp3",
-        "duration": 8.5,
+        "src": "audio/refdemo-reference-cv_0000.mp3",
+        "duration": 5.2,
         "sampleRate": 16000
       }
     },
     {
-      "id": "es_bp_189",
-      "language": "Spanish",
-      "text": "Es la activación para el empleo de quienes alejados de él solo tienen un futuro de cronificación.",
+      "id": "cv_0134",
+      "language": "Common Voice",
+      "text": "Diskoaren izenak diskoaren iraupen osoa adierazten du.",
       "audio": {
-        "src": "audio/refdemo-reference-es_bp_189.mp3",
+        "src": "audio/refdemo-reference-cv_0134.mp3",
+        "duration": 4.8,
+        "sampleRate": 16000
+      }
+    },
+    {
+      "id": "cv_0169",
+      "language": "Common Voice",
+      "text": "Baina istorioa ez da hemen amaitzen, bideo famatu bezain solidarioa delako.",
+      "audio": {
+        "src": "audio/refdemo-reference-cv_0169.mp3",
+        "duration": 4.4,
+        "sampleRate": 16000
+      }
+    },
+    {
+      "id": "cv_0354",
+      "language": "Common Voice",
+      "text": "Goi mailako sukaldaritzan ere hasi da erabiltzen azken aldian.",
+      "audio": {
+        "src": "audio/refdemo-reference-cv_0354.mp3",
+        "duration": 5.1,
+        "sampleRate": 16000
+      }
+    },
+    {
+      "id": "cv_0475",
+      "language": "Common Voice",
+      "text": "Gehien kontsumitzen diren komunikabideak dira espazio estatala bisortzen dutenak.",
+      "audio": {
+        "src": "audio/refdemo-reference-cv_0475.mp3",
+        "duration": 4.3,
+        "sampleRate": 16000
+      }
+    },
+    {
+      "id": "cv_0760",
+      "language": "Common Voice",
+      "text": "Oinetan, berriz, musika notak irudikatu ditu kantari ezagun honek.",
+      "audio": {
+        "src": "audio/refdemo-reference-cv_0760.mp3",
+        "duration": 5.7,
+        "sampleRate": 16000
+      }
+    },
+    {
+      "id": "cv_0769",
+      "language": "Common Voice",
+      "text": "Kanadarraren hitzetan, bere ibilbideko diskorik konplexuena izango da.",
+      "audio": {
+        "src": "audio/refdemo-reference-cv_0769.mp3",
         "duration": 5.4,
         "sampleRate": 16000
       }
     },
     {
-      "id": "es_bp_23",
-      "language": "Spanish",
-      "text": "Por eso entendemos que se requiere un consenso político previo entre todos los agentes sociales e institucionales que interviene en la configuración del derecho a la vivienda.",
+      "id": "cv_0978",
+      "language": "Common Voice",
+      "text": "Hondartzan ez da inor egoten ordu txiki hauetan.",
       "audio": {
-        "src": "audio/refdemo-reference-es_bp_23.mp3",
-        "duration": 8.5,
+        "src": "audio/refdemo-reference-cv_0978.mp3",
+        "duration": 4.1,
         "sampleRate": 16000
       }
     },
     {
-      "id": "es_bp_364",
-      "language": "Spanish",
-      "text": "Lo único que ha supuesto es que hoy aquí nos encontramos que tenemos que pagar treinta millónes de euros por su falta.",
+      "id": "cv_1083",
+      "language": "Common Voice",
+      "text": "Arte ikasketak egin zituen, eta Arteko irakaslea izan zen hainbat eskolatan.",
       "audio": {
-        "src": "audio/refdemo-reference-es_bp_364.mp3",
-        "duration": 6.3,
+        "src": "audio/refdemo-reference-cv_1083.mp3",
+        "duration": 4.6,
         "sampleRate": 16000
       }
     },
     {
-      "id": "es_bp_423",
-      "language": "Spanish",
-      "text": "Sin embargo cuando se cometen delitos el estado de derecho debe funcionar y sus poderes deben responder de una manera eficiente.",
+      "id": "cv_1142",
+      "language": "Common Voice",
+      "text": "Pertsona bi bizirik atera dira istriputik errusiar iturriek diotenez.",
       "audio": {
-        "src": "audio/refdemo-reference-es_bp_423.mp3",
-        "duration": 7.6,
+        "src": "audio/refdemo-reference-cv_1142.mp3",
+        "duration": 6.5,
         "sampleRate": 16000
       }
     },
     {
-      "id": "es_bp_487",
-      "language": "Spanish",
-      "text": "Un especulador inmobiliario es aquella persona que habiendo sufrido un ere en su empresa tiene que alquilar su vivienda para poder pagar.",
+      "id": "cv_1166",
+      "language": "Common Voice",
+      "text": "Klasikoez ari dela, zera dio idazle argentinarrak.",
       "audio": {
-        "src": "audio/refdemo-reference-es_bp_487.mp3",
-        "duration": 8.8,
+        "src": "audio/refdemo-reference-cv_1166.mp3",
+        "duration": 5.1,
         "sampleRate": 16000
       }
     },
     {
-      "id": "es_bp_488",
-      "language": "Spanish",
-      "text": "La impunidad de estas eléctricas con el continuo trasvase de políticos a los consejos de administración de las eléctricas el último conocido a principios de esta misma semana.",
+      "id": "cv_1322",
+      "language": "Common Voice",
+      "text": "Ikasle asko elebakar irteten dira askotan gure hezkuntza sistematik.",
       "audio": {
-        "src": "audio/refdemo-reference-es_bp_488.mp3",
-        "duration": 9.5,
-        "sampleRate": 16000
-      }
-    },
-    {
-      "id": "es_bp_515",
-      "language": "Spanish",
-      "text": "Importante por tanto incidir en ello como se hace ya desde el servicio de prevención de los centros sanitarios en coordinación con el programa de vigilancia y control de las infecciones.",
-      "audio": {
-        "src": "audio/refdemo-reference-es_bp_515.mp3",
-        "duration": 9.8,
-        "sampleRate": 16000
-      }
-    },
-    {
-      "id": "es_bp_531",
-      "language": "Spanish",
-      "text": "Este parlamento viene reiterando la necesidad del despliegue integral y multidisciplinar del sistema vasco de acogida a personas migrantes y refugiadas.",
-      "audio": {
-        "src": "audio/refdemo-reference-es_bp_531.mp3",
-        "duration": 9.9,
-        "sampleRate": 16000
-      }
-    },
-    {
-      "id": "es_bp_54",
-      "language": "Spanish",
-      "text": "Lo que voy a hacer es exponer nuestra postura y nuestras ideas para intentar combatir.",
-      "audio": {
-        "src": "audio/refdemo-reference-es_bp_54.mp3",
-        "duration": 5.3,
-        "sampleRate": 16000
-      }
-    },
-    {
-      "id": "es_bp_542",
-      "language": "Spanish",
-      "text": "No obstante no obstante la enmienda que presentamos conjuntamente con el grupo socialista busca despejar en la medida de lo posible esas dudas.",
-      "audio": {
-        "src": "audio/refdemo-reference-es_bp_542.mp3",
-        "duration": 8.4,
-        "sampleRate": 16000
-      }
-    },
-    {
-      "id": "es_bp_65",
-      "language": "Spanish",
-      "text": "Usted no podrá rescribir la historia señor ares y le cojo la palabra sobre la necesidad de asumir responsabilidades.",
-      "audio": {
-        "src": "audio/refdemo-reference-es_bp_65.mp3",
-        "duration": 9.2,
+        "src": "audio/refdemo-reference-cv_1322.mp3",
+        "duration": 4.2,
         "sampleRate": 16000
       }
     }
@@ -237,19 +257,24 @@ window.REFERENCE_DEMO = {
       "title": "Healthy habits",
       "text": "Hona hemen osasuntsu egoteko hiru aholku: jan orekatu, hidratatu ur asko edanez, eta egin gutxienez zazpi ordu lo gauero.",
       "voices": {
-        "aintzane": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-aintzane.mp3",
-          "duration": 7.0,
-          "sampleRate": 24000
-        },
         "inaki": {
           "src": "audio/refdemo-instruct_en_0-1-omnivoice-inaki.mp3",
           "duration": 6.7,
           "sampleRate": 24000
         },
+        "antton": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-antton.mp3",
+          "duration": 7.5,
+          "sampleRate": 24000
+        },
+        "aintzane": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-aintzane.mp3",
+          "duration": 7.0,
+          "sampleRate": 24000
+        },
         "jaione": {
           "src": "audio/refdemo-instruct_en_0-1-omnivoice-jaione.mp3",
-          "duration": 8.3,
+          "duration": 8.0,
           "sampleRate": 24000
         },
         "jon": {
@@ -257,34 +282,39 @@ window.REFERENCE_DEMO = {
           "duration": 8.4,
           "sampleRate": 24000
         },
-        "kepa": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-kepa.mp3",
-          "duration": 7.4,
-          "sampleRate": 24000
-        },
         "kiko": {
           "src": "audio/refdemo-instruct_en_0-1-omnivoice-kiko.mp3",
           "duration": 7.6,
           "sampleRate": 24000
         },
+        "kepa": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-kepa.mp3",
+          "duration": 7.3,
+          "sampleRate": 24000
+        },
         "klara": {
           "src": "audio/refdemo-instruct_en_0-1-omnivoice-klara.mp3",
-          "duration": 9.8,
+          "duration": 10.1,
+          "sampleRate": 24000
+        },
+        "maider": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-maider.mp3",
+          "duration": 6.8,
           "sampleRate": 24000
         },
         "miren": {
           "src": "audio/refdemo-instruct_en_0-1-omnivoice-miren.mp3",
-          "duration": 7.8,
-          "sampleRate": 24000
-        },
-        "nerea": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-nerea.mp3",
-          "duration": 8.0,
+          "duration": 7.9,
           "sampleRate": 24000
         },
         "pello": {
           "src": "audio/refdemo-instruct_en_0-1-omnivoice-pello.mp3",
-          "duration": 7.3,
+          "duration": 7.2,
+          "sampleRate": 24000
+        },
+        "nerea": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-nerea.mp3",
+          "duration": 7.7,
           "sampleRate": 24000
         },
         "xabier": {
@@ -292,64 +322,64 @@ window.REFERENCE_DEMO = {
           "duration": 8.8,
           "sampleRate": 24000
         },
-        "es_bp_0": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_0.mp3",
-          "duration": 7.4,
+        "cv_0000": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_0000.mp3",
+          "duration": 8.6,
           "sampleRate": 24000
         },
-        "es_bp_189": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_189.mp3",
+        "cv_0169": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_0169.mp3",
+          "duration": 7.0,
+          "sampleRate": 24000
+        },
+        "cv_0134": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_0134.mp3",
+          "duration": 8.9,
+          "sampleRate": 24000
+        },
+        "cv_0354": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_0354.mp3",
+          "duration": 7.6,
+          "sampleRate": 24000
+        },
+        "cv_0475": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_0475.mp3",
+          "duration": 6.1,
+          "sampleRate": 24000
+        },
+        "cv_0760": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_0760.mp3",
+          "duration": 9.9,
+          "sampleRate": 24000
+        },
+        "cv_0769": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_0769.mp3",
+          "duration": 8.4,
+          "sampleRate": 24000
+        },
+        "cv_1083": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_1083.mp3",
           "duration": 6.9,
           "sampleRate": 24000
         },
-        "es_bp_23": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_23.mp3",
-          "duration": 6.0,
+        "cv_0978": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_0978.mp3",
+          "duration": 9.6,
           "sampleRate": 24000
         },
-        "es_bp_364": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_364.mp3",
-          "duration": 6.5,
+        "cv_1142": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_1142.mp3",
+          "duration": 10.5,
           "sampleRate": 24000
         },
-        "es_bp_423": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_423.mp3",
-          "duration": 7.2,
+        "cv_1166": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_1166.mp3",
+          "duration": 9.8,
           "sampleRate": 24000
         },
-        "es_bp_487": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_487.mp3",
-          "duration": 7.2,
-          "sampleRate": 24000
-        },
-        "es_bp_488": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_488.mp3",
-          "duration": 6.7,
-          "sampleRate": 24000
-        },
-        "es_bp_515": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_515.mp3",
-          "duration": 6.5,
-          "sampleRate": 24000
-        },
-        "es_bp_531": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_531.mp3",
-          "duration": 7.5,
-          "sampleRate": 24000
-        },
-        "es_bp_54": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_54.mp3",
-          "duration": 7.3,
-          "sampleRate": 24000
-        },
-        "es_bp_542": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_542.mp3",
-          "duration": 7.2,
-          "sampleRate": 24000
-        },
-        "es_bp_65": {
-          "src": "audio/refdemo-instruct_en_0-1-omnivoice-es_bp_65.mp3",
-          "duration": 9.3,
+        "cv_1322": {
+          "src": "audio/refdemo-instruct_en_0-1-omnivoice-cv_1322.mp3",
+          "duration": 6.9,
           "sampleRate": 24000
         }
       },
@@ -365,6 +395,11 @@ window.REFERENCE_DEMO = {
       "title": "A house model",
       "text": "Ez naiz gai hiru dimentsioko ereduak sortzeko. Hala ere, etxe baten deskribapen testuala eman diezazuket, horrek laguntzen badizu.",
       "voices": {
+        "antton": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-antton.mp3",
+          "duration": 8.2,
+          "sampleRate": 24000
+        },
         "aintzane": {
           "src": "audio/refdemo-instruct_en_8-1-omnivoice-aintzane.mp3",
           "duration": 7.6,
@@ -380,49 +415,44 @@ window.REFERENCE_DEMO = {
           "duration": 8.7,
           "sampleRate": 24000
         },
-        "kepa": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-kepa.mp3",
-          "duration": 8.1,
-          "sampleRate": 24000
-        },
         "jon": {
           "src": "audio/refdemo-instruct_en_8-1-omnivoice-jon.mp3",
           "duration": 9.2,
           "sampleRate": 24000
         },
-        "kiko": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-kiko.mp3",
-          "duration": 8.3,
+        "kepa": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-kepa.mp3",
+          "duration": 7.8,
           "sampleRate": 24000
         },
-        "miren": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-miren.mp3",
-          "duration": 8.4,
+        "kiko": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-kiko.mp3",
+          "duration": 8.1,
           "sampleRate": 24000
         },
         "klara": {
           "src": "audio/refdemo-instruct_en_8-1-omnivoice-klara.mp3",
-          "duration": 10.7,
+          "duration": 11.2,
+          "sampleRate": 24000
+        },
+        "maider": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-maider.mp3",
+          "duration": 7.7,
+          "sampleRate": 24000
+        },
+        "miren": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-miren.mp3",
+          "duration": 8.8,
           "sampleRate": 24000
         },
         "nerea": {
           "src": "audio/refdemo-instruct_en_8-1-omnivoice-nerea.mp3",
-          "duration": 8.4,
+          "duration": 8.3,
           "sampleRate": 24000
         },
         "pello": {
           "src": "audio/refdemo-instruct_en_8-1-omnivoice-pello.mp3",
-          "duration": 8.0,
-          "sampleRate": 24000
-        },
-        "es_bp_189": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_189.mp3",
-          "duration": 7.5,
-          "sampleRate": 24000
-        },
-        "es_bp_0": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_0.mp3",
-          "duration": 8.1,
+          "duration": 7.8,
           "sampleRate": 24000
         },
         "xabier": {
@@ -430,54 +460,64 @@ window.REFERENCE_DEMO = {
           "duration": 9.6,
           "sampleRate": 24000
         },
-        "es_bp_23": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_23.mp3",
-          "duration": 6.5,
+        "cv_0000": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_0000.mp3",
+          "duration": 9.5,
           "sampleRate": 24000
         },
-        "es_bp_423": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_423.mp3",
-          "duration": 8.0,
+        "cv_0169": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_0169.mp3",
+          "duration": 7.7,
           "sampleRate": 24000
         },
-        "es_bp_364": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_364.mp3",
-          "duration": 7.1,
+        "cv_0134": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_0134.mp3",
+          "duration": 10.1,
           "sampleRate": 24000
         },
-        "es_bp_487": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_487.mp3",
-          "duration": 7.8,
+        "cv_0475": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_0475.mp3",
+          "duration": 6.6,
           "sampleRate": 24000
         },
-        "es_bp_488": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_488.mp3",
+        "cv_0354": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_0354.mp3",
+          "duration": 8.1,
+          "sampleRate": 24000
+        },
+        "cv_0769": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_0769.mp3",
+          "duration": 9.5,
+          "sampleRate": 24000
+        },
+        "cv_0760": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_0760.mp3",
+          "duration": 10.4,
+          "sampleRate": 24000
+        },
+        "cv_1083": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_1083.mp3",
           "duration": 7.3,
           "sampleRate": 24000
         },
-        "es_bp_515": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_515.mp3",
-          "duration": 7.1,
+        "cv_0978": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_0978.mp3",
+          "duration": 10.5,
           "sampleRate": 24000
         },
-        "es_bp_54": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_54.mp3",
-          "duration": 8.2,
+        "cv_1166": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_1166.mp3",
+          "duration": 9.9,
           "sampleRate": 24000
         },
-        "es_bp_531": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_531.mp3",
-          "duration": 8.2,
+        "cv_1142": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_1142.mp3",
+          "duration": 10.7,
           "sampleRate": 24000
         },
-        "es_bp_542": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_542.mp3",
-          "duration": 7.6,
-          "sampleRate": 24000
-        },
-        "es_bp_65": {
-          "src": "audio/refdemo-instruct_en_8-1-omnivoice-es_bp_65.mp3",
-          "duration": 10.1,
+        "cv_1322": {
+          "src": "audio/refdemo-instruct_en_8-1-omnivoice-cv_1322.mp3",
+          "duration": 7.8,
           "sampleRate": 24000
         }
       },
@@ -498,14 +538,19 @@ window.REFERENCE_DEMO = {
           "duration": 5.9,
           "sampleRate": 24000
         },
+        "antton": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-antton.mp3",
+          "duration": 6.4,
+          "sampleRate": 24000
+        },
         "inaki": {
           "src": "audio/refdemo-instruct_en_8-3-omnivoice-inaki.mp3",
-          "duration": 5.7,
+          "duration": 5.6,
           "sampleRate": 24000
         },
         "jaione": {
           "src": "audio/refdemo-instruct_en_8-3-omnivoice-jaione.mp3",
-          "duration": 7.0,
+          "duration": 6.9,
           "sampleRate": 24000
         },
         "jon": {
@@ -515,12 +560,22 @@ window.REFERENCE_DEMO = {
         },
         "kepa": {
           "src": "audio/refdemo-instruct_en_8-3-omnivoice-kepa.mp3",
-          "duration": 6.0,
+          "duration": 5.9,
           "sampleRate": 24000
         },
         "kiko": {
           "src": "audio/refdemo-instruct_en_8-3-omnivoice-kiko.mp3",
           "duration": 6.4,
+          "sampleRate": 24000
+        },
+        "klara": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-klara.mp3",
+          "duration": 8.4,
+          "sampleRate": 24000
+        },
+        "maider": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-maider.mp3",
+          "duration": 6.0,
           "sampleRate": 24000
         },
         "miren": {
@@ -530,7 +585,7 @@ window.REFERENCE_DEMO = {
         },
         "nerea": {
           "src": "audio/refdemo-instruct_en_8-3-omnivoice-nerea.mp3",
-          "duration": 6.8,
+          "duration": 6.4,
           "sampleRate": 24000
         },
         "pello": {
@@ -538,74 +593,69 @@ window.REFERENCE_DEMO = {
           "duration": 6.2,
           "sampleRate": 24000
         },
-        "klara": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-klara.mp3",
-          "duration": 8.2,
-          "sampleRate": 24000
-        },
         "xabier": {
           "src": "audio/refdemo-instruct_en_8-3-omnivoice-xabier.mp3",
-          "duration": 7.4,
+          "duration": 7.3,
           "sampleRate": 24000
         },
-        "es_bp_0": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_0.mp3",
-          "duration": 6.3,
+        "cv_0000": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_0000.mp3",
+          "duration": 7.2,
           "sampleRate": 24000
         },
-        "es_bp_23": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_23.mp3",
-          "duration": 5.1,
+        "cv_0134": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_0134.mp3",
+          "duration": 7.2,
           "sampleRate": 24000
         },
-        "es_bp_189": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_189.mp3",
-          "duration": 5.8,
-          "sampleRate": 24000
-        },
-        "es_bp_364": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_364.mp3",
-          "duration": 5.6,
-          "sampleRate": 24000
-        },
-        "es_bp_423": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_423.mp3",
-          "duration": 6.2,
-          "sampleRate": 24000
-        },
-        "es_bp_488": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_488.mp3",
-          "duration": 5.7,
-          "sampleRate": 24000
-        },
-        "es_bp_487": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_487.mp3",
+        "cv_0169": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_0169.mp3",
           "duration": 6.0,
           "sampleRate": 24000
         },
-        "es_bp_515": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_515.mp3",
-          "duration": 5.6,
+        "cv_0354": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_0354.mp3",
+          "duration": 6.6,
           "sampleRate": 24000
         },
-        "es_bp_542": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_542.mp3",
-          "duration": 6.1,
+        "cv_0475": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_0475.mp3",
+          "duration": 5.2,
           "sampleRate": 24000
         },
-        "es_bp_531": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_531.mp3",
-          "duration": 6.5,
-          "sampleRate": 24000
-        },
-        "es_bp_54": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_54.mp3",
-          "duration": 6.4,
-          "sampleRate": 24000
-        },
-        "es_bp_65": {
-          "src": "audio/refdemo-instruct_en_8-3-omnivoice-es_bp_65.mp3",
+        "cv_0760": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_0760.mp3",
           "duration": 7.9,
+          "sampleRate": 24000
+        },
+        "cv_0978": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_0978.mp3",
+          "duration": 7.9,
+          "sampleRate": 24000
+        },
+        "cv_1083": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_1083.mp3",
+          "duration": 5.9,
+          "sampleRate": 24000
+        },
+        "cv_0769": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_0769.mp3",
+          "duration": 7.1,
+          "sampleRate": 24000
+        },
+        "cv_1142": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_1142.mp3",
+          "duration": 8.7,
+          "sampleRate": 24000
+        },
+        "cv_1322": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_1322.mp3",
+          "duration": 6.0,
+          "sampleRate": 24000
+        },
+        "cv_1166": {
+          "src": "audio/refdemo-instruct_en_8-3-omnivoice-cv_1166.mp3",
+          "duration": 8.8,
           "sampleRate": 24000
         }
       },
