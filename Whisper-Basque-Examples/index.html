@@ -255,7 +255,16 @@ reference can read as 50%.</p>
 <td class="v best">57.69</td>
 <td class="v">64.58</td>
 </tr>
+<tr><td>EusPodcast_v2/test</td>
+<td class="v">51.75*</td>
+<td class="v">39.02*</td>
+<td class="v">28.95*</td>
+<td class="v">16.05</td>
+<td class="v">15.70</td>
+<td class="v best">14.36</td>
+</tr>
 </tbody></table></div>
+<p class="note"><b>EusPodcast_v2</b> is the same held-out podcast corpus, rebuilt: each episode’s transcript was force-aligned to the audio and cut only in pauses, into clips of up to 30 s (9,334 train, 610 dev, 472 test). The original segment times drifted by up to 15 s and many references covered only part of the speech, so most of the old EusPodcast gap was the segmentation, not the models. * tiny, small and medium were measured on an earlier copy of their lr 1e-5 checkpoints, not necessarily the exact weights used for the examples below.</p>
 <p class="note">From <code>test_results/</code>, over every utterance in each split &mdash; this is the measurement. The examples below are drawn from these same splits to show what the numbers look like utterance by utterance; six of them are far too few to rank anything, so read a row against its own reference rather than against the other rows.</p>
 <details class="split" id="composite_eu-test_cv" open>
 <summary><span class="chev" aria-hidden="true"></span><span class="sname">composite_eu/test_cv</span><span class="smeta">6 examples &middot; corpus WER 17.8 &rarr; 3.6</span></summary>
@@ -1611,7 +1620,7 @@ Oso pozik nator.
 <details class="split" id="EusPodcast-test" open>
 <summary><span class="chev" aria-hidden="true"></span><span class="sname">EusPodcast/test</span><span class="smeta">6 examples &middot; corpus WER 79.1 &rarr; 57.7</span></summary>
 <div class="split-body">
-<p class="note">Held out of training. Spontaneous conversation with Spanish code-switching, verbatim markup (#eh#, word*, [overlap]), and segments whose reference accounts for only part of the speech.</p>
+<p class="note">Held out of training. Spontaneous conversation with Spanish code-switching, verbatim markup (#eh#, word*, [overlap]), and segments whose reference accounts for only part of the speech. This is the original segmentation; EusPodcast_v2 in the table above fixes it.</p>
 <div class="card">
 <div class="card-top">
 <audio controls preload="none" src="audio/EusPodcast_test_3.mp3"></audio>
@@ -1890,7 +1899,7 @@ Ridikuloa.
 <p>Whisper fine-tuned for Basque. Models: <code>tiny</code> (lr 1e-5), <code>small</code> (lr 1e-5), <code>medium</code> (lr 1e-5), <code>large</code> (lr 2e-5), <code>large-v2</code> (lr 2e-5), <code>large-v3</code> (lr 2e-5). tiny, small and medium are the
 lr 1e-5 sweep; large, large-v2 and large-v3 are the lr 2e-5 sweep, jobs 54378, 54379 and
 54377. All six were trained on the same mixture of composite_eu, faktoria and Dialektoak;
-EusPodcast was held out, which is why it scores worst.</p>
+EusPodcast was held out, which is why it scores worst. EusPodcast_v2 is the same corpus re-segmented with forced alignment.</p>
 <p>Corpora: composite_eu combines Common Voice, Basque Parliament recordings and OpenSLR;
 faktoria is radio broadcast; Dialektoak and EusPodcast come from Aholab (UPV/EHU).
 Decoding is beam 5, max length
