@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Latxa-Omni Speech Datasets</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Literata:opsz,wght@7..72,400;7..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a listening bench. Header with the three datasets as tabs; each tab plays real conversations, translated and Latxa-70B answers side by side. */
+:root {
+  --bg: #F2F4F3;
+  --surface: #FBFCFB;
+  --ink: #17201D;
+  --muted: #56625D;
+  --line: #D6DDDA;
+  --orig: #4549A0;
+  --orig-soft: #E7E8F6;
+  --latxa: #0B6B60;
+  --latxa-soft: #DDEFEC;
+  --new: #A3480F;
+  --new-soft: #F8E7DB;
+  --f-display: 'Bricolage Grotesque', 'Segoe UI', Arial, sans-serif;
+  --f-body: 'Literata', Georgia, serif;
+  --f-mono: 'IBM Plex Mono', Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121816; --surface: #1A2220; --ink: #E6ECE9; --muted: #9BA8A3; --line: #2E3A36;
+  --orig: #A9ADF2; --orig-soft: #262948; --latxa: #6FD3C3; --latxa-soft: #16332F;
+  --new: #F2A774; --new-soft: #3A2618; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121816; --surface: #1A2220; --ink: #E6ECE9; --muted: #9BA8A3; --line: #2E3A36;
+  --orig: #A9ADF2; --orig-soft: #262948; --latxa: #6FD3C3; --latxa-soft: #16332F;
+  --new: #F2A774; --new-soft: #3A2618; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 32px }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 700; line-height: 1.15; text-wrap: balance; margin: 0 }
+h1 { font-size: clamp(30px, 5vw, 46px); letter-spacing: -0.01em }
+.lede { color: var(--muted); max-width: 64ch; margin: 8px 0 0 }
+.mono { font-family: var(--f-mono); font-size: 13px }
+.label { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase }
+
+.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px }
+.tab { text-align: left; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 10px;
+  padding: 16px 18px; cursor: pointer; display: grid; gap: 6px; font: inherit }
+.tab:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--latxa); outline-offset: 2px }
+.tab[aria-selected="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink) }
+.tab h2 { font-size: 19px }
+.tab .stats { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); line-height: 1.5 }
+.tab .stats b { color: var(--ink); font-weight: 500 }
+@media (max-width: 760px) { .tabs { grid-template-columns: 1fr } }
+
+.bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between }
+.picker { display: flex; gap: 8px; align-items: center; flex-wrap: wrap }
+.picker button, .picker select { font: 500 14px var(--f-mono); color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; cursor: pointer; max-width: 100% }
+.toggle { font: 500 13px var(--f-mono); color: var(--muted); display: flex; gap: 8px; align-items: center; cursor: pointer }
+
+.convo { display: grid; gap: 20px }
+.exchange { display: grid; gap: 12px; padding-top: 20px; border-top: 1px solid var(--line) }
+.exchange:first-child { border-top: 0; padding-top: 0 }
+.turn { display: grid; gap: 8px; padding: 16px 18px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); min-width: 0 }
+.turn p { margin: 0 }
+.turn .en { color: var(--muted); font-style: italic; font-size: 14.5px }
+.who { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; justify-content: space-between }
+.who .label { font-weight: 500 }
+.answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px }
+@media (max-width: 760px) { .answers { grid-template-columns: 1fr } }
+.turn.orig { background: var(--orig-soft); border-color: transparent }
+.turn.orig .label { color: var(--orig) }
+.turn.latxa { background: var(--latxa-soft); border-color: transparent }
+.turn.latxa .label { color: var(--latxa) }
+.turn.user .label { color: var(--muted) }
+.turn.new { background: var(--new-soft); border-color: transparent }
+.turn.new .label { color: var(--new) }
+.turn.assistant { margin-left: 48px }
+@media (max-width: 760px) { .turn.assistant { margin-left: 20px } }
+.len { color: var(--muted) }
+
+.play { display: inline-flex; align-items: center; gap: 10px; border: 0; background: none; padding: 0; cursor: pointer; color: inherit; font: 500 13px var(--f-mono); justify-self: start }
+.play .dot { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--bg); flex: none }
+.play .dot svg { width: 14px; height: 14px; fill: currentColor }
+.play .track { width: 120px; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden }
+.play .track i { display: block; height: 100%; width: 0; background: var(--ink) }
+.noaudio { font: 400 13px var(--f-mono); color: var(--muted) }
+
+.switch-mark { display: flex; align-items: center; gap: 12px; color: var(--new); font: 500 12px var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase }
+.switch-mark::before, .switch-mark::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: 0.5 }
+.note { color: var(--muted); max-width: 70ch; margin: 0; font-size: 15px }
+.stack { display: grid; gap: 40px }
+.card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline }
+.card-head h3 { font-size: 20px }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <p class="label" style="margin:0 0 10px;color:var(--muted)">Latxa-Omni · Stage 1 training data · Nov 2026</p>
+    <h1>Latxa-Omni speech datasets</h1>
+    <p class="lede">Real conversations from the three new datasets, with their audio. Questions are spoken in Common Voice speakers’ voices with OmniVoice; answers come either from the translated InstructS2S data or from Latxa-70B.</p>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Datasets">
+    <button class="tab" role="tab" id="tab-compare" data-view="compare">
+      <span class="label" style="color:var(--latxa)">Translated vs Latxa-70B</span>
+      <h2>New answers by Latxa-70B</h2>
+      <span class="stats"><b>199k</b> synthesized conv. · <b>3.73%</b> WER<br><b>181k</b> Latxa-70B conv. · <b>410k</b> answers · <b>3.49%</b> WER</span>
+    </button>
+    <button class="tab" role="tab" id="tab-switch" data-view="switch">
+      <span class="label" style="color:var(--new)">Multi-turn augment</span>
+      <h2>Topic switches</h2>
+      <span class="stats"><b>20k</b> train conv. joining 2–3 unrelated chats<br>in the same user voice · <b>300</b> in test</span>
+    </button>
+    <button class="tab" role="tab" id="tab-recall" data-view="recall">
+      <span class="label" style="color:var(--new)">Multi-turn augment</span>
+      <h2>Questions about the chat</h2>
+      <span class="stats"><b>15k</b> train conv. ending in a new spoken<br>question about earlier turns · <b>300</b> in test</span>
+    </button>
+  </nav>
+
+  <main id="view"></main>
+</div>
+
+<script>
+const DATA = {"compare": [{"id": "instruct_en_8", "turns": [{"user": {"text": "Kaixo, egin al dezakezu etxe baten hiru dimentsioko eredu bat niretzat?", "en": "Hey, can you render a 3 dimensional model of a house for me?", "speaker": "cv_0361", "audio": "audio/instruct_en_8-1-user.mp3"}, "orig": {"text": "Ez naiz gai hiru dimentsioko ereduak sortzeko. Hala ere, etxe baten deskribapen testuala eman diezazuket, horrek laguntzen badizu.", "en": "I'm not capable of rendering 3D models. However, I can provide you with a textual description of a house if that helps.", "speaker": "aintzane", "audio": "audio/instruct_en_8-1-orig.mp3"}, "latxa": {"text": "Ezin dut zuzenean hiru dimentsioko eredurik sortu, baina esan diezazuket nola egin dezakezun zuk zeuk edo zein tresna erabil ditzakezun horretarako.", "speaker": "maider", "audio": "audio/instruct_en_8-1-latxa.mp3"}}, {"user": {"text": "Deskribatu etxe txiki bat", "en": "Describe a small house", "speaker": "cv_0361", "audio": "audio/instruct_en_8-2-user.mp3"}, "orig": {"text": "Etxe txikiak solairu bat eta teilatu aldapatsua ditu. Logela bat, bainugela bat eta egongela bat ditu.", "en": "The small house has one floor and a sloping roof. It has one bedroom, one bathroom, and a living room.", "speaker": "aintzane", "audio": "audio/instruct_en_8-2-orig.mp3"}, "latxa": {"text": "Etxe txiki bat irudikatuko dut. Etxea laukizuzen formakoa da, teilatu triangeluar batekin. Aurrealdean, ate bat eta bi leiho ditu, eta alboetan, leiho bana. Atzealdean, lorategi txiki bat du, eta barruan, egongela, sukaldea, komuna eta logela bakarra.", "speaker": "maider", "audio": "audio/instruct_en_8-2-latxa.mp3"}}]}, {"id": "instruct_en_0", "turns": [{"user": {"text": "Kaixo emango al dizkidazu, ba, osasuntsu egoteko hiru aholku?", "en": "Hey, can you give me, like, three tips for staying healthy?", "speaker": "jon", "audio": "audio/instruct_en_0-1-user.mp3"}, "orig": {"text": "Hona hemen osasuntsu egoteko hiru aholku: jan orekatu, hidratatu ur asko edanez, eta egin gutxienez zazpi ordu lo gauero.", "en": "Here are three tips for staying healthy: eat a balanced diet, stay hydrated by drinking plenty of water, and get at least seven hours of sleep each night.", "speaker": "aintzane", "audio": "audio/instruct_en_0-1-orig.mp3"}, "latxa": {"text": "Noski, osasuntsu egoteko hiru aholku emango dizkizut. Lehenengoa da egunero ariketa fisikoa egitea, gutxienez ordu erdi ibiltzea edo kirolen bat praktikatzea. Bigarrena da elikadura osasuntsua izatea, fruta, barazki eta zerealak janez, eta azukre eta koipe gehiegi saihestuz. Hirugarrena da atseden hartzea, gutxienez zazpi edo zortzi ordu lo eginez gauero, eta estresa kudeatzen ikastea.", "speaker": "maider", "audio": "audio/instruct_en_0-1-latxa.mp3"}}]}, {"id": "instruct_en_91163", "turns": [{"user": {"text": "Antzeman al duzu patroirik edo gai errepikakorrik, badakizu, zure bizitzan ikasi dituzun ikasgai garrantzitsuenetan?", "en": "You know, have you, like, noticed any patterns or recurring themes, you know, in the most important lessons you've learned throughout your life?", "speaker": "xabier", "audio": "audio/instruct_en_91163-1-user.mp3"}, "orig": {"text": "Gai errepikakor bat norberaren kontzientzia izatearen eta akatsetatik ikasteko irekita egotearen garrantzia da. Beste bat oztopoak gainditzeko erresilientzia eta iraunkortasunaren balioa da.", "en": "One recurring theme is the importance of self-awareness and being open to learning from mistakes. Another is the value of resilience and perseverance in overcoming obstacles.", "speaker": "aintzane", "audio": "audio/instruct_en_91163-1-orig.mp3"}, "latxa": {"text": "Bai, patroi bat antzeman dut: bizitzan zehar ikasi ditudan ikasgai garrantzitsuenak porrotetatik eta akatsetatik datoz. Porrot egitea ez da beti erraza, baina ikasgai baliotsuak eman dizkit.", "speaker": "maider", "audio": "audio/instruct_en_91163-1-latxa.mp3"}}, {"user": {"text": "Emango al zenidake iraunkortasuna funtsezkoa izan zen une baten adibidea?", "en": "Can you give an example of a time when perseverance was crucial", "speaker": "xabier", "audio": "audio/instruct_en_91163-2-user.mp3"}, "orig": {"text": "Adibide bat porrotetik ikasi behar izan nuenekoa da, horrek irakatsi zidan aurrera jarraitzen, gauzak ezinezkoak diruditen arren.", "en": "One example is when I had to learn from failure, it taught me to keep going even when things seem impossible.", "speaker": "aintzane", "audio": "audio/instruct_en_91163-2-orig.mp3"}, "latxa": {"text": "Adibidez, hizkuntza berri bat ikasten ari nintzenean, askotan sentitzen nuen ez nuela aurrera egiten, eta porrot egingo nuela pentsatzen nuen. Baina iraunkortasunari esker, aurrera jarraitu nuen, eta azkenean helburua lortu nuen.", "speaker": "maider", "audio": "audio/instruct_en_91163-2-latxa.mp3"}}]}, {"id": "instruct_en_36921", "turns": [{"user": {"text": "Berridatzi al dezakezu paragrafo hau argi eta zehatzago egiteko Gaur egungo munduan, teknologiaren arloan egin diren aurrerapen ugari lagungarri izan zaizkigu negozioetan?", "en": "Can you rewrite this paragraph to make it clear and accurate, like, um, In the world of today, a great many advances which have been found with regard to technology have assisted us in business?", "speaker": "xabier", "audio": "audio/instruct_en_36921-1-user.mp3"}, "orig": {"text": "Gaur egungo teknologiaren aurrerapenek onura handiak ekarri dizkiote negozioari.", "en": "Today's technological advances have greatly benefited business.", "speaker": "aintzane", "audio": "audio/instruct_en_36921-1-orig.mp3"}, "latxa": {"text": "Gaur egungo munduan, teknologiaren arloan egin diren aurrerapen ugari oso lagungarri izan zaizkigu negozioetan.", "speaker": "maider", "audio": "audio/instruct_en_36921-1-latxa.mp3"}}, {"user": {"text": "Laburbildu al dezakezu testu hau esaldi bakarrean Zeintzuk dira teknologia hezkuntzan erabiltzearen onurak?", "en": "Can you summarize this text in one sentence, like, what are the benefits of using technology in education?", "speaker": "xabier", "audio": "audio/instruct_en_36921-2-user.mp3"}, "orig": {"text": "Hezkuntzan teknologia erabiltzeak onura ugari ditu, informaziorako sarbide hobea eta ikaskuntza-esperientzia aberatsagoak barne.", "en": "Technology in education provides several benefits, including improved access to information and enhanced learning experiences.", "speaker": "aintzane", "audio": "audio/instruct_en_36921-2-orig.mp3"}, "latxa": {"text": "Teknologiak hezkuntzan dituen onuren artean daude ikaskuntza pertsonalizatua, motibazioa areagotzea, baliabideen eskuragarritasuna handitzea eta ikasleen parte-hartzea sustatzea.", "speaker": "maider", "audio": "audio/instruct_en_36921-2-latxa.mp3"}}, {"user": {"text": "Deskribatu al dezakezu teknologiak komunikazioan izan duen eragina?", "en": "Can you describe the impact of technology on communication?", "speaker": "xabier", "audio": "audio/instruct_en_36921-3-user.mp3"}, "orig": {"text": "Teknologiak komunikazioa nabarmen hobetu du, abiadura eta irisgarritasuna handituz.", "en": "Technology has greatly improved communication by increasing speed and accessibility.", "speaker": "aintzane", "audio": "audio/instruct_en_36921-3-orig.mp3"}, "latxa": {"text": "Teknologiak iraultza ekarri du komunikazioaren arloan, komunikazioa azkarragoa, errazagoa eta globalagoa bihurtuz, eta pertsonen arteko harremanak hobetuz.", "speaker": "maider", "audio": "audio/instruct_en_36921-3-latxa.mp3"}}]}, {"id": "instruct_en_121110", "turns": [{"user": {"text": "Faktore genetikoek, badakizu, zerikusirik al dute alergiak garatzean?", "en": "So, do genetic factors, you know, have a role in how allergies develop?", "speaker": "cv_1053", "audio": "audio/instruct_en_121110-1-user.mp3"}, "orig": {"text": "Bai, faktore genetikoek eragina dute alergiak garatzean. Ikerketek iradokitzen dute alergien familia-aurrekariak dituzten pertsonek joera handiagoa dutela horiek garatzeko.", "en": "Yes, genetic factors do play a role in how allergies develop. Research suggests that people with a family history of allergies are more likely to develop them.", "speaker": "aintzane", "audio": "audio/instruct_en_121110-1-orig.mp3"}, "latxa": {"text": "Bai, faktore genetikoek zerikusi handia dute alergiak garatzean. Ikerketek erakutsi dute alergiak izateko joera heredatu egin daitekeela gurasoengandik seme-alabengana. Hau da, alergiak dituzten gurasoek probabilitate handiagoa dute alergiak dituzten seme-alabak izateko.", "speaker": "maider", "audio": "audio/instruct_en_121110-1-latxa.mp3"}}, {"user": {"text": "Ingurumen-faktoreek ere lagundu al dezakete alergiak garatzen?", "en": "Can environmental factors also contribute to allergy development?", "speaker": "cv_1053", "audio": "audio/instruct_en_121110-2-user.mp3"}, "orig": {"text": "Bai, ingurumen-faktoreek ere lagundu dezakete alergiak garatzen, hala nola alergenoekiko esposizioa adin gaztean.", "en": "Yes, environmental factors can also contribute to allergy development, such as exposure to allergens at a young age.", "speaker": "aintzane", "audio": "audio/instruct_en_121110-2-orig.mp3"}, "latxa": {"text": "Bai, ingurumen-faktoreek ere zerikusi handia dute alergiak garatzean. Adibidez, kutsadura, tabakoaren kea, estresak eta elikadura-ohitura txarrek alergiak garatzeko arriskua handitu dezakete. Gainera, higienearen hipotesiaren arabera, gaur egungo gizarte modernoetan mikroorganismoen eta parasitoen aurkako esposizio txikiagoak alergiak garatzeko arriskua handitu dezake.", "speaker": "maider", "audio": "audio/instruct_en_121110-2-latxa.mp3"}}]}, {"id": "instruct_en_118986", "turns": [{"user": {"text": "Lasagna beganoa egin nahi dut, baina ez dut gaztarik edo tofurik erabili nahi, ados? Nola egin dezaket hori?", "en": "So, I wanna make a vegan lasagna, but I don't wanna use cheese or tofu, okay? How can I do that?", "speaker": "miren", "audio": "audio/instruct_en_118986-1-user.mp3"}, "orig": {"text": "Lasagna beganoaren alternatibak erabil ditzakezu, hala nola alberjinia xerra erreak edo kalabazin fideoak, ohiko lasagna fideoen ordez. Gazta ordezkatzeko, saiatu intxaur-krema edo legamia elikagarria erabiltzen. Gainera, dilistak edo perretxikoak erabil ditzakezu proteina-iturri gisa. Esperimentatu konbinazio desberdinekin gustatzen zaizun zaporea aurkitzeko.", "en": "You can use vegan lasagna alternatives like roasted eggplant slices or zucchini noodles instead of traditional lasagna noodles. For the cheese substitute, try using cashew cream or nutritional yeast. Additionally, you can use lentils or mushrooms as protein sources. Experiment with different combinations to find the flavor you like.", "speaker": "aintzane", "audio": "audio/instruct_en_118986-1-orig.mp3"}, "latxa": {"text": "Lasagna beganoa egin dezakezu gaztarik eta tofurik gabe. Barazkiak erabili ditzakezu, adibidez, berenjenak, kalabazinak, azenarioak, tipulak eta baratxuriak. Horrez gain, soja testurizatua edo seitan-a erabil ditzakezu proteina iturri gisa. Beste aukera bat da gazta begetalak erabiltzea, esate baterako, soja gazta edo fruitu lehorrekin egindako gaztak.", "speaker": "maider", "audio": "audio/instruct_en_118986-1-latxa.mp3"}}, {"user": {"text": "Zein beste barazki erabil ditzaket alberjiniaren ordez?", "en": "What are some other vegetables I can use in place of eggplant?", "speaker": "miren", "audio": "audio/instruct_en_118986-2-user.mp3"}, "orig": {"text": "Portobello perretxiko xerratuak, piper berde erreak edo baratxuri salteatuak erabil ditzakezu alberjiniaren alternatiba gisa.", "en": "You can use sliced portobello mushrooms, grilled bell peppers, or sautéed spinach as alternatives to eggplant.", "speaker": "aintzane", "audio": "audio/instruct_en_118986-2-orig.mp3"}, "latxa": {"text": "Kuia edo kalabaza, porrua, zainzuriak, edo patata ere erabil ditzakezu lasagna beganoa egiteko. Barazki hauek egosi edo erregosi egin ditzakezu, eta lasagnaren geruzak egiteko erabili.", "speaker": "maider", "audio": "audio/instruct_en_118986-2-latxa.mp3"}}]}, {"id": "instruct_en_9510", "turns": [{"user": {"text": "Berridatzi al dezakezu produktuaren deskribapen hau aditz aktiboak erabiliz, gure produktuak zure finantzak hobeto kudeatzen laguntzen dizula esanez edo horrelako zerbait?", "en": "Can you, like, rewrite this product description using active verbs, so it says something like our product is designed to help you better manage your finances?", "speaker": "cv_0720", "audio": "audio/instruct_en_9510-1-user.mp3"}, "orig": {"text": "Hona hemen berridatzitako produktuaren deskribapena aditz aktiboak erabiliz: Gure produktuak finantzak kontrolpean izaten laguntzen dizu, aurrekontuak sinplifikatuz eta diruaren kudeaketa erraztuz.", "en": "Here is a rewritten product description using active verbs: Our product empowers you to take control of your finances, streamlining budgeting and simplifying money management.", "speaker": "aintzane", "audio": "audio/instruct_en_9510-1-orig.mp3"}, "latxa": {"text": "Zure finantzak modu eraginkorragoan kudeatzen laguntzeko sortu dugu gure produktua. Zure gastuak kontrolatzen eta aurrezten lagunduko dizu, zure diru-sarrerak hobeto aprobetxatzeko. Gure produktuarekin, zure ekonomia pertsonala antolatu ahal izango duzu, zure helburuak lortzeko bidean.", "speaker": "maider", "audio": "audio/instruct_en_9510-1-latxa.mp3"}}, {"user": {"text": "Berridatzi al dezakezu enpresaren misio-adierazpen hau bezeroen onuretan zentratzeko?", "en": "Can you rewrite this company mission statement to focus on customer benefits?", "speaker": "cv_0720", "audio": "audio/instruct_en_9510-2-user.mp3"}, "orig": {"text": "Gure enpresa zure helburuak lortzen laguntzera dedikatzen da, irtenbide berritzaileak eta laguntza bikaina eskainiz.", "en": "Our company is dedicated to helping you achieve your goals, providing innovative solutions and exceptional support.", "speaker": "aintzane", "audio": "audio/instruct_en_9510-2-orig.mp3"}, "latxa": {"text": "Gure misioa da gure bezeroei beren finantzak modu erraz eta eraginkorrean kudeatzen laguntzea, beren dirua hobeto aprobetxatu dezaten eta beren helburu ekonomikoak lortu ditzaten.", "speaker": "maider", "audio": "audio/instruct_en_9510-2-latxa.mp3"}}]}, {"id": "instruct_en_49403", "turns": [{"user": {"text": "Kaixo, jar ditzakezu trantsizio-hitz egokiak esaldi hau leunagoa izan dadin, adibidez, 'Parkean egon ginen, baina jendez gainezka zegoen'?", "en": "Hey, can you insert the appropriate transition words to make this sentence smoother, like 'We went to the park, but it was too crowded'?", "speaker": "cv_0624", "audio": "audio/instruct_en_49403-1-user.mp3"}, "orig": {"text": "Trantsizio-hitzak erabil ditzakezu, hala nola, aldiz, beraz edo bitartean, zure esaldia leunagoa izan dadin. Adibidez, 'Parkean egon ginen; aldiz, jendez gainezka zegoen'.", "en": "You can use transition words like however, therefore, or meanwhile to make your sentence smoother. For example, 'We went to the park; however, it was too crowded.'", "speaker": "aintzane", "audio": "audio/instruct_en_49403-1-orig.mp3"}, "latxa": {"text": "Parkean egon ginen, baina, egia esan, jendez gainezka zegoen.", "speaker": "maider", "audio": "audio/instruct_en_49403-1-latxa.mp3"}}, {"user": {"text": "Emango al didazu bitartean hitza erabiltzen duen esaldi baten adibidea?", "en": "Can you give me an example of using meanwhile in a sentence?", "speaker": "cv_0624", "audio": "audio/instruct_en_49403-2-user.mp3"}, "orig": {"text": "Hona hemen adibide bat: Dendara joan ginen, eta bitartean, nire ahizpak etxean geratzea erabaki zuen filma bat ikusteko.", "en": "Here is an example: We went to the store, and meanwhile, my sister stayed home to watch a movie.", "speaker": "aintzane", "audio": "audio/instruct_en_49403-2-orig.mp3"}, "latxa": {"text": "Bitartean hitza erabiltzen duen esaldi baten adibidea hau izan daiteke: Parkean egon ginen, eta bitartean, jendez gainezka zegoen.", "speaker": "maider", "audio": "audio/instruct_en_49403-2-latxa.mp3"}}]}, {"id": "instruct_en_8651", "turns": [{"user": {"text": "Kaixo, zeintzuk dira mezu elektroniko baten hiru zati nagusiak?", "en": "Hey, what are the, uh, three main parts of an email message?", "speaker": "cv_0882", "audio": "audio/instruct_en_8651-1-user.mp3"}, "orig": {"text": "Mezu elektroniko baten hiru zati nagusiak goiburua, gorputza eta sinadura dira.", "en": "The three main parts of an email message are the header, the body, and the signature.", "speaker": "aintzane", "audio": "audio/instruct_en_8651-1-orig.mp3"}, "latxa": {"text": "Mezu elektroniko baten hiru zati nagusiak igorlea, hartzailea eta edukia dira. Igorlea mezuaren bidaltzailea da, hau da, zure helbide elektronikoa. Hartzailea mezuaren jasotzailea da, hau da, nori bidaltzen diozun mezua. Azkenik, edukia mezuaren gorputza da, hau da, idazten duzun testua.", "speaker": "maider", "audio": "audio/instruct_en_8651-1-latxa.mp3"}}, {"user": {"text": "Zer sartzen da normalean mezu elektroniko baten goiburuan?", "en": "What is typically included in the header of an email message?", "speaker": "cv_0882", "audio": "audio/instruct_en_8651-2-user.mp3"}, "orig": {"text": "Goiburuan normalean igorlearen helbidea, hartzailearen helbidea eta gaia sartzen dira.", "en": "The header typically includes the sender's address, the recipient's address, and the subject line.", "speaker": "aintzane", "audio": "audio/instruct_en_8651-2-orig.mp3"}, "latxa": {"text": "Mezu elektroniko baten goiburuan normalean igorlea, hartzailea, data eta gaia sartzen dira.", "speaker": "maider", "audio": "audio/instruct_en_8651-2-latxa.mp3"}}, {"user": {"text": "Zer aurkitu ohi da mezu elektroniko baten gorputzean?", "en": "What is usually found in the body of an email message", "speaker": "cv_0882", "audio": "audio/instruct_en_8651-3-user.mp3"}, "orig": {"text": "Gorputzean normalean igorleak hartzaileari helarazi nahi dion mezu edo eduki nagusia aurkitzen da.", "en": "The body usually contains the main message or content that the sender wants to convey to the recipient.", "speaker": "aintzane", "audio": "audio/instruct_en_8651-3-orig.mp3"}, "latxa": {"text": "Mezu elektroniko baten gorputzean normalean agurrak, testu nagusia eta sinadura aurkitu ohi dira.", "speaker": "maider", "audio": "audio/instruct_en_8651-3-latxa.mp3"}}]}, {"id": "instruct_en_139344", "turns": [{"user": {"text": "Nola jokatzen du ironiak parodia on bat sortzeko orduan?", "en": "So, how does irony actually play a role in creating a good parody?", "speaker": "cv_0461", "audio": "audio/instruct_en_139344-1-user.mp3"}, "orig": {"text": "Ironiak funtsezko papera betetzen du parodia on bat sortzeko, jatorrizko lanaren kontraesanak edo zentzugabekeriak nabarmenduz, umoretsu eta pentsarazlea eginez.", "en": "Irony plays a crucial role in creating a good parody by highlighting the contradictions or absurdities in the original work, making it humorous and thought-provoking.", "speaker": "aintzane", "audio": "audio/instruct_en_139344-1-orig.mp3"}, "latxa": {"text": "Ironia funtsezko elementua da parodia on bat sortzeko orduan, izan ere, ironiak aukera ematen du testuinguru batetik kanpo dagoen zerbait adierazteko, esanahi bikoitzak sortuz. Parodia batean, ironia erabiltzen da jatorrizko lanaren edo egoeraren ezaugarriak nabarmentzeko eta horiei buruz barre egiteko.", "speaker": "maider", "audio": "audio/instruct_en_139344-1-latxa.mp3"}}, {"user": {"text": "Emango al zenidake ironiaren adibide bat parodia batean?", "en": "Can you give an example of irony in a parody", "speaker": "cv_0461", "audio": "audio/instruct_en_139344-2-user.mp3"}, "orig": {"text": "Adibidez, abesti serio baten parodia batek gehiegizko letra dramatikoak erabil ditzake ironikoki, umoretsu eta entretenigarri bihurtuz.", "en": "For instance, a parody of a serious song might use overly dramatic lyrics to ironic effect, making it humorous and entertaining.", "speaker": "aintzane", "audio": "audio/instruct_en_139344-2-orig.mp3"}, "latxa": {"text": "Imajinatu parodia bat non politikari batzuen ustelkeria salatzen den. Parodian, politikariak agertzen dira esanez \"Guk ez dugu diru publikoa erabiltzen gure onerako\", baina atzealdean ikusten da dirua poltsikoratzen ari direla. Kasu honetan, ironia erabiltzen da esaten denaren eta benetan gertatzen denaren arteko kontrastea azpimarratzeko.", "speaker": "maider", "audio": "audio/instruct_en_139344-2-latxa.mp3"}}]}], "switch": [{"id": "mt_switch_train_009556", "kind": "switch", "sources": ["instruct_en_122354", "instruct_en_165324"], "turns": [{"role": "user", "text": "Nola aldatu du WhatsApp-ek, badakizu, jendeak landa-eremuetan komunikatzeko modua, garapen bidean dauden herrialdeetan, tradizionalki?", "speaker": "inaki", "new": false, "audio": "audio/mt_switch_train_009556-0.mp3", "source": "instruct_en_122354"}, {"role": "assistant", "text": "WhatsApp-ek komunikazio-hutsunea gainditu du garapen bidean dauden herrialdeetako landa-eremuetan, lagunekin eta familiarekin harremanetan egoteko modu merke eta eskuragarri bat eskainiz, lotura sozial eta ekonomikoak erraztuz, eta informazio eta zerbitzuetarako sarbidea ahalbidetuz.", "speaker": "aintzane", "new": false, "audio": "audio/mt_switch_train_009556-1.mp3", "source": "instruct_en_122354"}, {"role": "user", "text": "Eman ahal dizkidazu eguneroko praktiken adibide batzuk, badakizu, geure buruarekiko errukia lantzen laguntzen digutenak, erresilientzia handitzeko eta eguneroko bizitzan estresa murrizteko?", "speaker": "inaki", "new": false, "audio": "audio/mt_switch_train_009556-2.mp3", "source": "instruct_en_165324"}, {"role": "assistant", "text": "Goizeko meditazioa, egunerokoa idaztea eta esker ona adieraztea bezalako praktikek geure buruarekiko errukia lantzen laguntzen dute, erresilientzia handituz eta estresa murriztuz. Gainera, ibilaldi kontzienteak egiteak, adeitasunez jokatzeak eta pentsamendu negatiboak berraztertzeak ere onurak ekar ditzake.", "speaker": "aintzane", "new": false, "audio": "audio/mt_switch_train_009556-3.mp3", "source": "instruct_en_165324"}]}, {"id": "mt_switch_train_005773", "kind": "switch", "sources": ["instruct_en_36627", "instruct_en_126087"], "turns": [{"role": "user", "text": "Egin dezakezu, ba, esaldi hau berridatzi, badakizu, pertsona ospetsu baten erreferentzia erabiliz, celebrity bat edo horrelako zerbait?", "speaker": "cv_0342", "new": false, "audio": "audio/mt_switch_train_005773-0.mp3", "source": "instruct_en_36627"}, {"role": "assistant", "text": "Borondate indartsua izatea Dwayne 'The Rock' Johnson izatea bezala da, borroka libreko lehia batean, aurkaria zenbat eta gogorragoa izan, amore emateari uko eginez.", "speaker": "aintzane", "new": false, "audio": "audio/mt_switch_train_005773-1.mp3", "source": "instruct_en_36627"}, {"role": "user", "text": "Nola eragin dio sare sozialak, badakizu, txikizkako merkatariek gauzak erosi eta saltzeko moduari?", "speaker": "cv_0342", "new": false, "audio": "audio/mt_switch_train_005773-2.mp3", "source": "instruct_en_126087"}, {"role": "assistant", "text": "Sare sozialek nabarmen eragin diote txikizkako merkataritzari, denbora errealeko merkatu-informaziorako sarbidea emanez, merkatariak elkarren artean konektatu eta ideiak partekatzeko aukera emanez, eta merkatuaren sentimendua joera-gaiekin eta traolekin eraginez.", "speaker": "aintzane", "new": false, "audio": "audio/mt_switch_train_005773-3.mp3", "source": "instruct_en_126087"}, {"role": "user", "text": "Zein dira txikizkako merkatarientzako sare sozialen plataformarik ezagunenak?", "speaker": "cv_0342", "new": false, "audio": "audio/mt_switch_train_005773-4.mp3", "source": "instruct_en_126087"}, {"role": "assistant", "text": "Txikizkako merkatarientzako sare sozialen plataformarik ezagunenak Twitter, Facebook eta Reddit dira, non merkatuaren ikuspegiak eta joerak partekatzen dituzten.", "speaker": "aintzane", "new": false, "audio": "audio/mt_switch_train_005773-5.mp3", "source": "instruct_en_126087"}]}, {"id": "mt_switch_train_018507", "kind": "switch", "sources": ["instruct_en_157", "instruct_en_12401"], "turns": [{"role": "user", "text": "Sor dezakezu lan-deskribapen bat Datu Analitikoen Aholkulari lanposturako?", "speaker": "cv_1321", "new": false, "audio": "audio/mt_switch_train_018507-0.mp3", "source": "instruct_en_157"}, {"role": "assistant", "text": "Hona hemen lan-deskribapen bat Datu Analitikoen Aholkulari lanposturako: Datu Analitikoen Aholkulariak datu konplexuak bildu eta aztertuko ditu, erakundeei negozio-erabaki informatuak hartzen laguntzeko. Erantzukizunen artean daude datu-baseak garatzea eta mantentzea, datu-bisualizazioak sortzea eta joerak eta ikuspegiak identifikatzea. Hautagai ideala analisi-gaitasun sendoak izango ditu, Excel eta SQL bezalako datu-tresnekin esperientzia, eta komunikazio-trebetasun bikainak, aurkikuntzak interesdunei aurkezteko.", "speaker": "aintzane", "new": false, "audio": "audio/mt_switch_train_018507-1.mp3", "source": "instruct_en_157"}, {"role": "user", "text": "Egin dezakezu, ba, zerrenda honetako elementuak sailkatu? Platinoa, Kobrea, Hidrogenoa eta Burdina ditu.", "speaker": "cv_1321", "new": false, "audio": "audio/mt_switch_train_018507-2.mp3", "source": "instruct_en_12401"}, {"role": "assistant", "text": "Zerrendatu dituzun elementuak honela sailka daitezke: Platinoa eta Burdina metalak dira, Kobrea trantsizio-metala da, eta Hidrogenoa ez-metala da.", "speaker": "aintzane", "new": false, "audio": "audio/mt_switch_train_018507-3.mp3", "source": "instruct_en_12401"}]}], "recall": [{"id": "mt_recall_train_014990", "kind": "first_question", "sources": ["instruct_en_170555"], "turns": [{"role": "user", "text": "Nola lortzen duzu zure balio pertsonalak zure lanaren eskakizunekin orekatzea, ezta?", "speaker": "cv_1060", "new": false, "audio": "audio/mt_recall_train_014990-0.mp3", "source": "instruct_en_170555"}, {"role": "assistant", "text": "Laguntzaile digital adimendun gisa, ez ditut balio pertsonalik ezta emoziorik ere, beraz, ez dut aurkitzen gatazkarik nire balio pertsonalen eta lan-eskakizunen artean. Informazioa emateko eta zereginetan laguntzeko diseinatuta nago, alborapen pertsonalik edo sentimendurik gabe.", "speaker": "aintzane", "new": false, "audio": "audio/mt_recall_train_014990-1.mp3", "source": "instruct_en_170555"}, {"role": "user", "text": "Zeintzuk dira zure indarguneak eta ahulguneak?", "speaker": "cv_1060", "new": false, "audio": "audio/mt_recall_train_014990-2.mp3", "source": "instruct_en_170555"}, {"role": "assistant", "text": "Laguntzaile digital adimendun bat naiz, beraz, ez ditut gizakiek dituzten bezalako indargune eta ahulgune pertsonalik. Hala ere, gai askori buruzko informazioa eman dezaket eta zereginetan lagundu ditzaket nire ahalmen onenean.", "speaker": "aintzane", "new": false, "audio": "audio/mt_recall_train_014990-3.mp3", "source": "instruct_en_170555"}, {"role": "user", "text": "Zein izan da nire lehen galdera?", "speaker": "cv_1060", "new": true, "audio": "audio/mt_recall_train_014990-4.mp3", "source": null}, {"role": "assistant", "text": "Zure lehen galdera hau izan da: \"Nola lortzen duzu zure balio pertsonalak zure lanaren eskakizunekin orekatzea, ezta?\"", "speaker": "", "new": false, "audio": null, "source": "instruct_en_170555"}]}, {"id": "mt_recall_train_008422", "kind": "previous_question", "sources": ["instruct_en_56477", "instruct_en_92177"], "turns": [{"role": "user", "text": "Onarpena positibotzat jo daitekeen ezaugarri edo trebetasuna al da? Esan nahi dut, zergatik bai edo zergatik ez?", "speaker": "cv_0738", "new": false, "audio": "audio/mt_recall_train_008422-0.mp3", "source": "instruct_en_56477"}, {"role": "assistant", "text": "Bai, onarpena ezaugarri edo trebetasun positibotzat jo daiteke. Irekitasuna, malgutasuna eta aurreiritzirik eza dakartza, eta horrek harreman hobeak, estres gutxiago eta ongizate emozional handiagoa ekar ditzake.", "speaker": "aintzane", "new": false, "audio": "audio/mt_recall_train_008422-1.mp3", "source": "instruct_en_56477"}, {"role": "user", "text": "Nola aldatu zuen inprentaren asmakuntzak, badakizu, literaturaren eta hezkuntzaren egoera?", "speaker": "cv_0738", "new": false, "audio": "audio/mt_recall_train_008422-2.mp3", "source": "instruct_en_92177"}, {"role": "assistant", "text": "Inprentaren asmakuntzak iraultza ekarri zuen literaturan eta hezkuntzan, liburuak eskuragarri eta merke bihurtuz, alfabetatze-tasak handituz eta ezagutzarako sarbidea demokratizatuz.", "speaker": "aintzane", "new": false, "audio": "audio/mt_recall_train_008422-3.mp3", "source": "instruct_en_92177"}, {"role": "user", "text": "Gogoratzen al duzu nire azken galdera?", "speaker": "cv_0738", "new": true, "audio": "audio/mt_recall_train_008422-4.mp3", "source": null}, {"role": "assistant", "text": "Azkenekoz hau galdetu didazu: \"Nola aldatu zuen inprentaren asmakuntzak, badakizu, literaturaren eta hezkuntzaren egoera?\"", "speaker": "", "new": false, "audio": null, "source": "instruct_en_92177"}]}, {"id": "mt_recall_train_009001", "kind": "previous_answer", "sources": ["instruct_en_26771", "instruct_en_18883"], "turns": [{"role": "user", "text": "Kaixo, azaldu ahal didazu mesedez zer esan nahi duen 'turning a blind eye' esapideak?", "speaker": "cv_0180", "new": false, "audio": "audio/mt_recall_train_009001-0.mp3", "source": "instruct_en_26771"}, {"role": "assistant", "text": "Begi itsua egiteak esan nahi du nahita zerbaiti jaramonik ez egitea edo ikusten ez duzula itxurak egitea, askotan deserosoa edo komenigarria ez delako.", "speaker": "aintzane", "new": false, "audio": "audio/mt_recall_train_009001-1.mp3", "source": "instruct_en_26771"}, {"role": "user", "text": "Kaixo, agur esaten badizut, erantzun natural bat eman dezakezu hizkuntza arruntean?", "speaker": "cv_0180", "new": false, "audio": "audio/mt_recall_train_009001-2.mp3", "source": "instruct_en_18883"}, {"role": "assistant", "text": "Kaixo! Pozten naiz zu ezagutzeaz.", "speaker": "aintzane", "new": false, "audio": "audio/mt_recall_train_009001-3.mp3", "source": "instruct_en_18883"}, {"role": "user", "text": "Errepikatu zure azken erantzuna, mesedez.", "speaker": "cv_0180", "new": true, "audio": "audio/mt_recall_train_009001-4.mp3", "source": null}, {"role": "assistant", "text": "Nire azken erantzuna hau izan da: \"Kaixo! Pozten naiz zu ezagutzeaz.\"", "speaker": "", "new": false, "audio": null, "source": "instruct_en_18883"}]}]};
+const VIEWS = ["compare", "switch", "recall"];
+const KIND = { first_question: "Asks for the first question", previous_question: "Asks for the last question", previous_answer: "Asks to repeat the last answer" };
+const view = document.getElementById("view");
+let current = null, showEn = false, convIdx = 0;
+try { showEn = localStorage.getItem("showEn") === "1"; } catch (e) {}
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const PLAY = '<svg viewBox="0 0 14 14"><path d="M3 1.5v11l9-5.5z"/></svg>';
+const PAUSE = '<svg viewBox="0 0 14 14"><path d="M3 1.5h3v11H3zM8 1.5h3v11H8z"/></svg>';
+
+function player(src) {
+  if (!src) return '<span class="noaudio">no audio (text target only)</span>';
+  return `<button class="play" data-src="${esc(src)}" aria-label="Play"><span class="dot">${PLAY}</span><span class="track"><i></i></span><span class="time">play</span></button>`;
+}
+
+const audio = new Audio();
+let activeBtn = null;
+function resetBtn(b) { if (!b) return; b.querySelector(".dot").innerHTML = PLAY; b.setAttribute("aria-label", "Play"); }
+audio.addEventListener("timeupdate", () => {
+  if (!activeBtn || !audio.duration) return;
+  activeBtn.querySelector(".track i").style.width = (100 * audio.currentTime / audio.duration) + "%";
+  activeBtn.querySelector(".time").textContent = audio.currentTime.toFixed(1) + " / " + audio.duration.toFixed(1) + " s";
+});
+audio.addEventListener("ended", () => resetBtn(activeBtn));
+document.addEventListener("click", e => {
+  const b = e.target.closest(".play");
+  if (!b) return;
+  if (activeBtn === b && !audio.paused) { audio.pause(); resetBtn(b); return; }
+  if (activeBtn !== b) { resetBtn(activeBtn); audio.src = b.dataset.src; activeBtn = b; }
+  audio.play().then(() => { b.querySelector(".dot").innerHTML = PAUSE; b.setAttribute("aria-label", "Pause"); }).catch(() => {});
+});
+
+function turnBox(cls, label, t, extra = "") {
+  return `<div class="turn ${cls}">
+    <div class="who"><span class="label">${label}</span><span class="mono len">${t.speaker ? esc(t.speaker) + " · " : ""}${t.text.length} chars</span></div>
+    <p>${esc(t.text)}</p>${extra}${player(t.audio)}</div>`;
+}
+
+function renderCompare() {
+  const c = DATA.compare[convIdx];
+  const opts = DATA.compare.map((x, i) => `<option value="${i}"${i === convIdx ? " selected" : ""}>${i + 1}. ${esc(x.turns[0].user.text.slice(0, 48))}…</option>`).join("");
+  const ex = c.turns.map(t => `<section class="exchange">
+      ${turnBox("user", "User question", t.user, showEn ? `<p class="en">${esc(t.user.en)}</p>` : "")}
+      <div class="answers">
+        ${turnBox("orig", "Translated InstructS2S", t.orig, showEn ? `<p class="en">${esc(t.orig.en)}</p>` : "")}
+        ${turnBox("latxa", "Latxa-70B", t.latxa)}
+      </div></section>`).join("");
+  view.innerHTML = `<div class="stack">
+    <p class="note">Same user question and audio; two different answer targets. The translated answer is the English InstructS2S answer translated to Basque. The Latxa-70B answer is Latxa’s own reply to the Basque transcript, in a spoken style.</p>
+    <div class="bar">
+      <div class="picker">
+        <button id="prev" aria-label="Previous conversation">←</button>
+        <select id="pick" aria-label="Conversation">${opts}</select>
+        <button id="next" aria-label="Next conversation">→</button>
+        <span class="mono len">${esc(c.id)}</span>
+      </div>
+      <label class="toggle"><input type="checkbox" id="en"${showEn ? " checked" : ""}> Show English source</label>
+    </div>
+    <div class="convo">${ex}</div></div>`;
+  document.getElementById("prev").onclick = () => { convIdx = (convIdx + DATA.compare.length - 1) % DATA.compare.length; render(); };
+  document.getElementById("next").onclick = () => { convIdx = (convIdx + 1) % DATA.compare.length; render(); };
+  document.getElementById("pick").onchange = e => { convIdx = +e.target.value; render(); };
+  document.getElementById("en").onchange = e => { showEn = e.target.checked; try { localStorage.setItem("showEn", showEn ? "1" : "0"); } catch (err) {} render(); };
+}
+
+function chat(c, isRecall) {
+  let prev = null, out = "", part = 0;
+  c.turns.forEach(t => {
+    if (!isRecall && t.source && t.source !== prev) {
+      part++;
+      if (prev) out += `<div class="switch-mark">Topic switch · now from ${esc(t.source)}</div>`;
+      prev = t.source;
+    }
+    if (isRecall && t.new) out += `<div class="switch-mark">New spoken question about the chat</div>`;
+    const user = t.role === "user";
+    const cls = t.new ? "user new" : (user ? "user" : "assistant");
+    const last = isRecall && !user && !t.audio;
+    const label = t.new ? "User · newly synthesized" : user ? "User" : last ? "Answer · quotes the earlier turn" : "Assistant";
+    out += turnBox(cls + (last ? " latxa" : ""), label, t);
+  });
+  return out;
+}
+
+function renderList(key) {
+  const isRecall = key === "recall";
+  const note = isRecall
+    ? "The chat is a normal conversation; only the last question is new. It is synthesized in the same user’s voice, and the answer quotes the earlier turn. Stage 1 trains on user audio and text answers, so that answer has no audio."
+    : "Two or three unrelated conversations from the same user voice, joined end to end. All audio already existed; the model learns not to drag a new question back to the old topic.";
+  view.innerHTML = `<div class="stack"><p class="note">${note}</p>${DATA[key].map(c => `<article class="convo">
+      <div class="card-head"><h3>${isRecall ? esc(KIND[c.kind]) : esc(c.sources.length) + " joined conversations"}</h3><span class="mono len">${esc(c.id)}</span></div>
+      ${chat(c, isRecall)}</article>`).join("")}</div>`;
+}
+
+function render() {
+  audio.pause(); resetBtn(activeBtn); activeBtn = null;
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.view === current));
+  if (current === "compare") renderCompare(); else renderList(current);
+}
+function go(v) { current = VIEWS.includes(v) ? v : "compare"; render(); }
+document.querySelectorAll(".tab").forEach(t => t.onclick = () => { go(t.dataset.view); try { history.replaceState(null, "", "#" + current); } catch (e) {} });
+go(location.hash.slice(1));
+</script>
+</body>
+</html>
