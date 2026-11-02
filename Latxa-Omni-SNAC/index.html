@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Latxa-Omni SNAC Answers</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Literata:opsz,wght@7..72,400;7..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one spoken question per row, the two SNAC models' spoken answers side by side under it, in demo order. */
+:root {
+  --bg: #F2F4F3;
+  --surface: #FBFCFB;
+  --ink: #17201D;
+  --muted: #56625D;
+  --line: #D6DDDA;
+  --a: #4549A0;
+  --a-soft: #E7E8F6;
+  --b: #0B6B60;
+  --b-soft: #DDEFEC;
+  --f-display: 'Bricolage Grotesque', 'Segoe UI', Arial, sans-serif;
+  --f-body: 'Literata', Georgia, serif;
+  --f-mono: 'IBM Plex Mono', Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121816; --surface: #1A2220; --ink: #E6ECE9; --muted: #9BA8A3; --line: #2E3A36;
+  --a: #A9ADF2; --a-soft: #262948; --b: #6FD3C3; --b-soft: #16332F; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121816; --surface: #1A2220; --ink: #E6ECE9; --muted: #9BA8A3; --line: #2E3A36;
+  --a: #A9ADF2; --a-soft: #262948; --b: #6FD3C3; --b-soft: #16332F; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 32px }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 700; line-height: 1.15; text-wrap: balance; margin: 0 }
+h1 { font-size: clamp(30px, 5vw, 46px); letter-spacing: -0.01em }
+p { margin: 0 }
+.lede { color: var(--muted); max-width: 66ch; margin-top: 8px }
+.mono { font-family: var(--f-mono); font-size: 13px; color: var(--muted) }
+.label { font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase }
+
+.pipeline { font-family: var(--f-mono); font-size: 13px; color: var(--muted); overflow-x: auto; white-space: nowrap; padding: 14px 16px; border: 1px dashed var(--line); border-radius: 10px }
+.pipeline b { color: var(--ink); font-weight: 500 }
+.models { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px }
+.model { padding: 18px 20px; border-radius: 10px; display: grid; gap: 6px; min-width: 0 }
+.model h2 { font-size: 20px }
+.model.a { background: var(--a-soft) } .model.a .label { color: var(--a) }
+.model.b { background: var(--b-soft) } .model.b .label { color: var(--b) }
+.model p { font-size: 15px }
+.model .mono { overflow-wrap: anywhere }
+@media (max-width: 760px) { .models, .answers { grid-template-columns: 1fr !important } }
+
+.turns { display: grid; gap: 28px }
+.turn { display: grid; gap: 12px; padding-top: 24px; border-top: 1px solid var(--line) }
+.turn:first-child { border-top: 0; padding-top: 0 }
+.group { font-family: var(--f-display); font-size: 15px; font-weight: 500; color: var(--muted) }
+.box { display: grid; gap: 8px; padding: 16px 18px; border-radius: 10px; min-width: 0 }
+.q { background: var(--surface); border: 1px solid var(--line) }
+.q .label { color: var(--muted) }
+.answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-left: 48px }
+@media (max-width: 760px) { .answers { margin-left: 20px } }
+.ans.a { background: var(--a-soft) } .ans.a .label { color: var(--a) }
+.ans.b { background: var(--b-soft) } .ans.b .label { color: var(--b) }
+.head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; justify-content: space-between }
+.missing { color: var(--muted); font-style: italic }
+
+.play { display: inline-flex; align-items: center; gap: 10px; border: 0; background: none; padding: 0; cursor: pointer; color: inherit; font: 500 13px var(--f-mono); justify-self: start }
+.play:focus-visible { outline: 2px solid var(--b); outline-offset: 3px; border-radius: 20px }
+.play .dot { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--bg); flex: none }
+.play .dot svg { width: 14px; height: 14px; fill: currentColor }
+.play .track { width: 120px; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden }
+.play .track i { display: block; height: 100%; width: 0; background: var(--ink) }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <p class="label" style="margin:0 0 10px;color:var(--muted)">Latxa-Omni-SNAC · compare demo · Nov 2, 2026</p>
+    <h1>Spoken answers with SNAC</h1>
+    <p class="lede">Twelve turns from the side-by-side demo. Each question was asked once and both models answered it with 24 kHz SNAC speech. Answer texts are Whisper transcripts of the spoken audio, so they show what you actually hear.</p>
+  </header>
+
+  <div class="pipeline">speech → <b>Whisper-large-v3 (eu)</b> → projector → <b>Latxa 8B “thinker”</b> → text + hidden states → <b>1B “talker”</b> → SNAC tokens → <b>SNAC decoder</b> → 24 kHz speech</div>
+
+  <section class="models" aria-label="Models">
+    <div class="model a">
+      <span class="label">Model A · unmerged</span>
+      <h2>Stage 1 thinker as trained</h2>
+      <p>Thinker: Stage 1 run 57250, checkpoint 5500. Talker: SNAC Stage 2 run 56979.</p>
+    </div>
+    <div class="model b">
+      <span class="label">Model B · merged α 0.7</span>
+      <h2>Thinker merged toward base Latxa</h2>
+      <p>Thinker: the same checkpoint, 70% Stage 1 + 30% base Latxa. Talker: SNAC Stage 2 run 57091.</p>
+    </div>
+  </section>
+
+  <main class="turns" id="turns"></main>
+</div>
+
+<script>
+const TURNS = [
+ {
+  "turn": 1,
+  "question": {
+   "text": "Eman ahal didazu informazio pixka bat bat larruzko jakak denboran zehar nola irauten duten eta merezi al du diru hori gastatzea?",
+   "dur": 7.7,
+   "audio": "audio/q1.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Larruzko jaka bat zaintzeko, lehenik eta behin, saihestu euria eta elurra, larrua hondatu baitezakete. Ez utzi larruzko jaka bustita denbora luzez eta ez jarri berobailu edo eguzki argi zuzenaren ondoan. Erabili larruzko produktuetarako bereziki diseinatutako garbitzaile eta leungarriak eta jarraitu fabrikatzailearen argibideak. Ez erabili inoiz urik edo xaboirik larrua garbitzeko, kalte egin baitiezaioke, larruzko jakak gordetzeko, erabili bepegarri bat forma mantentzeko eta gorde leku fresko eta lehor batean.",
+    "dur": 30.5,
+    "audio": "audio/a1-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Bai, noski, hona hemen laburpen bat, lehenik eta behin, garbitu zure aurpegia ur epelarekin eta xaboil eun batekin eta ondoren, aplikatu toniko bat zure poruak ixteko, ondoren, aplikatu serum bat eta utzi lehortzen, jarraian, aplikatu krema hidratatzaile bat eta utzi lehortzen, azkenik, aplikatu eguzki krema bat gutxienezo ehun eta hogeita base dagoena eta utzi lehortzen.",
+    "dur": 21.6,
+    "audio": "audio/a1-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 2,
+  "question": {
+   "text": "Kaixo esango ahal dizkidazu lau teknika bilatzaileetako sailkapena hobetzeko, badakizu?",
+   "dur": 5.8,
+   "audio": "audio/q2.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Bai, nosi, lehenik eta behin, garrantzitsua da bilatzaileetan zure marka edo produktuaren izena eta gakoitzak erabiltzea, jendeak errazago aurki zaitzan. Bigarrenik, ziurtatu zure webgunea mugikorretarako optimizatuta dagoela, erabiltzaile gehienek gailu mugikorretatik bilatzen baitute. Hirugarrenik, erabili kalitate handiko irudiak eta deskribapen zehatzak zure produktuetan, horrek lagunduko dizu zure webgunea bilaketa emaitzetan nabarmentzeko.",
+    "dur": 26.9,
+    "audio": "audio/a2-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Bai, noski, lehenik eta behin, garrantzitsua da ikasle bakoitzaren ikasketa estiloa identifikatzea horren arabera egokitzeko irakaskuntza metodoa, bigarrenik, ikasleen parte hartzea sustatzea funtsezkoa da, galderak eginez eta haien iritziak kontuan hartuz, hirugarrenik, ikasleen motibazioa mantentzeko garrantzitsua da ikasketa prozesua dibertigarria eta interaktiboa izatea, jolasak eta talde lanak erabiliz.",
+    "dur": 24.6,
+    "audio": "audio/a2-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 3,
+  "question": {
+   "text": "Kaixo, zein da Euskal Herriko mendirik altuena?",
+   "dur": 4.3,
+   "audio": "audio/q3.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Euskal Herriko mendirik altuena hiru erregeen mahaia da, bi laun eta berrehun metroko garaiera duena.",
+    "dur": 6.0,
+    "audio": "audio/a3-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Euskal Herriko mendirik altuena hiru erregeen maila da, bila berrehun metro gehien bateko garaiera duena.",
+    "dur": 6.1,
+    "audio": "audio/a3-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 4,
+  "question": {
+   "text": "Zein herri daude hor gertu?",
+   "dur": 2.0,
+   "audio": "audio/q4.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Hiru erregeen mahaia Nafarroa Garaia, Zuberoa eta hegoaldeko Behere Nafarroa artean dago, hau da, Espainia eta Frantzia arteko mugan.",
+    "dur": 7.9,
+    "audio": "audio/a4-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Hiru erregeen mahaia, Nafarroa garaia, Zuberoa eta hauestako probintzien artean dago, Pirinioetan.",
+    "dur": 5.9,
+    "audio": "audio/a4-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 5,
+  "question": {
+   "text": "Nondik igo daiteke?",
+   "dur": 2.0,
+   "audio": "audio/q5.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Hiru erregeen maila Pirinioetan dago, zehazki hori mendilerroan.",
+    "dur": 4.0,
+    "audio": "audio/a5-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Hiru erregeen mahaia mendia oinez igo daiteke, baina ibilbide luzea eta gogorra da, hogei kilometro ingurukoa, ibilbide ezagunen Alintzako aterpetxetik abiatzen da eta bat zepon metroko besnibela gainditu behar da.",
+    "dur": 13.0,
+    "audio": "audio/a5-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 6,
+  "question": {
+   "text": "Azaldu mesedez zer den adin hemen artifizial bat.",
+   "dur": 10.8,
+   "audio": "audio/q6.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Adimen artifiziala ordenagailu edo makina batek pentsatzeko eta ikasteko duen gaitasuna da. Gizakien adimena imitatzen saiatzen da arazoak konpontzeko eta erabakiak hartzeko.",
+    "dur": 10.5,
+    "audio": "audio/a6-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Adimen artifiziala ordenagailu edo makina batek pentsatzeko eta ikasteko duen gaitasuna da. Gizakien adimena imitatzen saiatzen da, arazoak konpontzeko eta erabakiak hartzeko.",
+    "dur": 10.3,
+    "audio": "audio/a6-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 7,
+  "question": {
+   "text": "Orain azaldu ahal didazu mesedez, hamar urteko ume bat banintz bezala?",
+   "dur": 4.6,
+   "audio": "audio/q7.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Sentitzen dut baina ezin dut zure urtebetetzea ospatu, ez baitut gaitasunik horretarako. Hala ere, zure urtebetetzea zoriontsua izatea opa dizut eta espero dut egun berezi hori ahalik eta ondoen pasatzea.",
+    "dur": 11.9,
+    "audio": "audio/a7-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Bai, noski, adibidez, telefono mugikorretako ahots laguntzaileak, hala nola Siri, Google Assistant edo Alexa adimen artifiziala erabiltzen dute erabiltzailearen ahotsa ulertzeko eta erantzun egokiak emateko.",
+    "dur": 12.3,
+    "audio": "audio/a7-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 8,
+  "question": {
+   "text": "Kaixo, ez dakit zer afaldu gaur, esango zenidake pare bat adibide?",
+   "dur": 3.9,
+   "audio": "audio/q8.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Kaixo, noski, saiatuko naiz laguntzen. Zer gertatzen zaio zure aitari, zer sintoma dituzte?",
+    "dur": 5.8,
+    "audio": "audio/a8-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Kaixo, noski, saiatuko naiz laguntzen. Zer da zehazki egin nahi duzuna?",
+    "dur": 4.4,
+    "audio": "audio/a8-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 9,
+  "question": {
+   "text": "Afaltzeko zerbait prestatu.",
+   "dur": 3.9,
+   "audio": "audio/q9.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Zure aitak sukarra, eztula, nekea edo buruko mina badu, baliteke gripea edo hotzeria izatea beste sintoma batzuk ere izan ditzake, hala nola, eztarriko mina, sudurreko kongestioa edo muskuluetako mina.",
+    "dur": 12.1,
+    "audio": "audio/a9-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Zer motatako zerrenda behar duzu, eguneroko zereginak antolatzeko, erosketa zerrenda bat egiteko edo beste zerbaitetarako?",
+    "dur": 7.4,
+    "audio": "audio/a9-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 10,
+  "question": {
+   "text": "Ez, nahi dudana da gaur afaltzeko adibide bat.",
+   "dur": 4.0,
+   "audio": "audio/q10.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Zure aitak sukarra, eztula, nekea, eztarriko mina, sudurreko kongestioa eta muskuluetako mina baditu, baliteke gripea edo hotzeria izatea.",
+    "dur": 8.4,
+    "audio": "audio/a10-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Ados, baina lehenik eta behin, esango al didazu zer motatako zerrenda behar duzu?",
+    "dur": 4.8,
+    "audio": "audio/a10-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 11,
+  "question": {
+   "text": "Kaixo, gaur ez dakit zer afaldu, emango didazu adibide bat?",
+   "dur": 4.8,
+   "audio": "audio/q11.mp3"
+  },
+  "answers": {
+   "unmerged": {
+    "text": "Bai, noski, adibidez, ez dut ezer entzun nire belarriak itxi ditudalako.",
+    "dur": 4.6,
+    "audio": "audio/a11-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Kaixo, zer moduz zaude?",
+    "dur": 1.7,
+    "audio": "audio/a11-merged-0.7.mp3"
+   }
+  }
+ },
+ {
+  "turn": 12,
+  "question": null,
+  "answers": {
+   "unmerged": {
+    "text": "Euskal Herrian euskara hitz egiten da.",
+    "dur": 2.3,
+    "audio": "audio/a12-unmerged.mp3"
+   },
+   "merged-0.7": {
+    "text": "Euskara ez da hizkuntza bat, hizkuntza batzuk baizik, euskara hizkuntza bat da, baina euskaldunok hainbat euskara ditugu, euskalkiak deitzen direnak, euskalkiak euskararen dialektoak dira eta bakoitzak bere ezaugarri propioak ditu.",
+    "dur": 13.7,
+    "audio": "audio/a12-merged-0.7.mp3"
+   }
+  }
+ }
+];
+const GROUPS = { 1: "Single questions", 3: "Follow-up chain: the highest mountain", 6: "Follow-up: artificial intelligence", 8: "Follow-up chain: what to cook for dinner", 12: "Later question" };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const PLAY = '<svg viewBox="0 0 14 14"><path d="M3 1.5v11l9-5.5z"/></svg>';
+const PAUSE = '<svg viewBox="0 0 14 14"><path d="M3 1.5h3v11H3zM8 1.5h3v11H8z"/></svg>';
+const player = (src, dur) => `<button class="play" data-src="${esc(src)}" aria-label="Play"><span class="dot">${PLAY}</span><span class="track"><i></i></span><span class="time">${dur.toFixed(1)} s</span></button>`;
+
+document.getElementById("turns").innerHTML = TURNS.map(t => {
+  const q = t.question;
+  const a = t.answers["unmerged"], b = t.answers["merged-0.7"];
+  return `${GROUPS[t.turn] ? `<p class="group">${esc(GROUPS[t.turn])}</p>` : ""}<article class="turn">
+    <div class="box q">
+      <div class="head"><span class="label">Turn ${t.turn} · question</span>${q ? `<span class="mono">${q.dur.toFixed(1)} s</span>` : ""}</div>
+      ${q ? `<p>${esc(q.text)}</p>${player(q.audio, q.dur)}` : `<p class="missing">The audio of this question was not saved.</p>`}
+    </div>
+    <div class="answers">
+      <div class="box ans a"><div class="head"><span class="label">A · unmerged</span></div><p>${esc(a.text)}</p>${player(a.audio, a.dur)}</div>
+      <div class="box ans b"><div class="head"><span class="label">B · merged α 0.7</span></div><p>${esc(b.text)}</p>${player(b.audio, b.dur)}</div>
+    </div></article>`;
+}).join("");
+
+const audio = new Audio();
+let active = null;
+const reset = b => { if (b) { b.querySelector(".dot").innerHTML = PLAY; b.setAttribute("aria-label", "Play"); } };
+audio.addEventListener("timeupdate", () => {
+  if (!active || !audio.duration) return;
+  active.querySelector(".track i").style.width = (100 * audio.currentTime / audio.duration) + "%";
+  active.querySelector(".time").textContent = audio.currentTime.toFixed(1) + " / " + audio.duration.toFixed(1) + " s";
+});
+audio.addEventListener("ended", () => reset(active));
+document.addEventListener("click", e => {
+  const b = e.target.closest(".play");
+  if (!b) return;
+  if (active === b && !audio.paused) { audio.pause(); reset(b); return; }
+  if (active !== b) { reset(active); audio.src = b.dataset.src; active = b; }
+  audio.play().then(() => { b.querySelector(".dot").innerHTML = PAUSE; b.setAttribute("aria-label", "Pause"); }).catch(() => {});
+});
+</script>
+</body>
+</html>
